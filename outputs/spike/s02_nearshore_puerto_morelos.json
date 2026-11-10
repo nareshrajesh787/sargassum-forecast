@@ -1,0 +1,116 @@
+{
+ "test": "Near-shore data availability, Puerto Morelos, June 2025",
+ "script": "spike/s02_nearshore_puerto_morelos.py",
+ "definition": "AFAI 1D row at 20.8527N east of the coast; first ocean pixel at -86.870E, 0.61 km from the Natural Earth coastline.",
+ "touches_test_seasons": false,
+ "results": [
+  {
+   "metric": "june_2025_days_in_product",
+   "spike": 30,
+   "rerun": 30,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "first_ocean_pixel_valid_days (first pixel off the NE coastline)",
+   "spike": 3,
+   "rerun": 0,
+   "flag_gt_tol": true
+  },
+  {
+   "metric": "first_ocean_pixel_valid_days (first pixel >= 1.5 km out)",
+   "spike": 3,
+   "rerun": 3,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "pixels_3_15km_valid_days_min",
+   "spike": 9,
+   "rerun": 10,
+   "flag_gt_tol": true
+  },
+  {
+   "metric": "pixels_3_15km_valid_days_max",
+   "spike": 14,
+   "rerun": 13,
+   "flag_gt_tol": true
+  }
+ ],
+ "notes": [
+  "Natural Earth 10 m coastline is good to ~0.5\u20131 km, so 'first ocean pixel' is approximate"
+ ],
+ "generated_utc": "2026-11-10T22:56:35Z",
+ "valid_share_by_coast_distance_june2025_box": {
+  "0-1.5km": 0.08644067796610169,
+  "1.5-3km": 0.23737373737373735,
+  "3-5km": 0.41225490196078435,
+  "5-10km": 0.45879265091863514,
+  "10-15km": 0.43563218390804603,
+  "15-30km": 0.3891385767790262
+ },
+ "transect_km_and_valid_days": [
+  [
+   0.61,
+   0
+  ],
+  [
+   2.12,
+   3
+  ],
+  [
+   3.67,
+   11
+  ],
+  [
+   5.23,
+   10
+  ],
+  [
+   6.76,
+   11
+  ],
+  [
+   8.19,
+   11
+  ],
+  [
+   9.62,
+   12
+  ],
+  [
+   11.05,
+   10
+  ],
+  [
+   12.47,
+   11
+  ],
+  [
+   13.9,
+   13
+  ],
+  [
+   15.33,
+   14
+  ],
+  [
+   16.76,
+   14
+  ],
+  [
+   18.19,
+   11
+  ],
+  [
+   19.63,
+   9
+  ],
+  [
+   21.08,
+   9
+  ],
+  [
+   22.55,
+   9
+  ]
+ ]
+}

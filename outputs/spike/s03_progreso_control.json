@@ -1,0 +1,27 @@
+{
+ "test": "Artifact check at a control coast (Progreso), June 2025",
+ "script": "spike/s03_progreso_control.py",
+ "definition": "AFAI 1D, June 2025, ocean pixels 1.5\u201310 km offshore, 89.80\u201389.50\u00b0W. Positive = AFAI > 0.",
+ "touches_test_seasons": false,
+ "results": [
+  {
+   "metric": "positive_pixels_(AFAI>0)",
+   "spike": 0,
+   "rerun": 40,
+   "flag_gt_tol": true
+  },
+  {
+   "metric": "mean_AFAI",
+   "spike": -0.0018,
+   "rerun": -0.0017,
+   "flag_gt_tol": false
+  }
+ ],
+ "notes": [
+  "'positive' in the spike is undefined; AFAI > 0 is the literal reading. The mean AFAI comparison uses the absolute 0.03 tolerance, which is loose for values of order 1e-3."
+ ],
+ "generated_utc": "2026-11-10T22:56:35Z",
+ "valid_pixel_days": 1242,
+ "band_pixels": 104,
+ "p99_AFAI": 0.0007060000207275152
+}

@@ -1,0 +1,83 @@
+{
+ "precedence": "none_first",
+ "reports_total": 14298,
+ "reports_assigned": 11813,
+ "reports_unassigned": 2485,
+ "reports_assigned_dropped_implausible_date": 5,
+ "site_days_total": 11780,
+ "site_days_in_season": 11780,
+ "site_days_out_of_season": 0,
+ "site_days_with_multiple_reports": 28,
+ "upload_lag_days_quantiles_assigned": {
+  "0.5": 0.0,
+  "0.9": 0.0,
+  "0.99": 4.0
+ },
+ "pooled": {
+  "all": "2019-2026",
+  "labeled_site_days": 11678,
+  "n_none": 889,
+  "n_present": 8717,
+  "n_moderate": 1737,
+  "n_heavy": 335,
+  "share_none": 0.0761,
+  "share_present": 0.7464,
+  "share_moderate": 0.1487,
+  "share_heavy": 0.0287,
+  "event_rate": 0.1774,
+  "heavy_rate": 0.0287,
+  "possible_site_days": 15680,
+  "missing_day_rate": 0.2552,
+  "site_days_unknown_severity": 102
+ },
+ "form_check_by_obs_year_assigned_reports": {
+  "2019": {
+   "reports": 791,
+   "water_blank": 789,
+   "condition_no_sargassum": 0,
+   "water_very_brown": 0
+  },
+  "2020": {
+   "reports": 719,
+   "water_blank": 3,
+   "condition_no_sargassum": 33,
+   "water_very_brown": 12
+  },
+  "2021": {
+   "reports": 1138,
+   "water_blank": 2,
+   "condition_no_sargassum": 47,
+   "water_very_brown": 3
+  },
+  "2022": {
+   "reports": 1721,
+   "water_blank": 5,
+   "condition_no_sargassum": 113,
+   "water_very_brown": 43
+  },
+  "2023": {
+   "reports": 1827,
+   "water_blank": 2,
+   "condition_no_sargassum": 300,
+   "water_very_brown": 15
+  },
+  "2024": {
+   "reports": 1824,
+   "water_blank": 2,
+   "condition_no_sargassum": 195,
+   "water_very_brown": 8
+  },
+  "2025": {
+   "reports": 1880,
+   "water_blank": 2,
+   "condition_no_sargassum": 147,
+   "water_very_brown": 68
+  },
+  "2026": {
+   "reports": 1908,
+   "water_blank": 6,
+   "condition_no_sargassum": 57,
+   "water_very_brown": 193
+  }
+ }
+}
