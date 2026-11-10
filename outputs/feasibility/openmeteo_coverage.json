@@ -1,0 +1,36 @@
+{
+ "distinct_grid_cells_for_8_sites": {
+  "marine_currents": 4,
+  "marine_waves": 3,
+  "wind_hf": 7,
+  "wind_prev": 7
+ },
+ "grid_km_from_site_range": {
+  "marine_currents": {
+   "min": 3.6,
+   "max": 8.52
+  },
+  "marine_waves": {
+   "min": 8.95,
+   "max": 22.75
+  },
+  "wind_hf": {
+   "min": 1.22,
+   "max": 3.59
+  },
+  "wind_prev": {
+   "min": 1.22,
+   "max": 3.59
+  }
+ },
+ "wind_prev_first_non_null": {
+  "wind_speed_10m_previous_day1": "2024-01-19T12:00:00+00:00",
+  "wind_speed_10m_previous_day2": "2024-01-20T12:00:00+00:00",
+  "wind_speed_10m_previous_day3": "2024-01-21T12:00:00+00:00",
+  "wind_speed_10m_previous_day5": "2024-01-23T12:00:00+00:00",
+  "wind_speed_10m_previous_day7": "2024-01-25T12:00:00+00:00"
+ },
+ "requests": 240,
+ "weighted_calls_estimate": 6051,
+ "seconds": 320.6
+}

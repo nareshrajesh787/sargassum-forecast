@@ -1,0 +1,73 @@
+{
+ "test": "Broward label base rates (latest 3,775 site reports)",
+ "script": "spike/s06_label_base_rates.py",
+ "definition": "The 3,775 most recently created reports assigned to one of the 8 sites; per-report severity with the frozen rules (precedence none_first). Reports, not site-days.",
+ "touches_test_seasons": true,
+ "results": [
+  {
+   "metric": "count_none",
+   "spike": 203,
+   "rerun": 203,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "count_present",
+   "spike": 2508,
+   "rerun": 2509,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "count_moderate",
+   "spike": 805,
+   "rerun": 797,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "count_heavy",
+   "spike": 259,
+   "rerun": 261,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "share_none",
+   "spike": 0.05,
+   "rerun": 0.0538,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "share_present",
+   "spike": 0.66,
+   "rerun": 0.6646,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "share_moderate",
+   "spike": 0.21,
+   "rerun": 0.2111,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "share_heavy",
+   "spike": 0.07,
+   "rerun": 0.0691,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "count_unknown_severity",
+   "spike": 0,
+   "rerun": 5,
+   "flag_gt_tol": true
+  },
+  {
+   "metric": "event_share_(severity>=2)",
+   "spike": 0.28,
+   "rerun": 0.2803,
+   "flag_gt_tol": false
+  }
+ ],
+ "notes": [
+  "date span of these reports: 2025-03-02 .. 2026-10-31",
+  "descriptive label counts only; no prediction is scored"
+ ],
+ "generated_utc": "2026-11-10T22:56:36Z"
+}

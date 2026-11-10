@@ -1,0 +1,63 @@
+script,test,metric,spike,rerun,flag_gt_tol,touches_test_seasons
+spike/s01_afai_metadata.py,AFAI 1-day product metadata,time_coverage_start,2016-06-18,2016-06-18,False,False
+spike/s01_afai_metadata.py,AFAI 1-day product metadata,time_coverage_end (as of run date),2026-11-09,2026-11-09,False,False
+spike/s01_afai_metadata.py,AFAI 1-day product metadata,latency_days (run date - last step),1,1,False,False
+spike/s01_afai_metadata.py,AFAI 1-day product metadata,n_daily_steps,3545,3545,False,False
+spike/s01_afai_metadata.py,AFAI 1-day product metadata,share_of_calendar_days_with_a_step,,0.9336,,False
+spike/s01_afai_metadata.py,AFAI 1-day product metadata,lon_resolution_deg,0.015,0.015,False,False
+spike/s01_afai_metadata.py,AFAI 1-day product metadata,lat_min,0.0,0.0,False,False
+spike/s01_afai_metadata.py,AFAI 1-day product metadata,lat_max,38.0,38.0,False,False
+spike/s01_afai_metadata.py,AFAI 1-day product metadata,lon_min,-98.0,-98.0,False,False
+spike/s01_afai_metadata.py,AFAI 1-day product metadata,lon_max,-38.0,-38.0,False,False
+spike/s02_nearshore_puerto_morelos.py,"Near-shore data availability, Puerto Morelos, June 2025",june_2025_days_in_product,30,30,False,False
+spike/s02_nearshore_puerto_morelos.py,"Near-shore data availability, Puerto Morelos, June 2025",first_ocean_pixel_valid_days (first pixel off the NE coastline),3,0,True,False
+spike/s02_nearshore_puerto_morelos.py,"Near-shore data availability, Puerto Morelos, June 2025",first_ocean_pixel_valid_days (first pixel >= 1.5 km out),3,3,False,False
+spike/s02_nearshore_puerto_morelos.py,"Near-shore data availability, Puerto Morelos, June 2025",pixels_3_15km_valid_days_min,9,10,True,False
+spike/s02_nearshore_puerto_morelos.py,"Near-shore data availability, Puerto Morelos, June 2025",pixels_3_15km_valid_days_max,14,13,True,False
+spike/s03_progreso_control.py,"Artifact check at a control coast (Progreso), June 2025",positive_pixels_(AFAI>0),0,40,True,False
+spike/s03_progreso_control.py,"Artifact check at a control coast (Progreso), June 2025",mean_AFAI,-0.0018,-0.0017,False,False
+spike/s04_afai_label_cancun.py,"AFAI as a label, Cancún–Puerto Morelos band, all of 2025",mean_daily_valid_share_1D,0.44,0.441,False,False
+spike/s04_afai_label_cancun.py,"AFAI as a label, Cancún–Puerto Morelos band, all of 2025",consecutive_observed_agreement_min,0.5,0.5442,True,False
+spike/s04_afai_label_cancun.py,"AFAI as a label, Cancún–Puerto Morelos band, all of 2025",consecutive_observed_agreement_max,0.66,0.9813,True,False
+spike/s04_afai_label_cancun.py,"AFAI as a label, Cancún–Puerto Morelos band, all of 2025",persistence_BSS_vs_monthly_clim_min,-0.21,-1.0834,True,False
+spike/s04_afai_label_cancun.py,"AFAI as a label, Cancún–Puerto Morelos band, all of 2025",persistence_BSS_vs_monthly_clim_max,-0.07,-0.0148,True,False
+spike/s05_fiu_api.py,FIU Sargassum Watch API,public_entries,14298,14298,False,False
+spike/s05_fiu_api.py,FIU Sargassum Watch API,oldest_entry_date,,2019-03-03,,False
+spike/s05_fiu_api.py,FIU Sargassum Watch API,newest_entry_date,,2026-11-09,,False
+spike/s05_fiu_api.py,FIU Sargassum Watch API,n_fixed_broward_sites,8,8,False,False
+spike/s05_fiu_api.py,FIU Sargassum Watch API,reports_assigned_to_the_8_sites,,11813,,False
+spike/s05_fiu_api.py,FIU Sargassum Watch API,first_season_with_reports,2019,2019,False,False
+spike/s05_fiu_api.py,FIU Sargassum Watch API,last_season_with_reports,2026,2026,False,False
+spike/s05_fiu_api.py,FIU Sargassum Watch API,mean_share_of_season_days_reported_per_site,,0.7513,,False
+spike/s06_label_base_rates.py,"Broward label base rates (latest 3,775 site reports)",count_none,203,203,False,True
+spike/s06_label_base_rates.py,"Broward label base rates (latest 3,775 site reports)",count_present,2508,2509,False,True
+spike/s06_label_base_rates.py,"Broward label base rates (latest 3,775 site reports)",count_moderate,805,797,False,True
+spike/s06_label_base_rates.py,"Broward label base rates (latest 3,775 site reports)",count_heavy,259,261,False,True
+spike/s06_label_base_rates.py,"Broward label base rates (latest 3,775 site reports)",share_none,0.05,0.0538,False,True
+spike/s06_label_base_rates.py,"Broward label base rates (latest 3,775 site reports)",share_present,0.66,0.6646,False,True
+spike/s06_label_base_rates.py,"Broward label base rates (latest 3,775 site reports)",share_moderate,0.21,0.2111,False,True
+spike/s06_label_base_rates.py,"Broward label base rates (latest 3,775 site reports)",share_heavy,0.07,0.0691,False,True
+spike/s06_label_base_rates.py,"Broward label base rates (latest 3,775 site reports)",count_unknown_severity,0,5,True,True
+spike/s06_label_base_rates.py,"Broward label base rates (latest 3,775 site reports)",event_share_(severity>=2),0.28,0.2803,False,True
+spike/s07_beach_persistence.py,"Beach persistence, Broward 2025–2026 seasons",next_day_event_agreement_2025_2026,0.7,0.704,False,True
+spike/s07_beach_persistence.py,"Beach persistence, Broward 2025–2026 seasons",P(event|event_yesterday)_2025_2026,0.47,0.4746,False,True
+spike/s07_beach_persistence.py,"Beach persistence, Broward 2025–2026 seasons",event_base_rate_2025_2026,0.28,0.2793,False,True
+spike/s07_beach_persistence.py,"Beach persistence, Broward 2025–2026 seasons",n_consecutive_site_day_pairs_2025_2026,,3632,,True
+spike/s08_offshore_vs_beach.py,"Can satellite pixels just offshore predict the beach? 2025, event = 3+ of 8 sites",persistence_AUC_lead1,0.76,0.7615,False,True
+spike/s08_offshore_vs_beach.py,"Can satellite pixels just offshore predict the beach? 2025, event = 3+ of 8 sites",persistence_AUC_lead2,0.73,0.7298,False,True
+spike/s08_offshore_vs_beach.py,"Can satellite pixels just offshore predict the beach? 2025, event = 3+ of 8 sites",persistence_AUC_lead3,0.7,0.7255,False,True
+spike/s08_offshore_vs_beach.py,"Can satellite pixels just offshore predict the beach? 2025, event = 3+ of 8 sites",persistence_AUC_lead5,0.65,0.637,False,True
+spike/s08_offshore_vs_beach.py,"Can satellite pixels just offshore predict the beach? 2025, event = 3+ of 8 sites",persistence_AUC_lead7,0.67,0.6351,True,True
+spike/s08_offshore_vs_beach.py,"Can satellite pixels just offshore predict the beach? 2025, event = 3+ of 8 sites",AFAI_3_8km_AUC_lead1,0.52,0.5425,False,True
+spike/s08_offshore_vs_beach.py,"Can satellite pixels just offshore predict the beach? 2025, event = 3+ of 8 sites",AFAI_3_8km_AUC_lead2,0.58,0.6029,False,True
+spike/s08_offshore_vs_beach.py,"Can satellite pixels just offshore predict the beach? 2025, event = 3+ of 8 sites",AFAI_3_8km_AUC_lead3,0.58,0.6036,False,True
+spike/s08_offshore_vs_beach.py,"Can satellite pixels just offshore predict the beach? 2025, event = 3+ of 8 sites",AFAI_3_8km_AUC_lead5,0.62,0.6385,False,True
+spike/s08_offshore_vs_beach.py,"Can satellite pixels just offshore predict the beach? 2025, event = 3+ of 8 sites",AFAI_3_8km_AUC_lead7,0.57,0.5873,False,True
+spike/s08_offshore_vs_beach.py,"Can satellite pixels just offshore predict the beach? 2025, event = 3+ of 8 sites",n_days,215,231,True,True
+spike/s08_offshore_vs_beach.py,"Can satellite pixels just offshore predict the beach? 2025, event = 3+ of 8 sites",event_day_rate,,0.2554,,True
+spike/s09_openmeteo.py,Open-Meteo currents and winds at Broward,forecast_current_hours_returned_(10_days),240,240,False,False
+spike/s09_openmeteo.py,Open-Meteo currents and winds at Broward,june_2022_current_non_null_share,1.0,1.0,False,False
+spike/s09_openmeteo.py,Open-Meteo currents and winds at Broward,2022_archived_wind_non_null_share,1.0,1.0,False,False
+spike/s10_sir.py,SIR archive,latest_kmz_MB,1.56,1.5647,False,False
+spike/s10_sir.py,SIR archive,june15_2022_2025_http404_count,4,4,False,False
+spike/s10_sir.py,SIR archive,earliest_available_kmz_date,none (no history),2025-07-01,True,False

@@ -1,0 +1,15 @@
+{
+ "first_day": "2025-06-28",
+ "last_day": "2026-01-16",
+ "calendar_days": 203,
+ "days_with_all_3_files": 199,
+ "days_missing_any_file": 4,
+ "mb_per_day_mean": 14.96,
+ "mb_per_file_mean": {
+  "SIR": 3.18,
+  "Sargassum_risk_currents_FA": 7.3,
+  "sargassum_risk": 4.7
+ },
+ "gb_per_365_days_estimate": 5.46,
+ "gb_total_archived": 3.04
+}
