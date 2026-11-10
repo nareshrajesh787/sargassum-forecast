@@ -1,0 +1,24 @@
+{
+ "train_seasons": [
+  2020,
+  2021,
+  2022,
+  2023
+ ],
+ "val_seasons": [
+  2024
+ ],
+ "n_boot": 1000,
+ "seed": 20261110,
+ "feature_version": 1,
+ "models": {
+  "B0": "persistence",
+  "B1": "climatology",
+  "B2": "SIR-style AFAI index",
+  "B3": "B2 + onshore wind",
+  "B3_fc": "B2 + onshore wind, lead-L forecast winds"
+ },
+ "perfect_prog_models": [
+  "B3"
+ ]
+}
