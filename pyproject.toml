@@ -1,0 +1,42 @@
+[project]
+name = "sargassum-forecast"
+version = "0.0.1"
+description = "Sargassum beaching forecast for 8 Broward County, FL beaches"
+requires-python = ">=3.12,<3.13"
+license = { text = "MIT" }
+dependencies = [
+    "requests>=2.32",
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "pyarrow>=17",
+    "xarray>=2024.9",
+    "netcdf4>=1.7",
+    "zarr>=2.18",
+    "scikit-learn>=1.5",
+    "copernicusmarine>=2.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.11", "pandas-stubs", "types-requests"]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+check_untyped_defs = true
+exclude = ["^data/", "^\\.venv/"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
+markers = ["live: hits a live network source (deselected by default in CI)"]
