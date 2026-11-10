@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.env
+.DS_Store
+# raw and cached data are never committed (FIU raw reports must not be republished)
+data/
+# SIR file bytes live in monthly GitHub prereleases; only archive/sir/manifest.csv is committed
+archive/sir/files/

@@ -1,0 +1,36 @@
+name: sir-archive
+# NOAA/USF SIR v1.5 posts the previous day's products around 16:00 UTC; run after that.
+# Look back 7 days so an outage on either side is caught up automatically.
+on:
+  schedule:
+    - cron: "30 19 * * *"
+  workflow_dispatch:
+    inputs:
+      days:
+        description: look-back window in days
+        default: "7"
+permissions:
+  contents: write   # create monthly prereleases + commit the manifest
+concurrency:
+  group: archive-commit
+  cancel-in-progress: false
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync --locked --no-dev
+      - name: Archive SIR (missing days are logged, never fatal)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: uv run python -m pipeline.ingest.sir_archive --days "${{ inputs.days || '7' }}" --upload --repo "${{ github.repository }}"
+      - name: Commit manifest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add archive/sir/manifest.csv
+          if git diff --cached --quiet; then echo "no new SIR files"; exit 0; fi
+          git commit -m "archive: SIR $(date -u +%F)"
+          git pull --rebase
+          git push

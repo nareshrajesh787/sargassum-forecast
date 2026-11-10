@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git push --force-with-lease:*)",
+      "Bash(git push origin main:*)",
+      "Bash(git push origin HEAD:main:*)",
+      "Bash(npm publish:*)",
+      "Bash(vercel --prod:*)",
+      "Write(data/test_lock/**)",
+      "Edit(data/test_lock/**)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && make test >/tmp/sargassum-make-test.log 2>&1 || { tail -40 /tmp/sargassum-make-test.log >&2; exit 2; }",
+            "timeout": 600
+          }
+        ]
+      }
+    ]
+  }
+}
