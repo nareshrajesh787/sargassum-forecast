@@ -117,3 +117,28 @@ FEASIBILITY §7 were applied: perfect-prog drivers (flagged) + lead-L forecast-w
 - SIR back-fill finished: 2025-06-28 → 2026-11-09, 6.2 GB local (`feasibility/sir_archive.json`).
 
 **Next**: Phase 3 (P1 drift) needs Copernicus credentials (`copernicusmarine login`).
+
+## 2026-11-10 — Phase 3 (physics P1), branch `phase-3-physics` (stacked on `phase-2-dataset-baselines`) — BLOCKED
+
+**Blocked:** no Copernicus Marine credentials (no env vars, no `~/.copernicusmarine`), so SMOC currents and L4 winds cannot be
+downloaded, and P1 cannot be run or scored. Gate G3 is not reached.
+
+**Done (all testable without Copernicus data)**
+- OpenDrift 1.14.11 added. `physics/forcing.py` (SMOC → CF currents in two modes: `total` = utotal incl. Stokes, `no_stokes`
+  = uo+utide; Copernicus L4 hourly 0.125° winds; season download), `physics/seed.py` (3D AFAI field of day I−1, detections
+  ≥ 3 km offshore, sampled ∝ anomaly above threshold), `physics/drift.py` (OceanDrift, stranding, all windage groups 0–3% in
+  one run, cached arrival tables), `physics/arrivals.py` (first entry within 5 km per site, lead windows (24L−6, 24L+18] h
+  after the I−1 18:00 seed), `physics/score.py` (sweep by 2024 AUC → mapping fit on 2021–2023 → paired bootstrap vs B0/B1).
+- Gridded winds: Copernicus `WIND_GLO_PHY_L4_MY_012_006` covers 2007 → 2026-06-20 and NRT covers 2024-06-13 → present
+  (catalogue, same account). Open-Meteo is point-only and would cost ~6k calls per season for a wind grid.
+- Measured: one run with 8,000 particles (2,000 × 4 windages) × 186 h took 8.4 s on synthetic forcing with real AFAI seeds (2024-06-15,
+  370 seed pixels). Projection: 2024 sweep ≈ 252 issue days × 2 modes ≈ 70 min; the daily job is far under 15 min. Synthetic
+  forcing, so real-reader interpolation time is unverified.
+- Found: OpenDrift stores `wind_drift_factor` as float32 (0.03 → 0.0299999993); arrivals now round in float64.
+- 69 tests pass, including an end-to-end OpenDrift run (onshore flow strands at The Palms; higher windage arrives no later).
+
+**Choices to review at G3**: seed time 18:00 UTC on I−1; seeds ≥ 3 km offshore; 2,000 particles per windage group;
+diffusivity 10 m²/s (fixed); config chosen by 2024 AUC (8 configurations → optimistic 2024 AUC for P1, to be disclosed);
+P1 is perfect-prog (analysed currents and winds after the issue time).
+
+**Next (owner)**: `! uv run copernicusmarine login`, then `make physics MODE=<best> WINDAGE=<best>` and `make p1-score`.

@@ -1,5 +1,5 @@
 # sargassum-forecast — see CLAUDE.md for what each target means.
-.PHONY: tides data labels features results backtest test lint typecheck sir fiu afai openmeteo spike
+.PHONY: physics p1-score tides data labels features results backtest test lint typecheck sir fiu afai openmeteo spike
 
 UV ?= uv
 
@@ -62,3 +62,14 @@ test: ## pytest + ruff + mypy (the Stop hook runs this)
 	$(UV) run pytest -m "not live"
 	$(MAKE) lint
 	$(MAKE) typecheck
+
+# Phase 3 (needs Copernicus Marine credentials): validation sweep on 2024 (2 current modes × 4 windages per run),
+# then the chosen configuration on the training seasons (set MODE/WINDAGE from outputs/p1_sweep_val.csv), then score.
+MODE ?= total
+WINDAGE ?= 0.02
+physics:
+	$(UV) run python -m physics.drift --season 2024 --modes total no_stokes
+	for s in 2021 2022 2023; do $(UV) run python -m physics.drift --season $$s --modes $(MODE) --windages $(WINDAGE) || exit 1; done
+
+p1-score:
+	$(UV) run python -m physics.score

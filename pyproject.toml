@@ -17,6 +17,7 @@ dependencies = [
     "shapely>=2.2.0",
     "pyshp>=3.1.8",
     "matplotlib>=3.11.2",
+    "opendrift>=1.14.12",
 ]
 
 [dependency-groups]
