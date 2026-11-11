@@ -91,12 +91,16 @@ def _x_b2(df: pd.DataFrame) -> np.ndarray:
 @dataclass
 class PerLeadLogit:
     xfun: object
-    models: dict[int, LogisticRegression] = field(default_factory=dict)
+    models: dict[int, LogisticRegression | float] = field(default_factory=dict)
 
     def fit(self, tr: pd.DataFrame) -> PerLeadLogit:
         for L, g in tr.groupby("lead"):
+            y = g["event"].to_numpy()
+            if len(np.unique(y)) < 2:  # one class only (tiny fold): constant event rate
+                self.models[int(L)] = float(y.mean())
+                continue
             m = LogisticRegression(C=1e4, max_iter=1000, random_state=SEED)
-            m.fit(self.xfun(g), g["event"].to_numpy())  # type: ignore[operator]
+            m.fit(self.xfun(g), y)  # type: ignore[operator]
             self.models[int(L)] = m
         return self
 
@@ -104,7 +108,11 @@ class PerLeadLogit:
         out = np.full(len(df), np.nan)
         for L, g in df.groupby("lead"):
             pos = df.index.get_indexer(g.index)
-            out[pos] = self.models[int(L)].predict_proba(self.xfun(g))[:, 1]  # type: ignore[operator]
+            x = self.xfun(g)  # type: ignore[operator]
+            ok = np.isfinite(x).all(axis=1)  # rows with a missing input (e.g. no wind before 2022) → NaN
+            if ok.any():
+                m = self.models[int(L)]
+                out[pos[ok]] = m if isinstance(m, float) else m.predict_proba(x[ok])[:, 1]
         return out
 
 

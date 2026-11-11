@@ -40,7 +40,22 @@ MODELS = {
     "B2": ("SIR-style AFAI index", False),
     "B3": ("B2 + onshore wind", True),
     "B3_fc": ("B2 + onshore wind, lead-L forecast winds", False),
+    "P1": ("Lagrangian drift arrival index (OpenDrift)", True),
+    "M1": ("LightGBM hybrid, all inputs", True),
+    "M2": ("M1 + isotonic calibration (fit on 2024)", True),
+    "M1_no_p1": ("M1 without P1", True),
+    "M1_no_afai": ("M1 without AFAI (and B2, B3)", True),
+    "M1_no_wind": ("M1 without wind (and B3); still uses waves, currents, P1", True),
+    "M1_fc": ("LightGBM, issue-time inputs only (no target-day drivers, no P1, no B3)", False),
+    "M2_fc": ("M1_fc + isotonic calibration (fit on 2024)", False),
 }
+
+
+def model_info(name: str) -> tuple[str, bool]:
+    """(description, perfect_prog). Unknown names fail loudly so no result row is ever mislabelled."""
+    if name not in MODELS:
+        raise KeyError(f"model {name!r} not registered in eval.run_val.MODELS (needs a perfect_prog label)")
+    return MODELS[name]
 
 
 def _subsets(df: pd.DataFrame) -> list[tuple[str, np.ndarray]]:
@@ -92,8 +107,8 @@ def evaluate(
                     "group": gname,
                     "lead": lead_name,
                     "model": k,
-                    "description": MODELS.get(k, ("", False))[0],
-                    "perfect_prog": MODELS.get(k, ("", False))[1],
+                    "description": model_info(k)[0],
+                    "perfect_prog": model_info(k)[1],
                     "n": int(m.sum()),
                     "events": int(y.sum()),
                     "base_rate": float(y.mean()),
