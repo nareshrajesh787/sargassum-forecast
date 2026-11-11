@@ -14,6 +14,7 @@ from datetime import date, timedelta
 from pathlib import Path
 from typing import Literal
 
+import pandas as pd
 import xarray as xr
 
 from pipeline.ingest.copernicus import SMOC, has_credentials
@@ -31,47 +32,67 @@ def season_window(season: int) -> tuple[str, str]:
     return f"{season}-02-20T00:00:00", f"{season}-11-08T23:00:00"
 
 
-def fetch_season(season: int, root: Path = RAW) -> tuple[Path, Path]:
-    """Download one season of SMOC and L4 wind over ``DOMAIN`` (idempotent). Needs credentials."""
-    if not has_credentials():
-        raise PermissionError("Copernicus Marine credentials not set (see .env.example / `copernicusmarine login`)")
+SMOC_VARS = ["uo", "vo", "utide", "vtide", "vsdx", "vsdy", "utotal", "vtotal"]
+WIND_VARS = ["eastward_wind", "northward_wind"]
+
+
+def _month_chunks(start: str, end: str) -> list[tuple[str, str]]:
+    a, b = pd.Timestamp(start), pd.Timestamp(end)
+    out = []
+    cur = a
+    while cur <= b:
+        nxt = (cur + pd.offsets.MonthBegin(1)).normalize()
+        stop = min(b, nxt - pd.Timedelta(hours=1))
+        out.append((cur.strftime("%Y-%m-%dT%H:%M:%S"), stop.strftime("%Y-%m-%dT%H:%M:%S")))
+        cur = nxt
+    return out
+
+
+def _subset_monthly(dataset_id: str, variables: list[str], prefix: str, season: int, root: Path) -> list[Path]:
+    """Whole-season subset via the ARCO *time-series* store. Measured on 2026-11-11: 30 days of SMOC over DOMAIN
+    took 1,771 s this way vs 1,360 s for 2 days via the default map (geo-series) store, whose chunks are one hour
+    × 512 × 2048 cells. Idempotent: an existing season file is skipped."""
     import copernicusmarine as cm
 
     lat0, lat1, lon0, lon1 = DOMAIN
-    start, end = season_window(season)
+    files = []
+    # One request per season: the time-series store's chunks are 4,272 h × 16 × 8 cells, so month-sized requests
+    # re-download the same ~178-day chunks (measured 2026-11-11; see WORKLOG). Kept as a list for open_mfdataset.
+    for a, b in [season_window(season)]:
+        dest = root / f"{prefix}_{season}.nc"
+        if not dest.exists():
+            tmp = f"{dest.stem}.part.nc"
+            cm.subset(
+                dataset_id=dataset_id,
+                variables=variables,
+                minimum_latitude=lat0,
+                maximum_latitude=lat1,
+                minimum_longitude=lon0,
+                maximum_longitude=lon1,
+                start_datetime=a,
+                end_datetime=b,
+                output_directory=str(root),
+                output_filename=tmp,
+                disable_progress_bar=True,
+                overwrite=True,
+                service="arco-time-series",
+            )
+            (root / tmp).rename(dest)
+        files.append(dest)
+    return files
+
+
+def fetch_season(season: int, root: Path = RAW) -> tuple[list[Path], list[Path]]:
+    """Download one season of SMOC and L4 wind over ``DOMAIN`` (idempotent, monthly files). Needs credentials."""
+    if not has_credentials():
+        raise PermissionError("Copernicus Marine credentials not set (see .env.example / `copernicusmarine login`)")
     root.mkdir(parents=True, exist_ok=True)
-    cur = root / f"smoc_{season}.nc"
-    if not cur.exists():
-        cm.subset(
-            dataset_id=SMOC,
-            variables=["uo", "vo", "utide", "vtide", "vsdx", "vsdy", "utotal", "vtotal"],
-            minimum_latitude=lat0,
-            maximum_latitude=lat1,
-            minimum_longitude=lon0,
-            maximum_longitude=lon1,
-            start_datetime=start,
-            end_datetime=end,
-            output_directory=str(root),
-            output_filename=cur.name,
-            disable_progress_bar=True,
-        )
-    wind = root / f"wind_{season}.nc"
-    if not wind.exists():
-        ds_id = WIND if date.fromisoformat(end[:10]) < date.today() - timedelta(days=150) else WIND_NRT
-        cm.subset(
-            dataset_id=ds_id,
-            variables=["eastward_wind", "northward_wind"],
-            minimum_latitude=lat0,
-            maximum_latitude=lat1,
-            minimum_longitude=lon0,
-            maximum_longitude=lon1,
-            start_datetime=start,
-            end_datetime=end,
-            output_directory=str(root),
-            output_filename=wind.name,
-            disable_progress_bar=True,
-        )
-    return cur, wind
+    end = season_window(season)[1]
+    wind_id = WIND if date.fromisoformat(end[:10]) < date.today() - timedelta(days=150) else WIND_NRT
+    return (
+        _subset_monthly(SMOC, SMOC_VARS, "smoc", season, root),
+        _subset_monthly(wind_id, WIND_VARS, "wind", season, root),
+    )
 
 
 def _cf(ds: xr.Dataset, u: xr.DataArray, v: xr.DataArray, xname: str, yname: str) -> xr.Dataset:

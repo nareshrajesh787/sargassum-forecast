@@ -103,7 +103,8 @@ def issue_dates(season: int) -> pd.DatetimeIndex:
 
 def run_season(season: int, modes: tuple[Mode, ...], windages: tuple[float, ...], out: Path = OUT) -> dict:
     cur_raw, wind_raw = fetch_season(season)
-    smoc, wind = xr.open_dataset(cur_raw), xr.open_dataset(wind_raw)
+    smoc = xr.open_mfdataset(cur_raw, combine="by_coords")
+    wind = xr.open_mfdataset(wind_raw, combine="by_coords")
     wind_nc = write_cf(wind_cf(wind), out / "forcing" / f"wind_{season}.nc")
     stats = {"runs": 0, "seconds": 0.0, "empty": 0}
     for mode in modes:
