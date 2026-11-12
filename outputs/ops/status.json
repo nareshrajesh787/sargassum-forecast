@@ -1,0 +1,9 @@
+{
+ "issue_date": "2026-11-12",
+ "ages_days": {
+  "fiu_newest_entry": 3.0,
+  "afai_last_step": 2.0
+ },
+ "stale": {},
+ "p1_status": "ok"
+}

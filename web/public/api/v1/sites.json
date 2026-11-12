@@ -51,7 +51,7 @@
  ],
  "region": "Broward County, Florida (8 FIU Sargassum Watch sites)",
  "attribution": "Beach observations: FIU Sargassum Watch (Marine Macroalgae Research Lab). Satellite AFAI: NOAA AOML Atlantic OceanWatch / USF Optical Oceanography Lab. Currents: E.U. Copernicus Marine Service Information. Winds, waves: Open-Meteo.com (M\u00e9t\u00e9o-France, NOAA GFS). Tides: NOAA CO-OPS.",
- "disclaimer": "Experimental research forecast, not a warning system. On the 2025\u20132026 test seasons the served model (M2) was worse than climatology (Brier skill \u22120.034 [\u22120.058, \u22120.011]); see track_record and methods.",
+ "disclaimer": "Experimental research forecast, not a warning system. On the 2025\u20132026 test seasons the served model (M2) had Brier skill -0.034 [-0.058, -0.011] versus climatology (negative = worse than climatology). See the track record and methods.",
  "model_version": "v0.1-test-frozen",
  "validated_season": "March\u2013October",
  "leads_days": [
