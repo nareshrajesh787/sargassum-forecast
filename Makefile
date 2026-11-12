@@ -1,5 +1,5 @@
 # sargassum-forecast — see CLAUDE.md for what each target means.
-.PHONY: physics p1-score tides data labels features results backtest test lint typecheck sir fiu afai openmeteo spike
+.PHONY: physics physics-best p1-score tides data labels features results backtest test lint typecheck sir fiu afai openmeteo spike
 
 UV ?= uv
 
@@ -44,12 +44,27 @@ features: labels
 	$(UV) run python -m pipeline.features.afai_grid
 	$(UV) run python -m pipeline.features.build
 
-# Validation-season (2024) tables + figures. Rebuilds labels and features from cached raw data first.
-results: features
+# Every results table and figure from cached raw data (≈ 80 min, dominated by OpenDrift runs):
+# labels → features → baselines (val) → P1 sweep + training seasons + score → hybrid (val) → frozen test
+# scoring (only if the retrained model hash matches the frozen one, see eval/run_test.py) → gallery →
+# backtests → API results file.
+results: features physics-best
 	$(UV) run python -m eval.run_val
+	$(UV) run python -m physics.score
+	$(UV) run python -m eval.run_hybrid
+	$(UV) run python -m eval.run_test
+	$(UV) run python -m eval.gallery
+	$(MAKE) backtest
+	$(UV) run python -m ops.intervals
+	$(UV) run python -m ops.publish_results
+
+# P1 with the frozen Phase 3 choice (no Stokes, 2 % windage; outputs/results_val_p1_meta.json)
+physics-best:
+	$(MAKE) physics MODE=no_stokes WINDAGE=0.02
 
 backtest:
-	@echo "backtest: implemented in Phase 5 (decision/backtest.py)"; exit 1
+	$(UV) run python -m decision.backtest --preds data/interim/preds_val_hybrid.parquet --tag val2024
+	$(UV) run python -m decision.backtest --preds data/test_lock/preds_test.parquet --tag test
 
 lint:
 	$(UV) run ruff check .
