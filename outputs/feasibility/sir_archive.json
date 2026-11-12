@@ -1,15 +1,15 @@
 {
  "first_day": "2025-06-28",
- "last_day": "2026-01-16",
- "calendar_days": 203,
- "days_with_all_3_files": 199,
- "days_missing_any_file": 4,
- "mb_per_day_mean": 14.96,
+ "last_day": "2026-11-09",
+ "calendar_days": 500,
+ "days_with_all_3_files": 494,
+ "days_missing_any_file": 6,
+ "mb_per_day_mean": 12.47,
  "mb_per_file_mean": {
-  "SIR": 3.18,
-  "Sargassum_risk_currents_FA": 7.3,
-  "sargassum_risk": 4.7
+  "SIR": 3.26,
+  "Sargassum_risk_currents_FA": 5.97,
+  "sargassum_risk": 3.29
  },
- "gb_per_365_days_estimate": 5.46,
- "gb_total_archived": 3.04
+ "gb_per_365_days_estimate": 4.55,
+ "gb_total_archived": 6.2
 }

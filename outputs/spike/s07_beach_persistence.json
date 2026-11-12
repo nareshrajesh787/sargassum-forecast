@@ -32,7 +32,7 @@
  "notes": [
   "fixed-rule statistics only; nothing fitted or selected"
  ],
- "generated_utc": "2026-11-10T22:56:36Z",
+ "generated_utc": "2026-11-10T23:35:02Z",
  "non_test_seasons": {
   "train_2019_2023": {
    "n_pairs": 4713,
