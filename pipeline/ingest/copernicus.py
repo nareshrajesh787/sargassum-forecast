@@ -43,10 +43,15 @@ CURRENT_VARS = {
 }
 
 
+CREDENTIALS_FILE = Path.home() / ".copernicusmarine" / ".copernicusmarine-credentials"
+
+
 def has_credentials() -> bool:
-    return bool(os.environ.get("COPERNICUSMARINE_SERVICE_USERNAME")) and bool(
+    """Env vars (CI / GitHub secrets) or the file written by ``copernicusmarine login`` (local)."""
+    env = bool(os.environ.get("COPERNICUSMARINE_SERVICE_USERNAME")) and bool(
         os.environ.get("COPERNICUSMARINE_SERVICE_PASSWORD")
     )
+    return env or CREDENTIALS_FILE.exists()
 
 
 def _ms(v: Any) -> str | None:
