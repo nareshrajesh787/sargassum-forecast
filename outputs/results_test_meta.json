@@ -1,0 +1,42 @@
+{
+ "unlocked_utc": "2026-11-12T02:06:10Z",
+ "git_head": "2448db9c113967e0bba0fb07edf88a1f8e381e9d",
+ "model_sha256": "c355696f5a1b8e8534d4262b15f658911481a3d0fbe8a957e9bbf0f25f54518c",
+ "test_seasons": [
+  2025,
+  2026
+ ],
+ "models": [
+  "B0",
+  "B1",
+  "B2",
+  "B3",
+  "B3_fc",
+  "P1",
+  "M1",
+  "M2",
+  "M1_no_p1",
+  "M1_no_afai",
+  "M1_no_wind",
+  "M1_fc",
+  "M2_fc"
+ ],
+ "p1": {
+  "chosen_mode": "no_stokes",
+  "chosen_windage": 0.02,
+  "selection": "max 2024 AUC of idx_window",
+  "mapping_train_seasons": [
+   2021,
+   2022,
+   2023
+  ],
+  "n_val_rows": 9095,
+  "perfect_prog": true
+ },
+ "train_seasons": [
+  2020,
+  2021,
+  2022,
+  2023
+ ]
+}

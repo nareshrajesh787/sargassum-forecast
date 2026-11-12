@@ -114,7 +114,9 @@ def main() -> None:
         a.plot(
             ax=ax[0], cmap="Greys", vmin=-0.001, vmax=0.002, add_colorbar=True, cbar_kwargs={"label": "AFAI anomaly"}
         )
+        ax[0].set_title("")  # drop xarray's automatic "time = …" title
         ax[0].plot(site.lon, site.lat, marker="*", color="#e34948", markersize=12)
+        ax[0].set_aspect(1 / np.cos(np.radians(site.lat)))
         ax[0].set_title(f"AFAI 3D anomaly, {day.date()} (seed field)", loc="left", fontsize=9, color=INK)
         try:
             lon, lat = tracks(pd.Timestamp(r.issue_date), meta)
@@ -125,6 +127,7 @@ def main() -> None:
         ax[1].add_patch(plt.Circle((site.lon, site.lat), 5 / 111.2, fill=False, color="#e34948", lw=1.2))
         ax[1].set_xlim(site.lon - 1.2, site.lon + 1.0)
         ax[1].set_ylim(site.lat - 1.2, site.lat + 1.0)
+        ax[1].set_aspect(1 / np.cos(np.radians(site.lat)))
         ax[1].set_title(
             f"P1 tracks from issue {pd.Timestamp(r.issue_date).date()} (5 km circle)", loc="left", fontsize=9, color=INK
         )
