@@ -237,3 +237,22 @@ lead 2): every policy beats reactive. M2 (forecast) vs climatology: no detectabl
 **Phase 7**: README, `docs/MODEL_CARD.md`, `docs/RESULTS.md` (was RESULTS_DRAFT), DATA_SOURCES final, MIT LICENSE, `docs/demo.gif`
 (11 frames from the app). The planner caption that compared plan values under different probability models was removed as misleading.
 `make results` now rebuilds every table. A clean-clone reproduction is running (see the next entry).
+
+## 2026-11-12 — Phase 7 verification, release status
+
+- **Clean-clone reproduction:** fresh clone of `phase-6-ops` with only `data/raw/` (cached raw data) linked, then `make results`.
+  - The first run failed in `eval.run_val` (`KeyError: 'P1'`). The cause: the leakage-cop labelling fix had added P1/M1/M2 to `MODELS`, which
+    `run_val.main` used as its baseline list. Fixed in 2b38129; the validation tables regenerate byte-identical.
+  - The resumed run completed with no errors (54 + 25 min).
+  - The retrained hybrid model is bit-identical to the frozen one (sha256 c355696f… in both).
+  - 46 of the 47 committed CSV/JSON tables in `outputs/` are byte-identical. The one difference, `results_test_meta.json`, differs only in
+    `unlocked_utc` and `git_head`. Figure PNGs differ only in file metadata.
+- **honesty-cop (Phase 7):** FAIL on 8 items. No number was wrong; the items were record-year wording, missing worse-cells and
+  upper-bound caveats in the backtest claim, no B0 column in the model card, an unanswered planner question, the band fit on test data,
+  an unsourced timing, and "beat climatology" not scoped to Brier. All were fixed in 6e63c86. The fixes were verified against
+  `outputs/` by the main session; a second honesty-cop pass was not run.
+- **Merges:** the owner merged the whole stack into `main` (PRs #7–#12). Production https://sargassum-forecast.vercel.app serves `main`
+  (verified: `results.json` carries the paired backtest summary).
+- **Daily job:** the owner set the `COPERNICUSMARINE_SERVICE_*` secrets (04:06 UTC). The first scheduled run is 2026-11-12 13:30 UTC,
+  and G5's "one successful unattended run" is pending until it completes.
+- Costa PR https://github.com/nareshrajesh787/Costa/pull/1 is open, awaiting teammate review.
