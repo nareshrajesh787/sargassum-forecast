@@ -84,9 +84,14 @@ Limitation: candidate zones each day are the sites that reported that day.
 
 ## Failure gallery
 
-The ten worst M2 test misses were generated with AFAI maps, drift tracks, winds and a rule-based cause. They are not yet
-published, because they show observed labels for individual site-days, and publishing derived daily labels needs FIU's agreement
-(CLAUDE.md rule 8). Numbers from the gallery will be added once that is confirmed.
+The gallery holds the ten worst M2 test misses (`outputs/failure_gallery.csv`, `outputs/figures/gallery/`). Each has the AFAI
+seed field, P1 drift tracks, onshore wind and the observed severity class. FIU agreed to publication of derived daily labels
+(`docs/DATA_SOURCES.md`); photos and raw reports are never shown.
+
+- All ten are observed events that M2 gave 0.000–0.029.
+- **Every model missed them**, not only M2: M1 gave 0.050–0.062 and climatology 0.028–0.083.
+- 8 of the 10 fall in September–October 2026. These are late-season days in a record year, which the training climatology treats as quiet.
+- Rule-based cause, applied in a fixed order: local accumulation 5, label noise 3, wind shift 2, cloud gap 0. The rules are heuristics (`eval/gallery.py`).
 
 ## What this means
 
