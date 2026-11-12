@@ -117,3 +117,48 @@ FEASIBILITY §7 were applied: perfect-prog drivers (flagged) + lead-L forecast-w
 - SIR back-fill finished: 2025-06-28 → 2026-11-09, 6.2 GB local (`feasibility/sir_archive.json`).
 
 **Next**: Phase 3 (P1 drift) needs Copernicus credentials (`copernicusmarine login`).
+
+## 2026-11-10 — Phase 3 (physics P1), branch `phase-3-physics` (stacked on `phase-2-dataset-baselines`) — BLOCKED
+
+**Blocked:** no Copernicus Marine credentials (no env vars, no `~/.copernicusmarine`), so SMOC currents and L4 winds cannot be
+downloaded, and P1 cannot be run or scored. Gate G3 is not reached.
+
+**Done (all testable without Copernicus data)**
+- OpenDrift 1.14.11 added. `physics/forcing.py` (SMOC → CF currents in two modes: `total` = utotal incl. Stokes, `no_stokes`
+  = uo+utide; Copernicus L4 hourly 0.125° winds; season download), `physics/seed.py` (3D AFAI field of day I−1, detections
+  ≥ 3 km offshore, sampled ∝ anomaly above threshold), `physics/drift.py` (OceanDrift, stranding, all windage groups 0–3% in
+  one run, cached arrival tables), `physics/arrivals.py` (first entry within 5 km per site, lead windows (24L−6, 24L+18] h
+  after the I−1 18:00 seed), `physics/score.py` (sweep by 2024 AUC → mapping fit on 2021–2023 → paired bootstrap vs B0/B1).
+- Gridded winds: Copernicus `WIND_GLO_PHY_L4_MY_012_006` covers 2007 → 2026-06-20 and NRT covers 2024-06-13 → present
+  (catalogue, same account). Open-Meteo is point-only and would cost ~6k calls per season for a wind grid.
+- Measured: one run with 8,000 particles (2,000 × 4 windages) × 186 h took 8.4 s on synthetic forcing with real AFAI seeds (2024-06-15,
+  370 seed pixels). Projection: 2024 sweep ≈ 252 issue days × 2 modes ≈ 70 min; the daily job is far under 15 min. Synthetic
+  forcing, so real-reader interpolation time is unverified.
+- Found: OpenDrift stores `wind_drift_factor` as float32 (0.03 → 0.0299999993); arrivals now round in float64.
+- 69 tests pass, including an end-to-end OpenDrift run (onshore flow strands at The Palms; higher windage arrives no later).
+
+**Choices to review at G3**: seed time 18:00 UTC on I−1; seeds ≥ 3 km offshore; 2,000 particles per windage group;
+diffusivity 10 m²/s (fixed); config chosen by 2024 AUC (8 configurations → optimistic 2024 AUC for P1, to be disclosed);
+P1 is perfect-prog (analysed currents and winds after the issue time).
+
+**Next (owner)**: `! uv run copernicusmarine login`, then `make physics MODE=<best> WINDAGE=<best>` and `make p1-score`.
+
+## 2026-11-11 — Phase 3 completed (Gate G3), branch `phase-3-physics`
+
+**Unblocked:** the owner ran `copernicusmarine login`; `has_credentials()` now also accepts `~/.copernicusmarine/.copernicusmarine-credentials`.
+
+**Downloads:** the default ARCO map store (chunks of 1 h × 512 × 2048 cells) took 1,360 s for 2 days of SMOC. The time-series store
+(chunks of 4,272 h × 16 × 8) took 1,771 s for 30 days when requested by month (each month re-downloads whole ~178-day chunks). Once
+switched to one request per season, and once the network recovered, a season of SMOC (1.07 GB) + L4 wind (58 MB) took ≈ 5–23 min.
+
+**Runs:** 2024 sweep = 504 OpenDrift runs (252 issue days × 2 current modes, 4 windages in each run), 1,610 s of simulation,
+8 issue days with no AFAI seeds (written as explicit zero arrivals). Chosen config on 2021–2023: 251 runs per season,
+420 / 411 / 484 s.
+
+**Results (`outputs/p1_sweep_val.csv`, `outputs/results_val_p1*.csv`; validation 2024; P1 is perfect-prog)**
+- Sweep AUC (arrivals in the 24 h window) ranges from 0.509 to 0.530 across the 8 configurations. Best: `no_stokes`, 2% windage (consistent with the
+  ~2% pure-windage estimate, Stokes not double-counted); selected on 2024, so P1's 2024 score is flattered.
+- P1 vs B1, leads pooled: Brier difference −0.0043 [−0.0091, +0.0003], no detectable difference. Vs B0: −0.0009 [−0.0021, +0.0004], no detectable
+  difference. AUC 0.514 [0.490, 0.537].
+- Only 1 of 10 lead-level Brier comparisons clears zero: P1 vs B1 at lead 3, −0.0046 [−0.0094, −0.0000], upper bound at zero.
+  With 10 comparisons this is what chance alone would produce. **Plainly: P1 alone does not beat climatology or persistence on 2024.**
