@@ -1,0 +1,31 @@
+{
+ "test": "SIR archive",
+ "script": "spike/s10_sir.py",
+ "definition": "HTTP GET of KMZ/sargassum_risk_YYYYMMDD.kmz; earliest day by binary search between 2020-01-01 and the latest available day (assumes contiguous availability; spot-checked weekly in Phase 0, 0 gaps).",
+ "touches_test_seasons": false,
+ "results": [
+  {
+   "metric": "latest_kmz_MB",
+   "spike": 1.56,
+   "rerun": 1.5647,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "june15_2022_2025_http404_count",
+   "spike": 4,
+   "rerun": 4,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "earliest_available_kmz_date",
+   "spike": "none (no history)",
+   "rerun": "2025-07-01",
+   "flag_gt_tol": true
+  }
+ ],
+ "notes": [
+  "latest available day: 2026-11-09",
+  "June 15 statuses: {2022: 404, 2023: 404, 2024: 404, 2025: 404}"
+ ],
+ "generated_utc": "2026-11-10T22:56:46Z"
+}

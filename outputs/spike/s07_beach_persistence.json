@@ -1,0 +1,50 @@
+{
+ "test": "Beach persistence, Broward 2025\u20132026 seasons",
+ "script": "spike/s07_beach_persistence.py",
+ "definition": "Site-day events (severity >= 2), Mar\u2013Oct. Pairs = same site on consecutive calendar days, both labeled. Agreement = share of pairs with the same event value. Base rate = event share of labeled site-days.",
+ "touches_test_seasons": true,
+ "results": [
+  {
+   "metric": "next_day_event_agreement_2025_2026",
+   "spike": 0.7,
+   "rerun": 0.704,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "P(event|event_yesterday)_2025_2026",
+   "spike": 0.47,
+   "rerun": 0.4746,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "event_base_rate_2025_2026",
+   "spike": 0.28,
+   "rerun": 0.2793,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "n_consecutive_site_day_pairs_2025_2026",
+   "spike": null,
+   "rerun": 3632,
+   "flag_gt_tol": null
+  }
+ ],
+ "notes": [
+  "fixed-rule statistics only; nothing fitted or selected"
+ ],
+ "generated_utc": "2026-11-10T22:56:36Z",
+ "non_test_seasons": {
+  "train_2019_2023": {
+   "n_pairs": 4713,
+   "agreement": 0.8117971568003395,
+   "p_event_given_event_yesterday": 0.35198821796759944,
+   "base_rate": 0.13959223939493587
+  },
+  "val_2024": {
+   "n_pairs": 1689,
+   "agreement": 0.8354055654233274,
+   "p_event_given_event_yesterday": 0.12578616352201258,
+   "base_rate": 0.09235843870258384
+  }
+ }
+}
