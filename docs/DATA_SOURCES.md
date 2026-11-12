@@ -12,3 +12,5 @@ Every source keeps its own terms; code is MIT.
 | Open-Meteo Marine, Historical Forecast and Previous Runs APIs (models `meteofrance_currents`, `meteofrance_wave`, `gfs_seamless`) | Point currents, waves, SST, winds | CC BY 4.0; non-commercial; < 10,000 calls/day. Credit Open-Meteo.com, Météo-France, NOAA NCEP. | No (cached under `data/raw/openmeteo`). |
 | NOAA CO-OPS | Tide predictions | Public domain. | No. |
 | Natural Earth 10 m land | Coastline for distance-to-coast bands | Public domain. | No (downloaded to `data/raw/naturalearth`). |
+| Copernicus Marine `WIND_GLO_PHY_L4_MY_012_006` / `_NRT_012_004` (hourly 0.125° L4 winds) | Gridded 10 m wind for P1 drift (windage) | Copernicus Marine Service licence (attribution). Same account as SMOC. | No. |
+| OpenDrift (MET Norway) with roaring-landmask (GSHHG) | Lagrangian drift engine and coastline for stranding | GPL-2.0 (OpenDrift) — used as a library, not redistributed; GSHHG LGPL. Cite Dagestad et al. 2018. | No. |

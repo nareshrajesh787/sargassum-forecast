@@ -1,0 +1,12 @@
+{
+ "chosen_mode": "no_stokes",
+ "chosen_windage": 0.02,
+ "selection": "max 2024 AUC of idx_window",
+ "mapping_train_seasons": [
+  2021,
+  2022,
+  2023
+ ],
+ "n_val_rows": 9095,
+ "perfect_prog": true
+}
