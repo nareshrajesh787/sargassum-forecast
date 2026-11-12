@@ -208,3 +208,32 @@ lead 2): every policy beats reactive. M2 (forecast) vs climatology: no detectabl
 - 2026-11-12: the owner confirmed FIU agreed (data use and publication of derived daily labels). The failure gallery is committed
   (`outputs/failure_gallery.csv`, `outputs/figures/gallery/`) and summarised in `docs/RESULTS_DRAFT.md`. The 10 worst M2 misses were also
   missed by M1 (0.050–0.062) and B1 (0.028–0.083). 8 of 10 fall in Sep–Oct 2026. Causes: local accumulation 5, label noise 3, wind shift 2.
+
+## 2026-11-12 — Phase 6 (ops, API, app, Costa PR) and Phase 7 (docs, release)
+
+**Phase 6**
+- `ops/bundle.py`: frozen forecast bundle (M1/M2/M1_fc/M2_fc + B0–B3 fitted on 2020–2023 + P1 mapping), 3.5 MB, committed.
+  `verify()` re-predicts all 18,885 test rows × 13 models with 0 mismatches. Making B3 picklable required replacing a closure
+  with a module function (same maths, verified by the bundle check).
+- `ops/live.py` + `ops/daily.py`: the live job reuses the frozen-store feature code. The AFAI region-stats refactor and the
+  `add_persist` always-columns fix were both verified by byte-identical rebuilds of the stats and feature store. Live drivers are real
+  forecasts (Open-Meteo GFS/Météo-France; Copernicus SMOC forecast via the time-series store, 8 days in 15 s; GFS wind on a 0.5° grid
+  for OpenDrift). End-to-end scratch run for issue 2026-11-11: 87 s, P1 ok, 6,457 seed pixels, nothing stale.
+- 80% interval = empirical 10th–90th percentile of the 2025–2026 observed frequency per 0.05 M2 bin (`outputs/m2_interval_table.csv`),
+  so the band carries M2's under-forecasting to users.
+- `.github/workflows/daily.yml` at 13:30 UTC. **It only runs from `main`**, so G5's "one unattended run" needs the owner to merge the
+  stack and add the `COPERNICUSMARINE_SERVICE_USERNAME/PASSWORD` repo secrets.
+- Web: Next.js 15.5.27 static export (`web/`): map (MapLibre + OSM) with lead slider, drift overlay and site list (keyboard path),
+  crew planner (TS knapsack, editable hours and weights, backtest table), track record (live + test, SVG reliability with
+  hover/focus), methods/model card. Loading, error and empty states; phone layout checked by screenshot. All numbers come from
+  `results.json` (`ops/publish_results.py`) or the daily files.
+- Vercel: project linked to the repo (root `web/`). The first build went to production at https://sargassum-forecast.vercel.app,
+  confirmed aliased to our deployment. Making preview deployments public was refused by the permission classifier, so previews stay behind Vercel
+  login and the production domain is public. Later pushes to non-main branches are previews; production updates when `main` changes.
+  The committed `latest.json` is a labelled preview from the scratch run; the append-only record starts with the first scheduled run.
+- Costa PR https://github.com/nareshrajesh787/Costa/pull/1 (not merged): nearest site within 30 km, else Costa's own risk
+  with `available: false`. Scenario labelling preserved. 42 Costa tests pass. `/point` not built (optional; it would be unvalidated).
+
+**Phase 7**: README, `docs/MODEL_CARD.md`, `docs/RESULTS.md` (was RESULTS_DRAFT), DATA_SOURCES final, MIT LICENSE, `docs/demo.gif`
+(11 frames from the app). The planner caption that compared plan values under different probability models was removed as misleading.
+`make results` now rebuilds every table. A clean-clone reproduction is running (see the next entry).

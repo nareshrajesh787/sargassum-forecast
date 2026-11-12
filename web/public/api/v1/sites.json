@@ -1,0 +1,64 @@
+{
+ "sites": [
+  {
+   "id": "bougainvillea_terrace",
+   "name": "Bougainvillea Terrace",
+   "lat": 26.0036,
+   "lon": -80.1157
+  },
+  {
+   "id": "mj_state_park",
+   "name": "MJ State Park",
+   "lat": 26.0604,
+   "lon": -80.1114
+  },
+  {
+   "id": "the_palms",
+   "name": "The Palms",
+   "lat": 26.1562,
+   "lon": -80.0996
+  },
+  {
+   "id": "commercial_pier",
+   "name": "Commercial Pier",
+   "lat": 26.1893,
+   "lon": -80.0946
+  },
+  {
+   "id": "sea_ranch_lakes",
+   "name": "Sea Ranch Lakes",
+   "lat": 26.2004,
+   "lon": -80.0933
+  },
+  {
+   "id": "atlantic_pier",
+   "name": "Atlantic Pier",
+   "lat": 26.2354,
+   "lon": -80.0879
+  },
+  {
+   "id": "hillsboro_mile_1173",
+   "name": "1173 Hillsboro Mile",
+   "lat": 26.2963,
+   "lon": -80.0774
+  },
+  {
+   "id": "county_line",
+   "name": "County Line",
+   "lat": 26.3209,
+   "lon": -80.0744
+  }
+ ],
+ "region": "Broward County, Florida (8 FIU Sargassum Watch sites)",
+ "attribution": "Beach observations: FIU Sargassum Watch (Marine Macroalgae Research Lab). Satellite AFAI: NOAA AOML Atlantic OceanWatch / USF Optical Oceanography Lab. Currents: E.U. Copernicus Marine Service Information. Winds, waves: Open-Meteo.com (M\u00e9t\u00e9o-France, NOAA GFS). Tides: NOAA CO-OPS.",
+ "disclaimer": "Experimental research forecast, not a warning system. On the 2025\u20132026 test seasons the served model (M2) was worse than climatology (Brier skill \u22120.034 [\u22120.058, \u22120.011]); see track_record and methods.",
+ "model_version": "v0.1-test-frozen",
+ "validated_season": "March\u2013October",
+ "leads_days": [
+  1,
+  2,
+  3,
+  5,
+  7
+ ]
+}
