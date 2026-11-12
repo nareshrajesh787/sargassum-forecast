@@ -116,11 +116,9 @@ class PerLeadLogit:
         return out
 
 
-def _x_b3(wind_col: str):  # type: ignore[no-untyped-def]
-    def f(df: pd.DataFrame) -> np.ndarray:
-        return np.column_stack([_x_b2(df), df[wind_col].to_numpy()])
-
-    return f
+def _x_b3(df: pd.DataFrame) -> np.ndarray:
+    """B3 inputs: the B2 index (+ missing flag) and onshore wind (module-level so fitted models pickle)."""
+    return np.column_stack([_x_b2(df), df["wind_pp_onshore"].to_numpy()])
 
 
 def b2() -> PerLeadLogit:
@@ -128,7 +126,7 @@ def b2() -> PerLeadLogit:
 
 
 def b3() -> PerLeadLogit:
-    return PerLeadLogit(_x_b3("wind_pp_onshore"))
+    return PerLeadLogit(_x_b3)
 
 
 def fit_all(train: pd.DataFrame) -> dict[str, object]:

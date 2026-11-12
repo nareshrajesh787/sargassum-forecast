@@ -94,6 +94,36 @@ def load_season(key: str, season: int) -> xr.Dataset:
     return ds
 
 
+def region_stats(times: pd.DatetimeIndex, anom: np.ndarray, masks: dict[str, np.ndarray]) -> list[pd.DataFrame]:
+    """Daily per-region stats (n_valid, valid_frac, det_frac, mean_anom) for an anomaly cube (time, lat, lon).
+    Shared by the historical store (``process``) and the live daily job (``ops.live``)."""
+    valid = np.isfinite(anom)
+    det = valid & (anom > DETECT_THRESHOLD)
+    out = []
+    for name, mk in masks.items():
+        n = int(mk.sum())
+        nv = valid[:, mk].sum(1)
+        nd = det[:, mk].sum(1)
+        with np.errstate(all="ignore"):
+            mean_anom = np.where(
+                nv > 0, np.nansum(np.where(valid[:, mk], anom[:, mk], 0), 1) / np.maximum(nv, 1), np.nan
+            )
+        out.append(
+            pd.DataFrame(
+                {
+                    "date": times,
+                    "region": name,
+                    "n_pixels": n,
+                    "n_valid": nv,
+                    "valid_frac": nv / max(n, 1),
+                    "det_frac": np.where(nv > 0, nd / np.maximum(nv, 1), np.nan),
+                    "mean_anom": mean_anom,
+                }
+            )
+        )
+    return out
+
+
 def process(key: str, seasons: list[int], out: Path = OUT) -> pd.DataFrame:
     out.mkdir(parents=True, exist_ok=True)
     store = out / f"{key}.zarr"
@@ -112,29 +142,7 @@ def process(key: str, seasons: list[int], out: Path = OUT) -> pd.DataFrame:
             attrs={"detect_threshold": DETECT_THRESHOLD, "source": DATASETS[key], "block_px": BLOCK},
         )
         z.to_zarr(store, mode="w" if i == 0 else "a", append_dim=None if i == 0 else "time", consolidated=False)
-        valid = np.isfinite(anom)
-        det = valid & (anom > DETECT_THRESHOLD)
-        for name, mk in masks.items():
-            n = int(mk.sum())
-            nv = valid[:, mk].sum(1)
-            nd = det[:, mk].sum(1)
-            with np.errstate(all="ignore"):
-                mean_anom = np.where(
-                    nv > 0, np.nansum(np.where(valid[:, mk], anom[:, mk], 0), 1) / np.maximum(nv, 1), np.nan
-                )
-            stats.append(
-                pd.DataFrame(
-                    {
-                        "date": pd.DatetimeIndex(ds.time.values),
-                        "region": name,
-                        "n_pixels": n,
-                        "n_valid": nv,
-                        "valid_frac": nv / max(n, 1),
-                        "det_frac": np.where(nv > 0, nd / np.maximum(nv, 1), np.nan),
-                        "mean_anom": mean_anom,
-                    }
-                )
-            )
+        stats.extend(region_stats(pd.DatetimeIndex(ds.time.values), anom, masks))
         log.info("%s %d: %d days", key, season, len(ds.time))
     df = pd.concat(stats, ignore_index=True)
     df["product"] = key

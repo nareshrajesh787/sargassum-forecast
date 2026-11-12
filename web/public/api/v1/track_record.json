@@ -1,0 +1,47 @@
+{
+ "updated_utc": "2026-11-12T02:46:21Z",
+ "n": 0,
+ "note": "Live forecasts scored as beach reports arrive. Off-season (Nov\u2013Feb) days are outside the validated Mar\u2013Oct season.",
+ "test_seasons_2025_2026": [
+  {
+   "model": "B1",
+   "brier": 0.2038,
+   "bss_B1": 0.0,
+   "bss_B1_lo": 0.0,
+   "bss_B1_hi": 0.0,
+   "auc": 0.7005,
+   "auc_lo": 0.6511,
+   "auc_hi": 0.7429
+  },
+  {
+   "model": "M1",
+   "brier": 0.1908,
+   "bss_B1": 0.0641,
+   "bss_B1_lo": 0.0319,
+   "bss_B1_hi": 0.0958,
+   "auc": 0.7236,
+   "auc_lo": 0.6778,
+   "auc_hi": 0.7669
+  },
+  {
+   "model": "M2",
+   "brier": 0.2109,
+   "bss_B1": -0.0344,
+   "bss_B1_lo": -0.0575,
+   "bss_B1_hi": -0.0109,
+   "auc": 0.72,
+   "auc_lo": 0.6761,
+   "auc_hi": 0.7618
+  },
+  {
+   "model": "M2_fc",
+   "brier": 0.2248,
+   "bss_B1": -0.103,
+   "bss_B1_lo": -0.1358,
+   "bss_B1_hi": -0.0661,
+   "auc": 0.6656,
+   "auc_lo": 0.6161,
+   "auc_hi": 0.7096
+  }
+ ]
+}

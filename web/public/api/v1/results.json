@@ -1,0 +1,1378 @@
+{
+ "generated_from_commit": "6a8013c",
+ "test_unlocked_utc": "2026-11-12T02:06:10Z",
+ "model_version": "v0.1-test-frozen",
+ "headline": {
+  "source": "outputs/results_test.csv",
+  "rows": [
+   {
+    "season": "2025-2026",
+    "model": "B1",
+    "description": "climatology",
+    "upper_bound": false,
+    "brier": 0.2038,
+    "bss_vs_climatology": 0.0,
+    "bss_ci": [
+     0.0,
+     0.0
+    ],
+    "auc": 0.701,
+    "auc_ci": [
+     0.651,
+     0.743
+    ],
+    "base_rate": 0.279
+   },
+   {
+    "season": "2025-2026",
+    "model": "B0",
+    "description": "persistence",
+    "upper_bound": false,
+    "brier": 0.2061,
+    "bss_vs_climatology": -0.011,
+    "bss_ci": [
+     -0.029,
+     0.006
+    ],
+    "auc": 0.616,
+    "auc_ci": [
+     0.578,
+     0.649
+    ],
+    "base_rate": 0.279
+   },
+   {
+    "season": "2025-2026",
+    "model": "B2",
+    "description": "SIR-style AFAI index",
+    "upper_bound": false,
+    "brier": 0.2198,
+    "bss_vs_climatology": -0.078,
+    "bss_ci": [
+     -0.106,
+     -0.043
+    ],
+    "auc": 0.535,
+    "auc_ci": [
+     0.483,
+     0.587
+    ],
+    "base_rate": 0.279
+   },
+   {
+    "season": "2025-2026",
+    "model": "B3_fc",
+    "description": "B2 + onshore wind, lead-L forecast winds",
+    "upper_bound": false,
+    "brier": 0.2089,
+    "bss_vs_climatology": -0.025,
+    "bss_ci": [
+     -0.059,
+     0.011
+    ],
+    "auc": 0.575,
+    "auc_ci": [
+     0.536,
+     0.614
+    ],
+    "base_rate": 0.279
+   },
+   {
+    "season": "2025-2026",
+    "model": "M1_fc",
+    "description": "LightGBM, issue-time inputs only (no target-day drivers, no P1, no B3)",
+    "upper_bound": false,
+    "brier": 0.2075,
+    "bss_vs_climatology": -0.018,
+    "bss_ci": [
+     -0.04,
+     0.005
+    ],
+    "auc": 0.671,
+    "auc_ci": [
+     0.62,
+     0.716
+    ],
+    "base_rate": 0.279
+   },
+   {
+    "season": "2025-2026",
+    "model": "M2_fc",
+    "description": "M1_fc + isotonic calibration (fit on 2024)",
+    "upper_bound": false,
+    "brier": 0.2248,
+    "bss_vs_climatology": -0.103,
+    "bss_ci": [
+     -0.136,
+     -0.066
+    ],
+    "auc": 0.666,
+    "auc_ci": [
+     0.616,
+     0.71
+    ],
+    "base_rate": 0.279
+   },
+   {
+    "season": "2025-2026",
+    "model": "P1",
+    "description": "Lagrangian drift arrival index (OpenDrift)",
+    "upper_bound": true,
+    "brier": 0.209,
+    "bss_vs_climatology": -0.025,
+    "bss_ci": [
+     -0.057,
+     0.004
+    ],
+    "auc": 0.592,
+    "auc_ci": [
+     0.551,
+     0.626
+    ],
+    "base_rate": 0.279
+   },
+   {
+    "season": "2025-2026",
+    "model": "M1",
+    "description": "LightGBM hybrid, all inputs",
+    "upper_bound": true,
+    "brier": 0.1908,
+    "bss_vs_climatology": 0.064,
+    "bss_ci": [
+     0.032,
+     0.096
+    ],
+    "auc": 0.724,
+    "auc_ci": [
+     0.678,
+     0.767
+    ],
+    "base_rate": 0.279
+   },
+   {
+    "season": "2025-2026",
+    "model": "M2",
+    "description": "M1 + isotonic calibration (fit on 2024)",
+    "upper_bound": true,
+    "brier": 0.2109,
+    "bss_vs_climatology": -0.034,
+    "bss_ci": [
+     -0.058,
+     -0.011
+    ],
+    "auc": 0.72,
+    "auc_ci": [
+     0.676,
+     0.762
+    ],
+    "base_rate": 0.279
+   },
+   {
+    "season": "2025",
+    "model": "B1",
+    "description": "climatology",
+    "upper_bound": false,
+    "brier": 0.1512,
+    "bss_vs_climatology": 0.0,
+    "bss_ci": [
+     0.0,
+     0.0
+    ],
+    "auc": 0.687,
+    "auc_ci": [
+     0.616,
+     0.746
+    ],
+    "base_rate": 0.198
+   },
+   {
+    "season": "2025",
+    "model": "B0",
+    "description": "persistence",
+    "upper_bound": false,
+    "brier": 0.1582,
+    "bss_vs_climatology": -0.046,
+    "bss_ci": [
+     -0.072,
+     -0.016
+    ],
+    "auc": 0.579,
+    "auc_ci": [
+     0.534,
+     0.622
+    ],
+    "base_rate": 0.198
+   },
+   {
+    "season": "2025",
+    "model": "B2",
+    "description": "SIR-style AFAI index",
+    "upper_bound": false,
+    "brier": 0.1612,
+    "bss_vs_climatology": -0.066,
+    "bss_ci": [
+     -0.109,
+     -0.018
+    ],
+    "auc": 0.543,
+    "auc_ci": [
+     0.472,
+     0.621
+    ],
+    "base_rate": 0.198
+   },
+   {
+    "season": "2025",
+    "model": "B3_fc",
+    "description": "B2 + onshore wind, lead-L forecast winds",
+    "upper_bound": false,
+    "brier": 0.1565,
+    "bss_vs_climatology": -0.035,
+    "bss_ci": [
+     -0.075,
+     0.006
+    ],
+    "auc": 0.616,
+    "auc_ci": [
+     0.571,
+     0.661
+    ],
+    "base_rate": 0.198
+   },
+   {
+    "season": "2025",
+    "model": "M1_fc",
+    "description": "LightGBM, issue-time inputs only (no target-day drivers, no P1, no B3)",
+    "upper_bound": false,
+    "brier": 0.1574,
+    "bss_vs_climatology": -0.041,
+    "bss_ci": [
+     -0.074,
+     -0.007
+    ],
+    "auc": 0.634,
+    "auc_ci": [
+     0.571,
+     0.689
+    ],
+    "base_rate": 0.198
+   },
+   {
+    "season": "2025",
+    "model": "M2_fc",
+    "description": "M1_fc + isotonic calibration (fit on 2024)",
+    "upper_bound": false,
+    "brier": 0.1673,
+    "bss_vs_climatology": -0.106,
+    "bss_ci": [
+     -0.156,
+     -0.049
+    ],
+    "auc": 0.632,
+    "auc_ci": [
+     0.571,
+     0.687
+    ],
+    "base_rate": 0.198
+   },
+   {
+    "season": "2025",
+    "model": "P1",
+    "description": "Lagrangian drift arrival index (OpenDrift)",
+    "upper_bound": true,
+    "brier": 0.161,
+    "bss_vs_climatology": -0.064,
+    "bss_ci": [
+     -0.101,
+     -0.022
+    ],
+    "auc": 0.549,
+    "auc_ci": [
+     0.512,
+     0.582
+    ],
+    "base_rate": 0.198
+   },
+   {
+    "season": "2025",
+    "model": "M1",
+    "description": "LightGBM hybrid, all inputs",
+    "upper_bound": true,
+    "brier": 0.1494,
+    "bss_vs_climatology": 0.012,
+    "bss_ci": [
+     -0.023,
+     0.045
+    ],
+    "auc": 0.709,
+    "auc_ci": [
+     0.651,
+     0.76
+    ],
+    "base_rate": 0.198
+   },
+   {
+    "season": "2025",
+    "model": "M2",
+    "description": "M1 + isotonic calibration (fit on 2024)",
+    "upper_bound": true,
+    "brier": 0.1551,
+    "bss_vs_climatology": -0.026,
+    "bss_ci": [
+     -0.063,
+     0.015
+    ],
+    "auc": 0.707,
+    "auc_ci": [
+     0.648,
+     0.758
+    ],
+    "base_rate": 0.198
+   },
+   {
+    "season": "2026",
+    "model": "B1",
+    "description": "climatology",
+    "upper_bound": false,
+    "brier": 0.2557,
+    "bss_vs_climatology": 0.0,
+    "bss_ci": [
+     0.0,
+     0.0
+    ],
+    "auc": 0.721,
+    "auc_ci": [
+     0.656,
+     0.781
+    ],
+    "base_rate": 0.359
+   },
+   {
+    "season": "2026",
+    "model": "B0",
+    "description": "persistence",
+    "upper_bound": false,
+    "brier": 0.2533,
+    "bss_vs_climatology": 0.009,
+    "bss_ci": [
+     -0.012,
+     0.029
+    ],
+    "auc": 0.62,
+    "auc_ci": [
+     0.57,
+     0.665
+    ],
+    "base_rate": 0.359
+   },
+   {
+    "season": "2026",
+    "model": "B2",
+    "description": "SIR-style AFAI index",
+    "upper_bound": false,
+    "brier": 0.2774,
+    "bss_vs_climatology": -0.085,
+    "bss_ci": [
+     -0.124,
+     -0.035
+    ],
+    "auc": 0.536,
+    "auc_ci": [
+     0.482,
+     0.588
+    ],
+    "base_rate": 0.359
+   },
+   {
+    "season": "2026",
+    "model": "B3_fc",
+    "description": "B2 + onshore wind, lead-L forecast winds",
+    "upper_bound": false,
+    "brier": 0.2606,
+    "bss_vs_climatology": -0.019,
+    "bss_ci": [
+     -0.075,
+     0.037
+    ],
+    "auc": 0.537,
+    "auc_ci": [
+     0.477,
+     0.598
+    ],
+    "base_rate": 0.359
+   },
+   {
+    "season": "2026",
+    "model": "M1_fc",
+    "description": "LightGBM, issue-time inputs only (no target-day drivers, no P1, no B3)",
+    "upper_bound": false,
+    "brier": 0.2568,
+    "bss_vs_climatology": -0.004,
+    "bss_ci": [
+     -0.031,
+     0.025
+    ],
+    "auc": 0.676,
+    "auc_ci": [
+     0.61,
+     0.739
+    ],
+    "base_rate": 0.359
+   },
+   {
+    "season": "2026",
+    "model": "M2_fc",
+    "description": "M1_fc + isotonic calibration (fit on 2024)",
+    "upper_bound": false,
+    "brier": 0.2815,
+    "bss_vs_climatology": -0.101,
+    "bss_ci": [
+     -0.144,
+     -0.051
+    ],
+    "auc": 0.669,
+    "auc_ci": [
+     0.603,
+     0.729
+    ],
+    "base_rate": 0.359
+   },
+   {
+    "season": "2026",
+    "model": "P1",
+    "description": "Lagrangian drift arrival index (OpenDrift)",
+    "upper_bound": true,
+    "brier": 0.2563,
+    "bss_vs_climatology": -0.003,
+    "bss_ci": [
+     -0.043,
+     0.034
+    ],
+    "auc": 0.595,
+    "auc_ci": [
+     0.543,
+     0.64
+    ],
+    "base_rate": 0.359
+   },
+   {
+    "season": "2026",
+    "model": "M1",
+    "description": "LightGBM hybrid, all inputs",
+    "upper_bound": true,
+    "brier": 0.2316,
+    "bss_vs_climatology": 0.094,
+    "bss_ci": [
+     0.052,
+     0.134
+    ],
+    "auc": 0.739,
+    "auc_ci": [
+     0.682,
+     0.785
+    ],
+    "base_rate": 0.359
+   },
+   {
+    "season": "2026",
+    "model": "M2",
+    "description": "M1 + isotonic calibration (fit on 2024)",
+    "upper_bound": true,
+    "brier": 0.2657,
+    "bss_vs_climatology": -0.04,
+    "bss_ci": [
+     -0.066,
+     -0.008
+    ],
+    "auc": 0.733,
+    "auc_ci": [
+     0.676,
+     0.779
+    ],
+    "base_rate": 0.359
+   }
+  ],
+  "by_lead": [
+   {
+    "model": "B0",
+    "lead": 1,
+    "bss_vs_climatology": 0.009,
+    "bss_ci": [
+     -0.018,
+     0.034
+    ]
+   },
+   {
+    "model": "B0",
+    "lead": 2,
+    "bss_vs_climatology": 0.001,
+    "bss_ci": [
+     -0.018,
+     0.019
+    ]
+   },
+   {
+    "model": "B0",
+    "lead": 3,
+    "bss_vs_climatology": -0.011,
+    "bss_ci": [
+     -0.032,
+     0.006
+    ]
+   },
+   {
+    "model": "B0",
+    "lead": 5,
+    "bss_vs_climatology": -0.023,
+    "bss_ci": [
+     -0.046,
+     -0.0
+    ]
+   },
+   {
+    "model": "B0",
+    "lead": 7,
+    "bss_vs_climatology": -0.032,
+    "bss_ci": [
+     -0.058,
+     -0.006
+    ]
+   },
+   {
+    "model": "M1",
+    "lead": 1,
+    "bss_vs_climatology": 0.07,
+    "bss_ci": [
+     0.035,
+     0.104
+    ]
+   },
+   {
+    "model": "M1",
+    "lead": 2,
+    "bss_vs_climatology": 0.066,
+    "bss_ci": [
+     0.033,
+     0.099
+    ]
+   },
+   {
+    "model": "M1",
+    "lead": 3,
+    "bss_vs_climatology": 0.063,
+    "bss_ci": [
+     0.031,
+     0.096
+    ]
+   },
+   {
+    "model": "M1",
+    "lead": 5,
+    "bss_vs_climatology": 0.06,
+    "bss_ci": [
+     0.028,
+     0.09
+    ]
+   },
+   {
+    "model": "M1",
+    "lead": 7,
+    "bss_vs_climatology": 0.061,
+    "bss_ci": [
+     0.031,
+     0.087
+    ]
+   },
+   {
+    "model": "M2",
+    "lead": 1,
+    "bss_vs_climatology": -0.03,
+    "bss_ci": [
+     -0.052,
+     -0.008
+    ]
+   },
+   {
+    "model": "M2",
+    "lead": 2,
+    "bss_vs_climatology": -0.034,
+    "bss_ci": [
+     -0.055,
+     -0.011
+    ]
+   },
+   {
+    "model": "M2",
+    "lead": 3,
+    "bss_vs_climatology": -0.034,
+    "bss_ci": [
+     -0.057,
+     -0.01
+    ]
+   },
+   {
+    "model": "M2",
+    "lead": 5,
+    "bss_vs_climatology": -0.037,
+    "bss_ci": [
+     -0.063,
+     -0.012
+    ]
+   },
+   {
+    "model": "M2",
+    "lead": 7,
+    "bss_vs_climatology": -0.036,
+    "bss_ci": [
+     -0.061,
+     -0.012
+    ]
+   },
+   {
+    "model": "M1_fc",
+    "lead": 1,
+    "bss_vs_climatology": -0.007,
+    "bss_ci": [
+     -0.027,
+     0.014
+    ]
+   },
+   {
+    "model": "M1_fc",
+    "lead": 2,
+    "bss_vs_climatology": -0.015,
+    "bss_ci": [
+     -0.037,
+     0.006
+    ]
+   },
+   {
+    "model": "M1_fc",
+    "lead": 3,
+    "bss_vs_climatology": -0.021,
+    "bss_ci": [
+     -0.043,
+     0.002
+    ]
+   },
+   {
+    "model": "M1_fc",
+    "lead": 5,
+    "bss_vs_climatology": -0.026,
+    "bss_ci": [
+     -0.052,
+     0.0
+    ]
+   },
+   {
+    "model": "M1_fc",
+    "lead": 7,
+    "bss_vs_climatology": -0.02,
+    "bss_ci": [
+     -0.049,
+     0.008
+    ]
+   },
+   {
+    "model": "P1",
+    "lead": 1,
+    "bss_vs_climatology": 0.002,
+    "bss_ci": [
+     -0.066,
+     0.064
+    ]
+   },
+   {
+    "model": "P1",
+    "lead": 2,
+    "bss_vs_climatology": 0.017,
+    "bss_ci": [
+     -0.029,
+     0.063
+    ]
+   },
+   {
+    "model": "P1",
+    "lead": 3,
+    "bss_vs_climatology": 0.013,
+    "bss_ci": [
+     -0.033,
+     0.06
+    ]
+   },
+   {
+    "model": "P1",
+    "lead": 5,
+    "bss_vs_climatology": -0.079,
+    "bss_ci": [
+     -0.11,
+     -0.042
+    ]
+   },
+   {
+    "model": "P1",
+    "lead": 7,
+    "bss_vs_climatology": -0.079,
+    "bss_ci": [
+     -0.11,
+     -0.042
+    ]
+   }
+  ]
+ },
+ "reliability": {
+  "source": "outputs/reliability_test.csv",
+  "bins": [
+   {
+    "model": "B1",
+    "p_mean": 0.055,
+    "obs_freq": 0.124,
+    "n": 7345
+   },
+   {
+    "model": "B1",
+    "p_mean": 0.148,
+    "obs_freq": 0.302,
+    "n": 5810
+   },
+   {
+    "model": "B1",
+    "p_mean": 0.239,
+    "obs_freq": 0.449,
+    "n": 5490
+   },
+   {
+    "model": "B1",
+    "p_mean": 0.338,
+    "obs_freq": 0.604,
+    "n": 240
+   },
+   {
+    "model": "M2",
+    "p_mean": 0.049,
+    "obs_freq": 0.105,
+    "n": 6270
+   },
+   {
+    "model": "M2",
+    "p_mean": 0.133,
+    "obs_freq": 0.309,
+    "n": 9194
+   },
+   {
+    "model": "M2",
+    "p_mean": 0.228,
+    "obs_freq": 0.519,
+    "n": 3421
+   },
+   {
+    "model": "M1_fc",
+    "p_mean": 0.078,
+    "obs_freq": 0.135,
+    "n": 6104
+   },
+   {
+    "model": "M1_fc",
+    "p_mean": 0.145,
+    "obs_freq": 0.301,
+    "n": 8382
+   },
+   {
+    "model": "M1_fc",
+    "p_mean": 0.239,
+    "obs_freq": 0.438,
+    "n": 3917
+   },
+   {
+    "model": "M1_fc",
+    "p_mean": 0.322,
+    "obs_freq": 0.448,
+    "n": 478
+   },
+   {
+    "model": "M1_fc",
+    "p_mean": 0.425,
+    "obs_freq": 0.5,
+    "n": 4
+   }
+  ]
+ },
+ "backtest": {
+  "source": "outputs/backtest_test.csv",
+  "label": "SIMULATED",
+  "booking_lead_days": 2,
+  "rows": [
+   {
+    "budget_hours": 4,
+    "policy": "reactive",
+    "share_of_oracle": 0.508,
+    "ci": [
+     0.435,
+     0.573
+    ]
+   },
+   {
+    "budget_hours": 4,
+    "policy": "climatology",
+    "share_of_oracle": 0.563,
+    "ci": [
+     0.5,
+     0.622
+    ]
+   },
+   {
+    "budget_hours": 4,
+    "policy": "forecast",
+    "share_of_oracle": 0.586,
+    "ci": [
+     0.52,
+     0.645
+    ]
+   },
+   {
+    "budget_hours": 4,
+    "policy": "forecast_fc",
+    "share_of_oracle": 0.547,
+    "ci": [
+     0.49,
+     0.602
+    ]
+   },
+   {
+    "budget_hours": 4,
+    "policy": "oracle",
+    "share_of_oracle": 1.0,
+    "ci": [
+     1.0,
+     1.0
+    ]
+   },
+   {
+    "budget_hours": 6,
+    "policy": "reactive",
+    "share_of_oracle": 0.523,
+    "ci": [
+     0.461,
+     0.58
+    ]
+   },
+   {
+    "budget_hours": 6,
+    "policy": "climatology",
+    "share_of_oracle": 0.598,
+    "ci": [
+     0.535,
+     0.654
+    ]
+   },
+   {
+    "budget_hours": 6,
+    "policy": "forecast",
+    "share_of_oracle": 0.592,
+    "ci": [
+     0.531,
+     0.651
+    ]
+   },
+   {
+    "budget_hours": 6,
+    "policy": "forecast_fc",
+    "share_of_oracle": 0.567,
+    "ci": [
+     0.507,
+     0.626
+    ]
+   },
+   {
+    "budget_hours": 6,
+    "policy": "oracle",
+    "share_of_oracle": 1.0,
+    "ci": [
+     1.0,
+     1.0
+    ]
+   },
+   {
+    "budget_hours": 8,
+    "policy": "reactive",
+    "share_of_oracle": 0.537,
+    "ci": [
+     0.481,
+     0.591
+    ]
+   },
+   {
+    "budget_hours": 8,
+    "policy": "climatology",
+    "share_of_oracle": 0.579,
+    "ci": [
+     0.531,
+     0.627
+    ]
+   },
+   {
+    "budget_hours": 8,
+    "policy": "forecast",
+    "share_of_oracle": 0.562,
+    "ci": [
+     0.512,
+     0.61
+    ]
+   },
+   {
+    "budget_hours": 8,
+    "policy": "forecast_fc",
+    "share_of_oracle": 0.55,
+    "ci": [
+     0.501,
+     0.598
+    ]
+   },
+   {
+    "budget_hours": 8,
+    "policy": "oracle",
+    "share_of_oracle": 1.0,
+    "ci": [
+     1.0,
+     1.0
+    ]
+   },
+   {
+    "budget_hours": 10,
+    "policy": "reactive",
+    "share_of_oracle": 0.586,
+    "ci": [
+     0.528,
+     0.636
+    ]
+   },
+   {
+    "budget_hours": 10,
+    "policy": "climatology",
+    "share_of_oracle": 0.666,
+    "ci": [
+     0.622,
+     0.71
+    ]
+   },
+   {
+    "budget_hours": 10,
+    "policy": "forecast",
+    "share_of_oracle": 0.651,
+    "ci": [
+     0.604,
+     0.693
+    ]
+   },
+   {
+    "budget_hours": 10,
+    "policy": "forecast_fc",
+    "share_of_oracle": 0.638,
+    "ci": [
+     0.592,
+     0.684
+    ]
+   },
+   {
+    "budget_hours": 10,
+    "policy": "oracle",
+    "share_of_oracle": 1.0,
+    "ci": [
+     1.0,
+     1.0
+    ]
+   },
+   {
+    "budget_hours": 12,
+    "policy": "reactive",
+    "share_of_oracle": 0.636,
+    "ci": [
+     0.582,
+     0.683
+    ]
+   },
+   {
+    "budget_hours": 12,
+    "policy": "climatology",
+    "share_of_oracle": 0.724,
+    "ci": [
+     0.679,
+     0.761
+    ]
+   },
+   {
+    "budget_hours": 12,
+    "policy": "forecast",
+    "share_of_oracle": 0.726,
+    "ci": [
+     0.689,
+     0.759
+    ]
+   },
+   {
+    "budget_hours": 12,
+    "policy": "forecast_fc",
+    "share_of_oracle": 0.694,
+    "ci": [
+     0.658,
+     0.728
+    ]
+   },
+   {
+    "budget_hours": 12,
+    "policy": "oracle",
+    "share_of_oracle": 1.0,
+    "ci": [
+     1.0,
+     1.0
+    ]
+   },
+   {
+    "budget_hours": 14,
+    "policy": "reactive",
+    "share_of_oracle": 0.691,
+    "ci": [
+     0.641,
+     0.732
+    ]
+   },
+   {
+    "budget_hours": 14,
+    "policy": "climatology",
+    "share_of_oracle": 0.753,
+    "ci": [
+     0.719,
+     0.783
+    ]
+   },
+   {
+    "budget_hours": 14,
+    "policy": "forecast",
+    "share_of_oracle": 0.732,
+    "ci": [
+     0.697,
+     0.764
+    ]
+   },
+   {
+    "budget_hours": 14,
+    "policy": "forecast_fc",
+    "share_of_oracle": 0.705,
+    "ci": [
+     0.668,
+     0.739
+    ]
+   },
+   {
+    "budget_hours": 14,
+    "policy": "oracle",
+    "share_of_oracle": 1.0,
+    "ci": [
+     1.0,
+     1.0
+    ]
+   },
+   {
+    "budget_hours": 16,
+    "policy": "reactive",
+    "share_of_oracle": 0.736,
+    "ci": [
+     0.683,
+     0.776
+    ]
+   },
+   {
+    "budget_hours": 16,
+    "policy": "climatology",
+    "share_of_oracle": 0.827,
+    "ci": [
+     0.8,
+     0.851
+    ]
+   },
+   {
+    "budget_hours": 16,
+    "policy": "forecast",
+    "share_of_oracle": 0.816,
+    "ci": [
+     0.792,
+     0.839
+    ]
+   },
+   {
+    "budget_hours": 16,
+    "policy": "forecast_fc",
+    "share_of_oracle": 0.79,
+    "ci": [
+     0.759,
+     0.821
+    ]
+   },
+   {
+    "budget_hours": 16,
+    "policy": "oracle",
+    "share_of_oracle": 1.0,
+    "ci": [
+     1.0,
+     1.0
+    ]
+   }
+  ]
+ },
+ "ablation": {
+  "source": "outputs/results_test_paired.csv",
+  "reference": "M1",
+  "rows": [
+   {
+    "model": "M1_no_p1",
+    "brier_minus_M1": 0.0004,
+    "ci": [
+     -0.0004,
+     0.0012
+    ],
+    "verdict": "no detectable difference"
+   },
+   {
+    "model": "M1_no_afai",
+    "brier_minus_M1": 0.0029,
+    "ci": [
+     0.0009,
+     0.0049
+    ],
+    "verdict": "worse"
+   },
+   {
+    "model": "M1_no_wind",
+    "brier_minus_M1": 0.0066,
+    "ci": [
+     0.002,
+     0.0125
+    ],
+    "verdict": "worse"
+   },
+   {
+    "model": "M1_fc",
+    "brier_minus_M1": 0.0167,
+    "ci": [
+     0.0086,
+     0.0265
+    ],
+    "verdict": "worse"
+   }
+  ]
+ },
+ "interval_table": {
+  "source": "outputs/m2_interval_table.csv",
+  "rows": [
+   {
+    "bin_lo": 0.0,
+    "bin_hi": 0.05,
+    "n": 4289,
+    "mean_forecast": 0.0358,
+    "observed_freq": 0.0879,
+    "obs_p10": 0.0682,
+    "obs_p90": 0.1107
+   },
+   {
+    "bin_lo": 0.05,
+    "bin_hi": 0.1,
+    "n": 1981,
+    "mean_forecast": 0.0762,
+    "observed_freq": 0.1429,
+    "obs_p10": 0.1165,
+    "obs_p90": 0.1684
+   },
+   {
+    "bin_lo": 0.1,
+    "bin_hi": 0.15,
+    "n": 8373,
+    "mean_forecast": 0.1285,
+    "observed_freq": 0.2927,
+    "obs_p10": 0.262,
+    "obs_p90": 0.322
+   },
+   {
+    "bin_lo": 0.15,
+    "bin_hi": 0.2,
+    "n": 821,
+    "mean_forecast": 0.1782,
+    "observed_freq": 0.475,
+    "obs_p10": 0.4163,
+    "obs_p90": 0.5317
+   },
+   {
+    "bin_lo": 0.2,
+    "bin_hi": 0.25,
+    "n": 2240,
+    "mean_forecast": 0.2069,
+    "observed_freq": 0.533,
+    "obs_p10": 0.4682,
+    "obs_p90": 0.5973
+   },
+   {
+    "bin_lo": 0.25,
+    "bin_hi": 0.3,
+    "n": 1181,
+    "mean_forecast": 0.2667,
+    "observed_freq": 0.4911,
+    "obs_p10": 0.3873,
+    "obs_p90": 0.5993
+   }
+  ]
+ },
+ "gallery": {
+  "source": "outputs/failure_gallery.csv",
+  "rows": [
+   {
+    "rank": 1,
+    "site": "atlantic_pier",
+    "date": "2025-09-02",
+    "lead": 1,
+    "observed_event": 1,
+    "severity": 2,
+    "M2": 0.0,
+    "M1": 0.05,
+    "B0": 0.114,
+    "B1": 0.063,
+    "P1": 0.129,
+    "cause": "label noise",
+    "figure": "figures/gallery/01_atlantic_pier_2025-09-02.png"
+   },
+   {
+    "rank": 2,
+    "site": "commercial_pier",
+    "date": "2026-10-18",
+    "lead": 3,
+    "observed_event": 1,
+    "severity": 2,
+    "M2": 0.0,
+    "M1": 0.052,
+    "B0": 0.122,
+    "B1": 0.073,
+    "P1": 0.127,
+    "cause": "wind shift",
+    "figure": "figures/gallery/02_commercial_pier_2026-10-18.png"
+   },
+   {
+    "rank": 3,
+    "site": "county_line",
+    "date": "2026-09-22",
+    "lead": 5,
+    "observed_event": 1,
+    "severity": 2,
+    "M2": 0.0,
+    "M1": 0.051,
+    "B0": 0.124,
+    "B1": 0.034,
+    "P1": 0.143,
+    "cause": "local accumulation",
+    "figure": "figures/gallery/03_county_line_2026-09-22.png"
+   },
+   {
+    "rank": 4,
+    "site": "county_line",
+    "date": "2026-09-23",
+    "lead": 7,
+    "observed_event": 1,
+    "severity": 2,
+    "M2": 0.0,
+    "M1": 0.051,
+    "B0": 0.126,
+    "B1": 0.033,
+    "P1": 0.143,
+    "cause": "local accumulation",
+    "figure": "figures/gallery/04_county_line_2026-09-23.png"
+   },
+   {
+    "rank": 5,
+    "site": "the_palms",
+    "date": "2025-10-17",
+    "lead": 5,
+    "observed_event": 1,
+    "severity": 2,
+    "M2": 0.008,
+    "M1": 0.052,
+    "B0": 0.124,
+    "B1": 0.083,
+    "P1": 0.143,
+    "cause": "label noise",
+    "figure": "figures/gallery/05_the_palms_2025-10-17.png"
+   },
+   {
+    "rank": 6,
+    "site": "the_palms",
+    "date": "2026-09-26",
+    "lead": 2,
+    "observed_event": 1,
+    "severity": 2,
+    "M2": 0.008,
+    "M1": 0.052,
+    "B0": 0.121,
+    "B1": 0.042,
+    "P1": 0.126,
+    "cause": "local accumulation",
+    "figure": "figures/gallery/06_the_palms_2026-09-26.png"
+   },
+   {
+    "rank": 7,
+    "site": "sea_ranch_lakes",
+    "date": "2026-09-27",
+    "lead": 5,
+    "observed_event": 1,
+    "severity": 2,
+    "M2": 0.029,
+    "M1": 0.057,
+    "B0": 0.124,
+    "B1": 0.028,
+    "P1": 0.143,
+    "cause": "label noise",
+    "figure": "figures/gallery/07_sea_ranch_lakes_2026-09-27.png"
+   },
+   {
+    "rank": 8,
+    "site": "sea_ranch_lakes",
+    "date": "2026-09-25",
+    "lead": 2,
+    "observed_event": 1,
+    "severity": 3,
+    "M2": 0.029,
+    "M1": 0.056,
+    "B0": 0.121,
+    "B1": 0.03,
+    "P1": 0.183,
+    "cause": "wind shift",
+    "figure": "figures/gallery/08_sea_ranch_lakes_2026-09-25.png"
+   },
+   {
+    "rank": 9,
+    "site": "county_line",
+    "date": "2026-10-22",
+    "lead": 3,
+    "observed_event": 1,
+    "severity": 3,
+    "M2": 0.029,
+    "M1": 0.062,
+    "B0": 0.122,
+    "B1": 0.039,
+    "P1": 0.127,
+    "cause": "local accumulation",
+    "figure": "figures/gallery/09_county_line_2026-10-22.png"
+   },
+   {
+    "rank": 10,
+    "site": "commercial_pier",
+    "date": "2026-09-26",
+    "lead": 5,
+    "observed_event": 1,
+    "severity": 3,
+    "M2": 0.029,
+    "M1": 0.054,
+    "B0": 0.124,
+    "B1": 0.047,
+    "P1": 0.143,
+    "cause": "local accumulation",
+    "figure": "figures/gallery/10_commercial_pier_2026-09-26.png"
+   }
+  ]
+ }
+}

@@ -1,0 +1,55 @@
+:root {
+  --surface: #fcfcfb; --plane: #f9f9f7; --ink: #0b0b0b; --ink-2: #52514e; --muted: #6f6d68;
+  --grid: #e1e0d9; --axis: #c3c2b7; --accent: #2a78d6; --warn-bg: #fff4e0; --warn-ink: #6b4400;
+  --border: rgba(11, 11, 11, 0.12); --focus: #1c5cab;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --surface: #1a1a19; --plane: #0d0d0d; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #a3a29b;
+    --grid: #2c2c2a; --axis: #383835; --accent: #5598e7; --warn-bg: #3a2a08; --warn-ink: #f3d9a4;
+    --border: rgba(255, 255, 255, 0.12); --focus: #86b6ef; }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--plane); color: var(--ink); }
+body { font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+a { color: var(--accent); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; }
+.skip:focus { left: 16px; top: 8px; background: var(--surface); padding: 8px 12px; z-index: 10; }
+header.top { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; padding: 12px 16px;
+  border-bottom: 1px solid var(--border); background: var(--surface); }
+header.top .brand { font-weight: 650; font-size: 17px; color: var(--ink); text-decoration: none; }
+header.top nav { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+header.top nav a { color: var(--ink-2); text-decoration: none; padding: 4px 0; }
+header.top nav a[aria-current="page"] { color: var(--ink); border-bottom: 2px solid var(--accent); }
+main { max-width: 1180px; margin: 0 auto; padding: 16px; }
+footer { max-width: 1180px; margin: 24px auto; padding: 0 16px 32px; color: var(--muted); font-size: 13px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.notice { background: var(--warn-bg); color: var(--warn-ink); border-radius: 8px; padding: 10px 12px; font-size: 14px; }
+.muted { color: var(--muted); }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 860px) { .grid2 { grid-template-columns: 1fr; } }
+.map { height: 520px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+@media (max-width: 860px) { .map { height: 380px; } }
+.sites { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.sites button { width: 100%; text-align: left; background: var(--surface); color: var(--ink); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 10px; cursor: pointer; font: inherit; }
+.sites button[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent) inset; }
+.row { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.bar { position: relative; height: 10px; background: var(--grid); border-radius: 5px; margin-top: 6px; }
+.bar .band { position: absolute; top: 0; bottom: 0; background: color-mix(in srgb, var(--accent) 28%, transparent); border-radius: 5px; }
+.bar .mark { position: absolute; top: -3px; width: 4px; height: 16px; border-radius: 2px; background: var(--ink); }
+.bar .clim { position: absolute; top: -3px; width: 2px; height: 16px; background: #eb6834; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 13px; color: var(--ink-2); }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 6px; margin-right: 4px; vertical-align: -1px; }
+.controls { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin: 12px 0; }
+.controls label { font-size: 14px; color: var(--ink-2); }
+input[type="range"] { accent-color: var(--accent); width: 220px; max-width: 100%; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--grid); vertical-align: top; }
+th { color: var(--ink-2); font-weight: 600; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.tag { display: inline-block; font-size: 12px; border: 1px solid var(--border); border-radius: 999px; padding: 0 8px; color: var(--ink-2); }
+.state { padding: 24px; text-align: center; color: var(--muted); }
+.table-wrap { overflow-x: auto; }
+h1 { font-size: 22px; margin: 4px 0 8px; } h2 { font-size: 18px; margin: 20px 0 8px; } h3 { font-size: 15px; margin: 14px 0 6px; }
+.maplibregl-ctrl-attrib { font-size: 11px; }

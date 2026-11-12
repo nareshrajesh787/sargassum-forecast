@@ -1,0 +1,42 @@
+name: daily-forecast
+# Issue time convention is 12:00 UTC; AFAI for day I−1 is assumed available by then (1-day latency).
+on:
+  schedule:
+    - cron: "30 13 * * *"
+  workflow_dispatch:
+    inputs:
+      no_p1:
+        description: skip the drift model (debug only)
+        type: boolean
+        default: false
+permissions:
+  contents: write   # commit the frozen forecast + static API
+  issues: write     # stale-input alarm
+concurrency:
+  group: archive-commit
+  cancel-in-progress: false
+jobs:
+  forecast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - run: uv sync --locked --no-dev
+      - name: Forecast (ingest → P1 → M2 → freeze → score → publish → staleness)
+        env:
+          COPERNICUSMARINE_SERVICE_USERNAME: ${{ secrets.COPERNICUSMARINE_SERVICE_USERNAME }}
+          COPERNICUSMARINE_SERVICE_PASSWORD: ${{ secrets.COPERNICUSMARINE_SERVICE_PASSWORD }}
+          GH_TOKEN: ${{ github.token }}
+        run: uv run python -m ops.daily ${{ inputs.no_p1 && '--no-p1' || '' }}
+      - name: Commit forecast and API
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add outputs/forecasts outputs/track_record.json outputs/track_record_items.csv outputs/ops web/public/api 2>/dev/null || true
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git commit -m "forecast: $(date -u +%F)"
+          git pull --rebase
+          git push

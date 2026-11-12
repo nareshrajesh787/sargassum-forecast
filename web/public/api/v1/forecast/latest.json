@@ -1,0 +1,613 @@
+{
+ "issue_date": "2026-11-11",
+ "issue_time": "2026-11-11T12:00:00Z",
+ "generated_utc": "2026-11-12T02:46:21Z",
+ "model_version": "v0.1-test-frozen",
+ "served_model": "M2",
+ "target": "P(moderate-or-worse sargassum day: severity >= 2) at the beach on the target date",
+ "interval_80_definition": "10th\u201390th percentile of the observed event frequency in 2025\u20132026 when M2 issued a probability in the same 0.05 bin (outputs/m2_interval_table.csv)",
+ "p1_status": "ok",
+ "inputs": {
+  "fiu_newest_entry": "2026-11-09T22:27:23.000Z",
+  "afai_last_step": "2026-11-10",
+  "openmeteo_last_hour": {
+   "marine_currents": "2026-11-20T23:00",
+   "marine_waves": "2026-11-20T23:00",
+   "wind_hf": "2026-11-20T23:00"
+  },
+  "afai_hash": "6f57986bdb09a86c",
+  "openmeteo_hash": "e5431631fb79a54a",
+  "p1_forcing_hash": "a8042c48b184a9929f15af0d5a2bed65",
+  "bundle_sha256": "b63e4bdee387484d"
+ },
+ "disclaimer": "Experimental research forecast, not a warning system. On the 2025\u20132026 test seasons the served model (M2) was worse than climatology (Brier skill \u22120.034 [\u22120.058, \u22120.011]); see track_record and methods.",
+ "attribution": "Beach observations: FIU Sargassum Watch (Marine Macroalgae Research Lab). Satellite AFAI: NOAA AOML Atlantic OceanWatch / USF Optical Oceanography Lab. Currents: E.U. Copernicus Marine Service Information. Winds, waves: Open-Meteo.com (M\u00e9t\u00e9o-France, NOAA GFS). Tides: NOAA CO-OPS.",
+ "sites": [
+  {
+   "id": "bougainvillea_terrace",
+   "name": "Bougainvillea Terrace",
+   "lat": 26.0036,
+   "lon": -80.1157,
+   "leads": [
+    {
+     "lead_days": 1,
+     "target_date": "2026-11-12",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0526,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1285,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 2,
+     "target_date": "2026-11-13",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0527,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.126,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-14",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0527,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1268,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 5,
+     "target_date": "2026-11-16",
+     "probability": 0.0447,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0528,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 7,
+     "target_date": "2026-11-18",
+     "probability": 0.044,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0529,
+     "issue_time_model_M2_fc": 0.1067,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    }
+   ]
+  },
+  {
+   "id": "mj_state_park",
+   "name": "MJ State Park",
+   "lat": 26.0604,
+   "lon": -80.1114,
+   "leads": [
+    {
+     "lead_days": 1,
+     "target_date": "2026-11-12",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0756,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1285,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 2,
+     "target_date": "2026-11-13",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0738,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.126,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-14",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0719,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1268,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 5,
+     "target_date": "2026-11-16",
+     "probability": 0.0447,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.068,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 7,
+     "target_date": "2026-11-18",
+     "probability": 0.044,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0643,
+     "issue_time_model_M2_fc": 0.1067,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    }
+   ]
+  },
+  {
+   "id": "the_palms",
+   "name": "The Palms",
+   "lat": 26.1562,
+   "lon": -80.0996,
+   "leads": [
+    {
+     "lead_days": 1,
+     "target_date": "2026-11-12",
+     "probability": 0.0417,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0638,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1388,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 2,
+     "target_date": "2026-11-13",
+     "probability": 0.0417,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0623,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.126,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-14",
+     "probability": 0.0081,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0609,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1268,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 5,
+     "target_date": "2026-11-16",
+     "probability": 0.0447,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0585,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 7,
+     "target_date": "2026-11-18",
+     "probability": 0.0417,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0565,
+     "issue_time_model_M2_fc": 0.1067,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    }
+   ]
+  },
+  {
+   "id": "commercial_pier",
+   "name": "Commercial Pier",
+   "lat": 26.1893,
+   "lon": -80.0946,
+   "leads": [
+    {
+     "lead_days": 1,
+     "target_date": "2026-11-12",
+     "probability": 0.0417,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0533,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1388,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 2,
+     "target_date": "2026-11-13",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0529,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.126,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-14",
+     "probability": 0.0,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0525,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1268,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 5,
+     "target_date": "2026-11-16",
+     "probability": 0.0447,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0521,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 7,
+     "target_date": "2026-11-18",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0519,
+     "issue_time_model_M2_fc": 0.1067,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    }
+   ]
+  },
+  {
+   "id": "sea_ranch_lakes",
+   "name": "Sea Ranch Lakes",
+   "lat": 26.2004,
+   "lon": -80.0933,
+   "leads": [
+    {
+     "lead_days": 1,
+     "target_date": "2026-11-12",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.059,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1388,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 2,
+     "target_date": "2026-11-13",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0588,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.126,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-14",
+     "probability": 0.0,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0585,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1268,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 5,
+     "target_date": "2026-11-16",
+     "probability": 0.044,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0577,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 7,
+     "target_date": "2026-11-18",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0567,
+     "issue_time_model_M2_fc": 0.1067,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    }
+   ]
+  },
+  {
+   "id": "atlantic_pier",
+   "name": "Atlantic Pier",
+   "lat": 26.2354,
+   "lon": -80.0879,
+   "leads": [
+    {
+     "lead_days": 1,
+     "target_date": "2026-11-12",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0455,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1388,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 2,
+     "target_date": "2026-11-13",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0461,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.126,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-14",
+     "probability": 0.0081,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0467,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1268,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 5,
+     "target_date": "2026-11-16",
+     "probability": 0.044,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.048,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 7,
+     "target_date": "2026-11-18",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0492,
+     "issue_time_model_M2_fc": 0.1067,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    }
+   ]
+  },
+  {
+   "id": "hillsboro_mile_1173",
+   "name": "1173 Hillsboro Mile",
+   "lat": 26.2963,
+   "lon": -80.0774,
+   "leads": [
+    {
+     "lead_days": 1,
+     "target_date": "2026-11-12",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0421,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1388,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 2,
+     "target_date": "2026-11-13",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0433,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.126,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-14",
+     "probability": 0.0081,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0445,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1268,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 5,
+     "target_date": "2026-11-16",
+     "probability": 0.044,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0467,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 7,
+     "target_date": "2026-11-18",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0485,
+     "issue_time_model_M2_fc": 0.1067,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    }
+   ]
+  },
+  {
+   "id": "county_line",
+   "name": "County Line",
+   "lat": 26.3209,
+   "lon": -80.0744,
+   "leads": [
+    {
+     "lead_days": 1,
+     "target_date": "2026-11-12",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0425,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1336,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 2,
+     "target_date": "2026-11-13",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0435,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1331,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-14",
+     "probability": 0.0081,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0446,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1268,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 5,
+     "target_date": "2026-11-16",
+     "probability": 0.044,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0467,
+     "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 7,
+     "target_date": "2026-11-18",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0485,
+     "issue_time_model_M2_fc": 0.1067,
+     "drift_index_P1": 0.1429,
+     "in_validated_season": false
+    }
+   ]
+  }
+ ],
+ "preview": true,
+ "preview_note": "Preview from a pipeline test run (issue 2026-11-11, generated 2026-11-12T02:46:21Z); not part of the frozen forecast record. The first scheduled run replaces it."
+}
