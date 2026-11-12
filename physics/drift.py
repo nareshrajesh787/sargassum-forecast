@@ -30,7 +30,7 @@ import xarray as xr
 
 from physics.arrivals import LEADS, RUN_HOURS, SEED_HOUR_UTC, arrival_table
 from physics.forcing import MODES, Mode, currents_cf, fetch_season, wind_cf, write_cf
-from physics.seed import Seeds, seeds_for_issue
+from physics.seed import ZARR, Seeds, seeds_for_issue
 from pipeline.sites import SITES
 
 WINDAGES = (0.0, 0.01, 0.02, 0.03)
@@ -97,11 +97,34 @@ def zero_table(windages: tuple[float, ...]) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def simulate_tracks(
+    seeds: Seeds, current_nc: Path, wind_nc: Path, windage: float, hours: int = RUN_HOURS
+) -> tuple[np.ndarray, np.ndarray]:
+    """Same physics as ``simulate`` for one windage, returning (lon, lat) arrays (particles × hours) for plots."""
+    from opendrift.models.oceandrift import OceanDrift
+    from opendrift.readers import reader_netCDF_CF_generic
+
+    if len(seeds.lon) == 0:
+        return np.empty((0, 0)), np.empty((0, 0))
+    o = OceanDrift(loglevel=50)
+    o.add_reader([reader_netCDF_CF_generic.Reader(str(current_nc)), reader_netCDF_CF_generic.Reader(str(wind_nc))])
+    o.set_config("general:coastline_action", "stranding")
+    o.set_config("environment:constant:horizontal_diffusivity", DIFFUSIVITY)
+    o.set_config("drift:stokes_drift", False)
+    t0 = (seeds.field_day + pd.Timedelta(hours=SEED_HOUR_UTC)).to_pydatetime()
+    o.seed_elements(lon=seeds.lon, lat=seeds.lat, time=t0, wind_drift_factor=windage, z=0)
+    o.run(duration=timedelta(hours=hours), time_step=timedelta(hours=1), time_step_output=timedelta(hours=1))
+    lon, lat = o.result["lon"].values, o.result["lat"].values
+    return (lon, lat) if lon.shape[0] == len(seeds.lon) else (lon.T, lat.T)
+
+
 def issue_dates(season: int) -> pd.DatetimeIndex:
     return pd.date_range(f"{season}-02-22", f"{season}-10-30", freq="D")
 
 
-def run_season(season: int, modes: tuple[Mode, ...], windages: tuple[float, ...], out: Path = OUT) -> dict:
+def run_season(
+    season: int, modes: tuple[Mode, ...], windages: tuple[float, ...], out: Path = OUT, zarr: Path = ZARR
+) -> dict:
     cur_raw, wind_raw = fetch_season(season)
     smoc = xr.open_mfdataset(cur_raw, combine="by_coords")
     wind = xr.open_mfdataset(wind_raw, combine="by_coords")
@@ -113,7 +136,7 @@ def run_season(season: int, modes: tuple[Mode, ...], windages: tuple[float, ...]
             dest = out / mode / f"{issue:%Y-%m-%d}.parquet"
             if dest.exists():
                 continue
-            seeds = seeds_for_issue(issue, N_PER_GROUP)
+            seeds = seeds_for_issue(issue, N_PER_GROUP, zarr=zarr)
             t = time.monotonic()
             tab = simulate(seeds, cur_nc, wind_nc, windages)
             secs = time.monotonic() - t
