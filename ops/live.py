@@ -47,6 +47,7 @@ class LiveInputs:
     afai_dir: Path
     om_root: Path
     seed_anom: xr.DataArray | None
+    seed_day: pd.Timestamp | None
     status: dict[str, Any]
 
 
@@ -79,14 +80,33 @@ def fiu_recent(root: Path, pages: int = 2) -> tuple[pd.DataFrame, str]:
 
 
 # ----------------------------------------------------------------------------------------------- AFAI
-def afai_recent(issue: pd.Timestamp, root: Path) -> tuple[Path, xr.DataArray | None, str]:
-    """AFAI 1D and 3D for [I−45, I−1]: region stats (same code as the store) and the 3D anomaly of I−1 for seeding."""
+def afai_latest_step(dataset: str) -> pd.Timestamp:
+    """Newest published AFAI day (ERDDAP ``time_coverage_end``). ERDDAP rejects requests that end after it."""
+    r = requests.get(
+        afai.ERDDAP.replace("griddap/", "info/") + f"{dataset}/index.csv",
+        headers={"User-Agent": USER_AGENT},
+        timeout=60,
+    )
+    r.raise_for_status()
+    for line in r.text.splitlines():
+        if "time_coverage_end" in line:
+            return pd.Timestamp(line.rsplit(",", 1)[1].strip()[:10])
+    raise RuntimeError(f"no time_coverage_end for {dataset}")
+
+
+def afai_recent(issue: pd.Timestamp, root: Path) -> tuple[Path, xr.DataArray | None, pd.Timestamp | None, str]:
+    """AFAI 1D and 3D for [I−45, min(I−1, newest published day)]: region stats (same code as the store) and the newest
+    available 3D anomaly field (≤ I−1) for seeding, with its date. Real AFAI latency can exceed the SPEC's 1 day
+    (observed 2026-11-12: day I−1 still unpublished at 17:00 UTC on I), so the request is capped at what exists."""
     out = root / "afai"
     out.mkdir(parents=True, exist_ok=True)
-    t0, t1 = (issue - pd.Timedelta(days=45)).date(), (issue - pd.Timedelta(days=1)).date()
+    want_end = issue.normalize() - pd.Timedelta(days=1)
+    t0 = (issue - pd.Timedelta(days=45)).date()
     seed: xr.DataArray | None = None
+    seed_day: pd.Timestamp | None = None
     last_step = ""
     for key in ("1D", "3D"):
+        t1 = min(want_end, afai_latest_step(afai.DATASETS[key])).date()
         nc = out / f"{key}.nc"
         rec = afai.fetch(afai.DATASETS[key], t0, t1, afai.BROWARD_UPSTREAM, nc)
         if rec["status"] != "ok":
@@ -102,16 +122,17 @@ def afai_recent(issue: pd.Timestamp, root: Path) -> tuple[Path, xr.DataArray | N
         st["available_at"] = st["date"].dt.tz_localize("UTC") + pd.Timedelta(days=1, hours=12)
         st.to_parquet(out / f"stats_{key}.parquet", index=False)
         if key == "3D":
-            last_step = str(pd.DatetimeIndex(ds.time.values).max().date())
-            want = issue.normalize() - pd.Timedelta(days=1)
-            if want in pd.DatetimeIndex(ds.time.values):
-                i = list(pd.DatetimeIndex(ds.time.values)).index(want)
+            times = pd.DatetimeIndex(ds.time.values)
+            last_step = str(times.max().date())
+            if len(times):
+                i = int(times.argmax())  # newest available field ≤ I−1
+                seed_day = times[i]
                 seed = xr.DataArray(
                     anom[i],
                     coords={"latitude": ds.latitude.values, "longitude": ds.longitude.values},
                     dims=("latitude", "longitude"),
                 )
-    return out, seed, last_step
+    return out, seed, seed_day, last_step
 
 
 # ----------------------------------------------------------------------------------------------- Open-Meteo
@@ -155,7 +176,7 @@ def openmeteo_live(issue: pd.Timestamp, root: Path) -> tuple[Path, dict[str, str
     return om, first
 
 
-def wind_grid(issue: pd.Timestamp, root: Path) -> Path:
+def wind_grid(issue: pd.Timestamp, root: Path, past_days: int = 2) -> Path:
     """GFS 10 m wind on a 0.5° grid over the drift domain (169 points, one multi-location call) → CF NetCDF."""
     LON, LAT = np.meshgrid(LON_GRID, LAT_GRID)
     params: dict[str, Any] = {
@@ -164,7 +185,7 @@ def wind_grid(issue: pd.Timestamp, root: Path) -> Path:
         "hourly": "wind_speed_10m,wind_direction_10m",
         "models": "gfs_seamless",
         "wind_speed_unit": "ms",
-        "past_days": 2,
+        "past_days": past_days,
         "forecast_days": 9,
         "timezone": "UTC",
     }
@@ -195,7 +216,7 @@ def wind_grid(issue: pd.Timestamp, root: Path) -> Path:
     return path
 
 
-def smoc_forecast(issue: pd.Timestamp, root: Path) -> Path:
+def smoc_forecast(issue: pd.Timestamp, root: Path, seed_day: pd.Timestamp | None = None) -> Path:
     """SMOC currents (uo + utide, the frozen ``no_stokes`` mode) for seed time → last lead window end."""
     import copernicusmarine as cm
 
@@ -205,7 +226,8 @@ def smoc_forecast(issue: pd.Timestamp, root: Path) -> Path:
     lat0, lat1, lon0, lon1 = DOMAIN
     raw = root / "forcing" / "smoc.nc"
     raw.parent.mkdir(parents=True, exist_ok=True)
-    start = (issue.normalize() - pd.Timedelta(days=1) + pd.Timedelta(hours=18)).strftime("%Y-%m-%dT%H:%M:%S")
+    first = seed_day if seed_day is not None else issue.normalize() - pd.Timedelta(days=1)
+    start = (first.normalize() + pd.Timedelta(hours=18)).strftime("%Y-%m-%dT%H:%M:%S")
     end = (issue.normalize() + pd.Timedelta(days=7, hours=13)).strftime("%Y-%m-%dT%H:%M:%S")
     cm.subset(
         dataset_id=SMOC,
@@ -259,11 +281,12 @@ def gather(issue: pd.Timestamp, root: Path = LIVE) -> LiveInputs:
     status: dict[str, Any] = {}
     labels, newest = fiu_recent(r)
     status["fiu_newest_entry"] = newest
-    afai_dir, seed, last_afai = afai_recent(issue, r)
+    afai_dir, seed, seed_day, last_afai = afai_recent(issue, r)
     status["afai_last_step"] = last_afai
+    status["p1_seed_field_day"] = str(seed_day.date()) if seed_day is not None else ""
     om_root, last_om = openmeteo_live(issue, r)
     status["openmeteo_last_hour"] = last_om
-    return LiveInputs(issue, r, labels, afai_dir, om_root, seed, status)
+    return LiveInputs(issue, r, labels, afai_dir, om_root, seed, seed_day, status)
 
 
 _ = (date, timedelta)

@@ -154,3 +154,23 @@ def test_empty_seed_days_produce_explicit_zeros() -> None:
 
     z = zero_table((0.0, 0.03))
     assert len(z) == len(SITES) * 5 * 2 and (z.idx_window == 0).all()
+
+
+@pytest.mark.filterwarnings("ignore")
+def test_older_seed_field_shifts_the_arrival_clock(tmp_path: Path) -> None:
+    """Live fallback: a seed field one day older drifts 24 h longer; with hour_offset=24 its arrivals land on the same
+    clock as an I−1 field, i.e. no earlier than the zero-offset run (particles had a head start)."""
+    pytest.importorskip("opendrift")
+    from physics.drift import simulate
+
+    cur = write_cf(currents_cf(_smoc(-0.25, 0.0, hours=240), "no_stokes"), tmp_path / "cur.nc")
+    wind = write_cf(wind_cf(_wind(-8.0, hours=240)), tmp_path / "wind.nc")
+    rng = np.random.default_rng(2)
+    lon = PALMS.lon + 0.3 + rng.uniform(-0.01, 0.01, 200)
+    lat = PALMS.lat + rng.uniform(-0.01, 0.01, 200)
+    s = Seeds(lon, lat, 1.0, 200, pd.Timestamp("2024-06-01"))
+    base = simulate(s, cur, wind, windages=(0.03,), n_per_group=200, hours=96)
+    shifted = simulate(s, cur, wind, windages=(0.03,), n_per_group=200, hours=120, hour_offset=24)
+    b = base[(base.site == "the_palms") & (base.lead == 1)].arr_cum.iloc[0]
+    sh = shifted[(shifted.site == "the_palms") & (shifted.lead == 1)].arr_cum.iloc[0]
+    assert sh >= b
