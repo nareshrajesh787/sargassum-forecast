@@ -8,12 +8,12 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-MODELS = ["B0", "B1", "B3", "P1", "M1", "M2"]
+MODELS = ["B0", "B1", "M1_fc", "P1", "M1", "M2"]
 COLORS = dict(zip(MODELS, ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300"], strict=True))
 MARKERS = dict(zip(MODELS, ["o", "s", "^", "D", "v", "P"], strict=True))
 INK, MUTED, GRID, AXIS = "#0b0b0b", "#898781", "#e1e0d9", "#c3c2b7"
 LEADS = [1, 2, 3, 5, 7]
-PP_NOTE = "B3, P1, M1, M2 use target-day drivers (perfect-prog upper bound)"
+PP_NOTE = "P1, M1, M2 use target-day drivers (perfect-prog upper bound); M1_fc uses issue-time inputs only"
 
 
 def _style() -> None:
@@ -91,7 +91,7 @@ def test_figures(res: pd.DataFrame, rel: pd.DataFrame, out: Path) -> None:
     fig.savefig(out / "skill_vs_lead_test.png", dpi=150)
     plt.close(fig)
 
-    show = ["B0", "B1", "P1", "M1", "M2"]
+    show = ["B0", "B1", "M1_fc", "M1", "M2"]
     fig, axes = plt.subplots(
         len(seasons), len(show), figsize=(3.0 * len(show), 3.0 * len(seasons)), sharex=True, sharey=True
     )
