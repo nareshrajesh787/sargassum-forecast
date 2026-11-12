@@ -77,7 +77,7 @@ def main() -> None:
     names = list(preds.columns)
     keep = ["site", "date", "lead", "season", "event", "last_event", "event_rate_7d"]
     pd.concat([va[keep], preds], axis=1).to_parquet(Path("data/interim/preds_val_hybrid.parquet"), index=False)
-    res, paired = evaluate(va, preds, names)
+    res, paired = evaluate(va, preds, names, paired_refs=("B0", "B1", "M1"))
     res.to_csv(OUT / "results_val_hybrid.csv", index=False, float_format="%.4f")
     paired.to_csv(OUT / "results_val_hybrid_paired.csv", index=False, float_format="%.4f")
     imp = pd.Series(models["full"].model.booster_.feature_importance("gain"), index=models["full"].features)

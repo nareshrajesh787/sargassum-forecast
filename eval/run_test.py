@@ -139,7 +139,7 @@ def main() -> None:
     frames, pframes, rels = [], [], []
     for label, mask in [("2025", te.season == 2025), ("2026", te.season == 2026), ("2025-2026", te.season > 0)]:
         sub, ps = te[mask].reset_index(drop=True), preds[mask].reset_index(drop=True)
-        r, p = evaluate(sub, ps, names)
+        r, p = evaluate(sub, ps, names, paired_refs=("B0", "B1", "M1"))
         frames.append(r.assign(season=label))
         pframes.append(p.assign(season=label))
         for k in names:
