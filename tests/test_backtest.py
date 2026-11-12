@@ -56,4 +56,5 @@ def test_summary_shares_and_paired_diffs() -> None:
     assert s.loc["oracle", "share_of_oracle"] == 1.0
     assert 0 <= s.loc["reactive", "share_of_oracle"] <= 1
     assert s.loc["forecast", "share_of_oracle"] > s.loc["forecast_fc", "share_of_oracle"]  # informative M2 here
-    assert np.isnan(s.loc["reactive"].get("share_of_oracle_minus_reactive", np.nan))
+    assert np.isnan(s.loc["reactive"].get("share_minus_reactive", np.nan))
+    assert s.loc["forecast", "share_minus_climatology_significant"] in (True, False)
