@@ -71,8 +71,10 @@ def evaluate(
     group_col: str | None = None,
     n_boot: int = N_BOOT,
     seed: int = SEED,
+    paired_refs: tuple[str, ...] = ("B0", "B1"),
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Point estimates + paired weekly-block bootstrap CIs. Returns (metrics table, paired-diff table)."""
+    """Point estimates + paired weekly-block bootstrap CIs. Returns (metrics table, paired-diff table).
+    ``paired_refs``: references for the paired differences (e.g. add "M1" to test the ablations)."""
     y_all = df["event"].to_numpy()
     weeks = week_blocks(df["date"])
     n_weeks = weeks.max() + 1
@@ -124,7 +126,7 @@ def evaluate(
                 rec["pr_auc"] = pr_auc(y, p)
                 rec["pr_auc_lo"], rec["pr_auc_hi"] = ci(pr_b)
                 rows.append(rec)
-                for ref in ("B0", "B1"):
+                for ref in paired_refs:
                     if ref == k or ref not in point_bs:
                         continue
                     lo, hi = ci(boot_bs[k] - boot_bs[ref])
