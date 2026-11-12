@@ -113,13 +113,14 @@ def summarize(alloc: pd.DataFrame, n_boot: int = N_BOOT, seed: int = SEED) -> pd
         }
         for j, name in enumerate(["covered_per_crew_hour", "share_of_oracle", "regret_events"]):
             rec[f"{name}_lo"], rec[f"{name}_hi"] = ci(b[:, j])
-        if p != "reactive":  # paired difference vs the reactive policy (same resampled weeks)
-            d_pt = point[1] - stats(np.arange(len(dates)), "reactive")[1]
-            d_b = np.array([stats(i)[1] - stats(i, "reactive")[1] for i in boots])
-            lo, hi = ci(d_b)
-            rec["share_of_oracle_minus_reactive"] = d_pt
-            rec["diff_lo"], rec["diff_hi"] = lo, hi
-            rec["diff_significant"] = bool(lo > 0 or hi < 0)
+        for ref in ("reactive", "climatology"):  # paired differences in share of oracle (same resampled weeks)
+            if p == ref:
+                continue
+            d_pt = point[1] - stats(np.arange(len(dates)), ref)[1]
+            lo, hi = ci(np.array([stats(i)[1] - stats(i, ref)[1] for i in boots]))
+            rec[f"share_minus_{ref}"] = d_pt
+            rec[f"share_minus_{ref}_lo"], rec[f"share_minus_{ref}_hi"] = lo, hi
+            rec[f"share_minus_{ref}_significant"] = bool(lo > 0 or hi < 0)
         out.append(rec)
     return pd.DataFrame(out)
 
@@ -166,11 +167,12 @@ def main() -> None:
         [
             "budget_hours",
             "policy",
-            "covered_per_crew_hour",
             "share_of_oracle",
             "share_of_oracle_lo",
             "share_of_oracle_hi",
-            "diff_significant",
+            "share_minus_climatology",
+            "share_minus_climatology_lo",
+            "share_minus_climatology_hi",
         ]
     ]
     print(LABEL)
