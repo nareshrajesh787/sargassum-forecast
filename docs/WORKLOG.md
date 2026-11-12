@@ -162,3 +162,49 @@ switched to one request per season, and once the network recovered, a season of 
   difference. AUC 0.514 [0.490, 0.537].
 - Only 1 of 10 lead-level Brier comparisons clears zero: P1 vs B1 at lead 3, −0.0046 [−0.0094, −0.0000], upper bound at zero.
   With 10 comparisons this is what chance alone would produce. **Plainly: P1 alone does not beat climatology or persistence on 2024.**
+
+## 2026-11-11 — Phase 4 (validation stage done; test unlock NOT run) and Phase 5 (validation backtest)
+
+**leakage-cop** (subagent, `.claude/agents/leakage-cop.md`): no temporal leakage. It recomputed 400 persistence rows and 200 AFAI
+rows with 0 mismatches, confirmed the 3D product is trailing, LOSO stacking is clean, and test isolation holds. Blocker fixed: P1/M1/M2/M1_*
+were labelled `perfect_prog=False` in result CSVs → model registry `eval.run_val.MODELS` + `model_info()` (unknown names
+now raise). Acted on its recommendation: added leakage-safe **M1_fc / M2_fc** (no target-day drivers, no P1, no B3) before
+freezing. Test P1 coverage is now asserted (no silent zero-fill).
+
+**Validation stage (2024; M1 tuned and M2 calibrated on 2024 → optimistic)**: `outputs/results_val_hybrid*.csv`, `m1_params.json`,
+`m1_trials.csv`. Frozen model `data/models/hybrid_v1.pkl` sha256 c355696f… at commit 08ddcce.
+- BSS vs B1, leads pooled: M1 0.073 [0.028, 0.120], M2 0.105 [0.057, 0.162], M2_fc 0.082 [0.033, 0.142].
+- Ablations, paired vs M1: no P1 → no detectable difference (Brier +0.0004 [−0.0001, 0.0008]). No AFAI → Brier worse
+  +0.0031 [0.0015, 0.0047]. No wind → AUC worse −0.072 [−0.123, −0.028]. M1_fc → AUC worse −0.104 [−0.157, −0.060], Brier no
+  detectable difference.
+- Top gain feature: target-day onshore wind (perfect-prog).
+
+**Test unlock: blocked.** `uv run python -m eval.run_test` was denied by the session's permission classifier. Nothing under
+`data/test_lock/` exists, and no 2025–2026 score has been computed by Phase 4 code. Needs the owner's explicit go-ahead.
+
+**Phase 5** (branch `phase-5-decision`, worktree `../sargassum-forecast-p5`): knapsack port + TS port (1,000-case parity),
+backtest with paired differences vs reactive and climatology. Simulated 2024 validation (`outputs/backtest_val2024.csv`, booking
+lead 2): every policy beats reactive. M2 (forecast) vs climatology: no detectable difference at any budget 4–16 h. M2_fc is worse than climatology at 8 h
+(−0.090 [−0.185, −0.005]). The test-season backtest waits for the unlock.
+
+**Environment**: `brew install libomp` (LightGBM on macOS needs OpenMP).
+
+## 2026-11-12 — Phase 4 test stage (Gate G4) + Phase 5 test backtest
+
+- Test unlock was run by the owner (`uv run python -m eval.run_test`, 02:06 UTC, model sha256 c355696f…). P1 for 2025/2026
+  completed with 251 issue days each. Outputs: `results_test*.csv`, `reliability_test.csv`, figures. Tag `v0.1-test-frozen` = d8e708d.
+- **Headline (pooled):** no issue-time model beats climatology. The only exception is B0 at lead 1 in 2026. M1 (upper bound) BSS vs B1 is 0.064
+  [0.032, 0.096]. M2 (user-facing, upper bound) is −0.034 [−0.058, −0.011]: isotonic calibration fit on quiet 2024 under-forecasts
+  record years (2026 mean forecasts 0.127–0.206 vs observed 0.359). Validation → test reversal for M1_fc/M2_fc and M2.
+  P1 adds nothing (no-P1 ablation: no detectable difference).
+- Backtest (simulated): no forecast policy beats climatology at any budget or booking lead. Climatology beats reactive.
+- honesty-cop: FAIL on the first draft (no mismatched numbers; scope, labelling and omissions). All 11 items were addressed in
+  `docs/RESULTS_DRAFT.md`, and each cited number was re-verified independently.
+- leakage-cop (before unlock): PASS after the labelling fix.
+- **Not committed:** failure gallery (`outputs/failure_gallery.csv`, `outputs/figures/gallery/`). It shows observed labels for
+  10 site-days, and FIU's agreement to publish derived daily labels is unconfirmed (rule 8). It needs an owner decision.
+- Post-hoc idea, NOT run (models frozen): calibrating on train + val, or no calibration at all, would likely have avoided M2's loss. This
+  can only be tested on the 2027 live season, never on 2025–2026.
+- 2026-11-12: the owner confirmed FIU agreed (data use and publication of derived daily labels). The failure gallery is committed
+  (`outputs/failure_gallery.csv`, `outputs/figures/gallery/`) and summarised in `docs/RESULTS_DRAFT.md`. The 10 worst M2 misses were also
+  missed by M1 (0.050–0.062) and B1 (0.028–0.083). 8 of 10 fall in Sep–Oct 2026. Causes: local accumulation 5, label noise 3, wind shift 2.
