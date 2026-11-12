@@ -51,6 +51,9 @@ MODELS = {
 }
 
 
+BASELINES = ("B0", "B1", "B2", "B3", "B3_fc")
+
+
 def model_info(name: str) -> tuple[str, bool]:
     """(description, perfect_prog). Unknown names fail loudly so no result row is ever mislabelled."""
     if name not in MODELS:
@@ -269,7 +272,7 @@ def main() -> None:
     ap.add_argument("--n-boot", type=int, default=N_BOOT)
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
-    models = list(MODELS)
+    models = list(BASELINES)  # MODELS also registers P1/M1/M2 labels; this runner scores the baselines only
 
     va, preds, _ = run(TRAIN_DEFAULT)
     res, paired = evaluate(va, preds, models, n_boot=a.n_boot)
@@ -310,8 +313,8 @@ def main() -> None:
         "n_boot": a.n_boot,
         "seed": SEED,
         "feature_version": FEATURE_VERSION,
-        "models": {k: v[0] for k, v in MODELS.items()},
-        "perfect_prog_models": [k for k, v in MODELS.items() if v[1]],
+        "models": {k: MODELS[k][0] for k in BASELINES},
+        "perfect_prog_models": [k for k in BASELINES if MODELS[k][1]],
     }
     (OUT / "results_val_meta.json").write_text(json.dumps(meta, indent=1) + "\n")
     show = res[res.group == "all"][
