@@ -36,6 +36,7 @@ from pipeline.sites import SITES
 LIVE = Path("data/live")
 LAT_GRID = np.arange(22.5, 28.51, 0.5)
 LON_GRID = np.arange(-82.5, -76.49, 0.5)
+WIND_CHUNK = 25
 log = logging.getLogger("live")
 
 
@@ -177,23 +178,29 @@ def openmeteo_live(issue: pd.Timestamp, root: Path) -> tuple[Path, dict[str, str
 
 
 def wind_grid(issue: pd.Timestamp, root: Path, past_days: int = 2) -> Path:
-    """GFS 10 m wind on a 0.5° grid over the drift domain (169 points, one multi-location call) → CF NetCDF."""
+    """GFS 10 m wind on a 0.5° grid over the drift domain (169 points) → CF NetCDF.
+
+    Fetched in chunks of ``WIND_CHUNK`` locations with retries: one 169-location call timed out (300 s) from a GitHub
+    runner on 2026-11-12, while small calls are fast. Same calls in total, so the same Open-Meteo budget."""
     LON, LAT = np.meshgrid(LON_GRID, LAT_GRID)
-    params: dict[str, Any] = {
-        "latitude": ",".join(f"{v:.2f}" for v in LAT.ravel()),
-        "longitude": ",".join(f"{v:.2f}" for v in LON.ravel()),
-        "hourly": "wind_speed_10m,wind_direction_10m",
-        "models": "gfs_seamless",
-        "wind_speed_unit": "ms",
-        "past_days": past_days,
-        "forecast_days": 9,
-        "timezone": "UTC",
-    }
-    r = requests.get(
-        "https://api.open-meteo.com/v1/forecast", params=params, headers={"User-Agent": USER_AGENT}, timeout=300
-    )
-    r.raise_for_status()
-    locs = r.json()
+    lats, lons = LAT.ravel(), LON.ravel()
+    locs: list[dict[str, Any]] = []
+    for i in range(0, len(lats), WIND_CHUNK):
+        params: dict[str, Any] = {
+            "latitude": ",".join(f"{v:.2f}" for v in lats[i : i + WIND_CHUNK]),
+            "longitude": ",".join(f"{v:.2f}" for v in lons[i : i + WIND_CHUNK]),
+            "hourly": "wind_speed_10m,wind_direction_10m",
+            "models": "gfs_seamless",
+            "wind_speed_unit": "ms",
+            "past_days": past_days,
+            "forecast_days": 9,
+            "timezone": "UTC",
+        }
+        part: Any = _get("https://api.open-meteo.com/v1/forecast", params)
+        locs.extend(part if isinstance(part, list) else [part])
+        time.sleep(1)
+    if len(locs) != len(lats):
+        raise RuntimeError(f"wind grid: got {len(locs)} of {len(lats)} locations")
     t = pd.to_datetime(locs[0]["hourly"]["time"])
     sp = np.stack([np.asarray(x["hourly"]["wind_speed_10m"], float) for x in locs]).reshape(*LAT.shape, len(t))
     dr = np.stack([np.asarray(x["hourly"]["wind_direction_10m"], float) for x in locs]).reshape(*LAT.shape, len(t))

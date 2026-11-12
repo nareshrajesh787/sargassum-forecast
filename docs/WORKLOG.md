@@ -273,3 +273,8 @@ lead 2): every policy beats reactive. M2 (forecast) vs climatology: no detectabl
   AFAI and P1 features assumed day I−1 was available at 12:00 UTC on I, so they used up to one day of satellite data that a live
   forecast may not have. The frozen models and test results are not changed. This adds to the perfect-prog caveat that live skill should be
   expected at or below the test numbers.
+- Second dispatched run (43311425025) "succeeded", but (a) P1 failed: Open-Meteo timed out on the single 169-location wind-grid call
+  from the GitHub runner, and (b) nothing was committed: `git add` with the not-yet-existing `outputs/track_record_items.csv`
+  failed as a whole and the step printed "nothing new". The stale alarm worked (issue #15). Fixes: the wind grid is fetched in chunks of 25
+  with retries (tested live: complete in 10 s); the commit step adds only existing paths (tested in a scratch repo); the alarm title now
+  says "Stale (> 3 days) or failed".
