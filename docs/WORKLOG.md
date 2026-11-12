@@ -205,3 +205,6 @@ lead 2): every policy beats reactive. M2 (forecast) vs climatology: no detectabl
   10 site-days, and FIU's agreement to publish derived daily labels is unconfirmed (rule 8). It needs an owner decision.
 - Post-hoc idea, NOT run (models frozen): calibrating on train + val, or no calibration at all, would likely have avoided M2's loss. This
   can only be tested on the 2027 live season, never on 2025–2026.
+- 2026-11-12: the owner confirmed FIU agreed (data use and publication of derived daily labels). The failure gallery is committed
+  (`outputs/failure_gallery.csv`, `outputs/figures/gallery/`) and summarised in `docs/RESULTS_DRAFT.md`. The 10 worst M2 misses were also
+  missed by M1 (0.050–0.062) and B1 (0.028–0.083). 8 of 10 fall in Sep–Oct 2026. Causes: local accumulation 5, label noise 3, wind shift 2.
