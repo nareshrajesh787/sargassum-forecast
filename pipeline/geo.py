@@ -66,3 +66,38 @@ def grid_coast_distance(lats: np.ndarray, lons: np.ndarray) -> tuple[np.ndarray,
     """Distance-to-coast (km) and land mask on a lat × lon grid."""
     LON, LAT = np.meshgrid(np.asarray(lons, float), np.asarray(lats, float))
     return coast_distance_km(LAT, LON)
+
+
+def shore_normal_deg(lat: float, lon: float, radius_km: float = 5.0) -> float:
+    """Bearing (degrees clockwise from north) of the seaward shore normal at a coastal point.
+
+    Fits a line (principal axis) to Natural Earth coastline vertices within ``radius_km`` of the point,
+    then picks the perpendicular whose side is water 2 km out.
+    """
+    land = land_in_box(round(lat - 0.2, 3), round(lat + 0.2, 3), round(lon - 0.2, 3), round(lon + 0.2, 3))
+    kx, ky = KM_PER_DEG * np.cos(np.radians(lat)), KM_PER_DEG
+    coast_km = shapely.transform(
+        land.boundary, lambda xy: np.column_stack([(xy[:, 0] - lon) * kx, (xy[:, 1] - lat) * ky])
+    )
+    coords = shapely.get_coordinates(shapely.segmentize(coast_km, 0.25))  # densify: 250 m spacing
+    x, y = coords[:, 0], coords[:, 1]
+    near = np.hypot(x, y) <= radius_km
+    if near.sum() < 3:
+        raise ValueError(f"too few coastline vertices near {lat},{lon}")
+    xy = np.column_stack([x[near], y[near]])
+    xy -= xy.mean(0)
+    _, _, vt = np.linalg.svd(xy, full_matrices=False)
+    tx, ty = vt[0]
+    for nx, ny in ((ty, -tx), (-ty, tx)):
+        px, py = 2.0 * nx / kx + lon, 2.0 * ny / ky + lat
+        if not shapely.contains_xy(land, px, py):
+            return float(np.degrees(np.arctan2(nx, ny)) % 360)
+    raise ValueError(f"could not find the seaward side at {lat},{lon}")
+
+
+def onshore(speed: np.ndarray, direction_from_deg: np.ndarray, seaward_normal_deg: float) -> np.ndarray:
+    """Onshore component of a flow given as speed + direction it comes FROM (winds, waves).
+
+    Positive = moving toward land. A flow coming from the seaward normal is fully onshore.
+    """
+    return np.asarray(speed) * np.cos(np.radians(np.asarray(direction_from_deg) - seaward_normal_deg))

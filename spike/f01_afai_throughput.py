@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 import pandas as pd
+import xarray as xr
 
 from pipeline.ingest.afai import BROWARD_UPSTREAM, DATASETS
 
@@ -21,9 +22,14 @@ def main() -> None:
     for key in ("1D", "3D"):
         t = pd.read_csv(ROOT / DATASETS[key] / BROWARD_UPSTREAM.tag / "_throughput.csv")
         t = t[t.status == "ok"].drop_duplicates("month", keep="last")
+        t = t[t.month.str[5:7].astype(int).between(3, 10)]  # season months only (Feb is cached for baselines)
         t["season"] = t.month.str[:4].astype(int)
         t["dataset"] = key
         rows.append(t)
+        # steps per month from the cached files (after ERDDAP nearest-time trimming), not the request log
+        cache = ROOT / DATASETS[key] / BROWARD_UPSTREAM.tag
+        t["steps_requested"] = t["steps"]
+        t["steps"] = [xr.open_dataset(cache / f"{m}.nc").sizes["time"] for m in t.month]
         by = t.groupby("season").agg(steps=("steps", "sum"), seconds=("seconds", "sum"), mb=("bytes", "sum"))
         by["mb"] = by.mb / 1e6
         by["calendar_days"] = 245
@@ -36,7 +42,8 @@ def main() -> None:
             "values_per_second_month_min": round(float((t["values"] / t.seconds).min())),
             "values_per_second_month_max": round(float((t["values"] / t.seconds).max())),
             "mb_total": round(float(t.bytes.sum() / 1e6), 1),
-            "pixels_per_day": int(t["values"].sum() / t.steps.sum()),
+            "pixels_per_day": int(t["values"].sum() / t.steps_requested.sum()),
+            "out_of_window_steps_trimmed": int((t.steps_requested - t.steps).sum()),
             "per_season": by.round(1).reset_index().to_dict(orient="records"),
         }
     OUT.mkdir(parents=True, exist_ok=True)

@@ -24,6 +24,7 @@ from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 
+import numpy as np
 import requests
 import xarray as xr
 
@@ -109,6 +110,7 @@ def fetch(dataset: str, t0: date, t1: date, box: Box, dest: Path, retries: int =
         tmp = dest.with_suffix(".part")
         tmp.write_bytes(r.content)
         tmp.rename(dest)
+        trim(dest, t0, t1)
         with xr.open_dataset(dest) as ds:
             sizes = dict(ds.AFAI.sizes)
         values = sizes["time"] * sizes["latitude"] * sizes["longitude"]
@@ -120,6 +122,36 @@ def fetch(dataset: str, t0: date, t1: date, box: Box, dest: Path, retries: int =
             "steps": sizes["time"],
         }
     raise RuntimeError(f"AFAI fetch failed {dataset} {t0}..{t1}: {last}")
+
+
+def trim(path: Path, t0: date, t1: date) -> int:
+    """Drop time steps outside [t0, t1]. ERDDAP snaps request bounds to the *nearest* existing time, so a
+    month whose last (or first) day is missing returns a step from the neighbouring month (seen for
+    2024-07-01 inside 2024-06.nc). Returns the number of steps removed."""
+    with xr.open_dataset(path) as ds:
+        days = ds.time.dt.floor("D")
+        keep = (days >= np.datetime64(t0)) & (days <= np.datetime64(t1))
+        n_drop = int((~keep).sum())
+        if n_drop == 0:
+            return 0
+        sub = None if int(keep.sum()) == 0 else ds.isel(time=np.flatnonzero(keep.values)).load()
+    if sub is None:
+        path.unlink()
+    else:
+        tmp = path.with_suffix(".trim")
+        sub.to_netcdf(tmp)
+        tmp.replace(path)
+    log.info("trimmed %d out-of-window step(s) from %s", n_drop, path)
+    return n_drop
+
+
+def trim_cache(root: Path) -> int:
+    """Apply ``trim`` to every cached ``YYYY-MM.nc`` under ``root`` (one-off repair of older pulls)."""
+    n = 0
+    for p in sorted(root.glob("*/*/????-??.nc")):
+        first, last = month_range(p.stem, p.stem)[0]
+        n += trim(p, first, last)
+    return n
 
 
 def pull(key: str, start: str, end: str, box: Box, root: Path, months: tuple[int, ...] | None = None) -> list[dict]:
