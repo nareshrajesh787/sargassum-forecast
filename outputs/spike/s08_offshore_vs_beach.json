@@ -37,31 +37,31 @@
   {
    "metric": "AFAI_3_8km_AUC_lead1",
    "spike": 0.52,
-   "rerun": 0.5425,
+   "rerun": 0.5396,
    "flag_gt_tol": false
   },
   {
    "metric": "AFAI_3_8km_AUC_lead2",
    "spike": 0.58,
-   "rerun": 0.6029,
+   "rerun": 0.6009,
    "flag_gt_tol": false
   },
   {
    "metric": "AFAI_3_8km_AUC_lead3",
    "spike": 0.58,
-   "rerun": 0.6036,
+   "rerun": 0.6001,
    "flag_gt_tol": false
   },
   {
    "metric": "AFAI_3_8km_AUC_lead5",
    "spike": 0.62,
-   "rerun": 0.6385,
+   "rerun": 0.6367,
    "flag_gt_tol": false
   },
   {
    "metric": "AFAI_3_8km_AUC_lead7",
    "spike": 0.57,
-   "rerun": 0.5873,
+   "rerun": 0.5874,
    "flag_gt_tol": false
   },
   {
@@ -81,7 +81,7 @@
   "The spike did not record how 215 days were chosen; MIN_SITES is set to the reporting threshold whose 2025 day count is closest to 215 (not to any score).",
   "Fixed-rule predictors only; nothing fitted. Rerun of pre-registered spike numbers on a test season."
  ],
- "generated_utc": "2026-11-10T22:56:38Z",
+ "generated_utc": "2026-11-10T23:35:04Z",
  "min_sites_reporting": 7,
  "days_by_min_sites": {
   "1": 245,
@@ -96,33 +96,33 @@
  "per_lead": {
   "1": {
    "persistence_auc": 0.7614728912677173,
-   "afai_auc": 0.542489604989605,
+   "afai_auc": 0.539623128549303,
    "n_persistence": 230,
-   "n_afai": 200
+   "n_afai": 201
   },
   "2": {
    "persistence_auc": 0.7298105682951147,
-   "afai_auc": 0.602875816993464,
+   "afai_auc": 0.6008771929824561,
    "n_persistence": 229,
-   "n_afai": 201
+   "n_afai": 203
   },
   "3": {
    "persistence_auc": 0.7254538160665931,
-   "afai_auc": 0.6036036036036037,
+   "afai_auc": 0.6000519413063239,
    "n_persistence": 228,
-   "n_afai": 199
+   "n_afai": 202
   },
   "5": {
    "persistence_auc": 0.6370141073784634,
-   "afai_auc": 0.6384540117416829,
+   "afai_auc": 0.6366666666666667,
    "n_persistence": 226,
-   "n_afai": 195
+   "n_afai": 199
   },
   "7": {
    "persistence_auc": 0.6350796096558808,
-   "afai_auc": 0.5872968091511138,
+   "afai_auc": 0.5874348581354951,
    "n_persistence": 224,
-   "n_afai": 195
+   "n_afai": 201
   }
  },
  "afai_band_pixels": 363

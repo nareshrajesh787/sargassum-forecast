@@ -38,7 +38,7 @@
  "notes": [
   "Natural Earth 10 m coastline is good to ~0.5\u20131 km, so 'first ocean pixel' is approximate"
  ],
- "generated_utc": "2026-11-10T22:56:35Z",
+ "generated_utc": "2026-11-10T23:35:00Z",
  "valid_share_by_coast_distance_june2025_box": {
   "0-1.5km": 0.08644067796610169,
   "1.5-3km": 0.23737373737373735,

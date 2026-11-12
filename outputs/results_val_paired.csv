@@ -1,0 +1,49 @@
+group,lead,model,reference,brier_diff,diff_lo,diff_hi,significant,verdict,auc_diff,auc_diff_lo,auc_diff_hi,auc_significant,auc_verdict
+all,1,B0,B1,-0.0027,-0.0078,0.0024,False,no detectable difference,-0.0402,-0.1047,0.0235,False,no detectable difference
+all,1,B1,B0,0.0027,-0.0024,0.0078,False,no detectable difference,0.0402,-0.0235,0.1047,False,no detectable difference
+all,1,B2,B0,-0.0012,-0.0034,0.0008,False,no detectable difference,-0.0249,-0.1037,0.0611,False,no detectable difference
+all,1,B2,B1,-0.0039,-0.0088,0.0006,False,no detectable difference,-0.0651,-0.1743,0.0413,False,no detectable difference
+all,1,B3,B0,0.0060,-0.0002,0.0119,False,no detectable difference,0.1407,0.0819,0.2042,True,better
+all,1,B3,B1,0.0033,-0.0045,0.0118,False,no detectable difference,0.1005,0.0162,0.1904,True,better
+all,1,B3_fc,B0,0.0001,-0.0049,0.0050,False,no detectable difference,0.1487,0.0918,0.2090,True,better
+all,1,B3_fc,B1,-0.0026,-0.0094,0.0048,False,no detectable difference,0.1085,0.0280,0.1959,True,better
+all,2,B0,B1,-0.0032,-0.0081,0.0012,False,no detectable difference,-0.0442,-0.1116,0.0240,False,no detectable difference
+all,2,B1,B0,0.0032,-0.0012,0.0081,False,no detectable difference,0.0442,-0.0240,0.1116,False,no detectable difference
+all,2,B2,B0,-0.0003,-0.0021,0.0016,False,no detectable difference,-0.0298,-0.1045,0.0503,False,no detectable difference
+all,2,B2,B1,-0.0035,-0.0085,0.0010,False,no detectable difference,-0.0739,-0.1792,0.0329,False,no detectable difference
+all,2,B3,B0,0.0076,0.0017,0.0143,True,worse,0.1283,0.0744,0.1856,True,better
+all,2,B3,B1,0.0044,-0.0039,0.0128,False,no detectable difference,0.0841,-0.0034,0.1764,False,no detectable difference
+all,2,B3_fc,B0,0.0157,0.0071,0.0251,True,worse,0.1126,0.0538,0.1740,True,better
+all,2,B3_fc,B1,0.0125,0.0018,0.0237,True,worse,0.0684,-0.0245,0.1647,False,no detectable difference
+all,3,B0,B1,-0.0034,-0.0082,0.0007,False,no detectable difference,-0.0444,-0.1087,0.0212,False,no detectable difference
+all,3,B1,B0,0.0034,-0.0007,0.0082,False,no detectable difference,0.0444,-0.0212,0.1087,False,no detectable difference
+all,3,B2,B0,0.0003,-0.0020,0.0025,False,no detectable difference,-0.0273,-0.1088,0.0591,False,no detectable difference
+all,3,B2,B1,-0.0032,-0.0084,0.0017,False,no detectable difference,-0.0717,-0.1850,0.0373,False,no detectable difference
+all,3,B3,B0,0.0071,0.0010,0.0137,True,worse,0.1407,0.0853,0.2037,True,better
+all,3,B3,B1,0.0037,-0.0044,0.0125,False,no detectable difference,0.0963,0.0117,0.1893,True,better
+all,3,B3_fc,B0,0.0171,0.0081,0.0274,True,worse,0.1121,0.0489,0.1789,True,better
+all,3,B3_fc,B1,0.0137,0.0030,0.0257,True,worse,0.0677,-0.0257,0.1652,False,no detectable difference
+all,5,B0,B1,-0.0042,-0.0083,-0.0004,True,better,-0.0372,-0.1006,0.0357,False,no detectable difference
+all,5,B1,B0,0.0042,0.0004,0.0083,True,worse,0.0372,-0.0357,0.1006,False,no detectable difference
+all,5,B2,B0,0.0015,-0.0010,0.0043,False,no detectable difference,-0.0251,-0.1142,0.0693,False,no detectable difference
+all,5,B2,B1,-0.0027,-0.0082,0.0026,False,no detectable difference,-0.0622,-0.1714,0.0514,False,no detectable difference
+all,5,B3,B0,0.0076,0.0012,0.0146,True,worse,0.1361,0.0747,0.2028,True,better
+all,5,B3,B1,0.0034,-0.0044,0.0121,False,no detectable difference,0.0989,0.0155,0.1922,True,better
+all,5,B3_fc,B0,0.0172,0.0090,0.0263,True,worse,0.1033,0.0339,0.1763,True,better
+all,5,B3_fc,B1,0.0131,0.0034,0.0241,True,worse,0.0661,-0.0261,0.1619,False,no detectable difference
+all,7,B0,B1,-0.0035,-0.0080,0.0010,False,no detectable difference,-0.0528,-0.1149,0.0119,False,no detectable difference
+all,7,B1,B0,0.0035,-0.0010,0.0080,False,no detectable difference,0.0528,-0.0119,0.1149,False,no detectable difference
+all,7,B2,B0,-0.0003,-0.0016,0.0012,False,no detectable difference,0.0002,-0.0619,0.0629,False,no detectable difference
+all,7,B2,B1,-0.0038,-0.0086,0.0008,False,no detectable difference,-0.0526,-0.1562,0.0514,False,no detectable difference
+all,7,B3,B0,0.0064,0.0003,0.0125,True,worse,0.1604,0.1117,0.2074,True,better
+all,7,B3,B1,0.0029,-0.0051,0.0114,False,no detectable difference,0.1076,0.0237,0.1962,True,better
+all,7,B3_fc,B0,0.0223,0.0147,0.0310,True,worse,0.0868,0.0357,0.1409,True,better
+all,7,B3_fc,B1,0.0188,0.0095,0.0291,True,worse,0.0340,-0.0547,0.1185,False,no detectable difference
+all,all,B0,B1,-0.0034,-0.0081,0.0008,False,no detectable difference,-0.0471,-0.1062,0.0165,False,no detectable difference
+all,all,B1,B0,0.0034,-0.0008,0.0081,False,no detectable difference,0.0471,-0.0165,0.1062,False,no detectable difference
+all,all,B2,B0,-0.0000,-0.0014,0.0014,False,no detectable difference,-0.0188,-0.0830,0.0496,False,no detectable difference
+all,all,B2,B1,-0.0034,-0.0085,0.0012,False,no detectable difference,-0.0659,-0.1659,0.0356,False,no detectable difference
+all,all,B3,B0,0.0069,0.0011,0.0132,True,worse,0.1443,0.0911,0.2000,True,better
+all,all,B3,B1,0.0035,-0.0044,0.0123,False,no detectable difference,0.0972,0.0139,0.1879,True,better
+all,all,B3_fc,B0,0.0145,0.0073,0.0225,True,worse,0.1093,0.0579,0.1642,True,better
+all,all,B3_fc,B1,0.0111,0.0023,0.0217,True,worse,0.0622,-0.0257,0.1499,False,no detectable difference

@@ -20,7 +20,7 @@
  "notes": [
   "'positive' in the spike is undefined; AFAI > 0 is the literal reading. The mean AFAI comparison uses the absolute 0.03 tolerance, which is loose for values of order 1e-3."
  ],
- "generated_utc": "2026-11-10T22:56:35Z",
+ "generated_utc": "2026-11-10T23:35:01Z",
  "valid_pixel_days": 1242,
  "band_pixels": 104,
  "p99_AFAI": 0.0007060000207275152

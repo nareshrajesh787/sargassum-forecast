@@ -79,15 +79,18 @@ idempotent and logs every request to `_throughput.csv`.
 
   The SPEC planned around ~30K values/min (CSV). netCDF is roughly 1,000× faster. **Plan: full box, native resolution, no
   coarsening.** The whole history for both products takes about 11 minutes, far inside the 12-hour budget. Phase 2 converts to compressed Zarr.
-- Missing days in season (calendar days with no time step): 0 for 2019–2021 and 2023; 1 for 2022; 3 for 2024; 9 for 2025; 1 for 2026
-  (same file, `per_season`).
+- Missing days in season (calendar days with no time step): 0 for 2019–2021 and 2023; 1 for 2022; 4 for 2024; 9 for 2025; 1 for 2026
+  (same file, `per_season`; counted from the cached files after trimming, see below).
 - Licence (verbatim, ERDDAP `license` attribute): "The data may be used and redistributed for free but is not intended for
   legal use, since it may contain inaccuracies. Neither the data Contributor, ERD, NOAA, nor the United States Government,
   nor any of their employees or contractors, makes any warranty, express or implied, including warranties of
   merchantability and fitness for a particular purpose, or assumes any legal liability for the accuracy, completeness, or
   usefulness, of this information." (`spike/s01_afai_metadata.json` notes)
 
-**Failure modes:** small boxes are latency-bound (~5 s per request whatever the size), so fetch by month, not by day. AFAI is NaN
+**Failure modes:** ERDDAP snaps request bounds to the *nearest* existing time step, so a month whose last day is missing
+returns the next month's first day. 2024-07-01 appeared in both `2024-06.nc` and `2024-07.nc`. The adapter now trims every
+file to its requested window (`afai.trim`; `out_of_window_steps_trimmed` = 1 per product in `afai_throughput.json`).
+Small boxes are latency-bound (~5 s per request whatever the size), so fetch by month, not by day. AFAI is NaN
 for cloud, glint and land alike: there is no separate land flag, so `pipeline/geo.py` (Natural Earth 10 m) supplies distance-to-coast.
 Pixels within ~1.5 km of the coast are almost never valid (`spike/s02` → `valid_share_by_coast_distance_june2025_box`: 0.086
 for 0–1.5 km vs 0.237 for 1.5–3 km and 0.412–0.459 for 3–15 km). The source sensor is not stated in the metadata, which keeps
@@ -157,8 +160,8 @@ for counts). The flagged metrics:
 
 Reproduced within tolerance: AFAI metadata (all 10 metrics); FIU entries 14,298; base-rate counts 203 / 2,509 / 797 / 261 vs
 203 / 2,508 / 805 / 259 and event share 0.280; next-day agreement 0.704 (0.70); P(e|e) 0.475 (0.47); base rate 0.279 (0.28);
-persistence AUC 0.762 / 0.730 / 0.726 / 0.637 at leads 1/2/3/5 (0.76 / 0.73 / 0.70 / 0.65); offshore-AFAI AUC 0.543 / 0.603 /
-0.604 / 0.639 / 0.587 (0.52 / 0.58 / 0.58 / 0.62 / 0.57); Open-Meteo (3/3); SIR size and 404s.
+persistence AUC 0.762 / 0.730 / 0.726 / 0.637 at leads 1/2/3/5 (0.76 / 0.73 / 0.70 / 0.65); offshore-AFAI AUC 0.540 / 0.601 /
+0.600 / 0.637 / 0.587 (0.52 / 0.58 / 0.58 / 0.62 / 0.57); Open-Meteo (3/3); SIR size and 404s.
 
 **Rule tension, disclosed.** `s06`, `s07` and `s08` read 2025–2026 Broward labels (`"touches_test_seasons": true`).
 KICKOFF Phase 1 and Gate G2 explicitly ask for these reproductions, but CLAUDE.md rule 4 says not to score on 2025–2026 before G4.
@@ -167,7 +170,9 @@ They compute only the pre-registered spike metrics with fixed rules (nothing fit
 
 ## 6. SPEC conflicts found (also in WORKLOG)
 
-1. SIR history exists from 2025-07-01 (SPEC: none). The local back-fill is in `data/raw/sir/` (`feasibility/sir_archive.json`).
+1. SIR history exists from 2025-07-01 (SPEC: none). The local back-fill (`data/raw/sir/`, `feasibility/sir_archive.json`) covers
+   2025-06-28 → 2026-11-09: all 3 files on 494 of 500 days, 12.47 MB/day on average, ≈ 4.55 GB per 365 days, 6.2 GB in total.
+   This supersedes the Phase 0 WORKLOG estimate (7.4 MB/day, measured on one November day).
 2. SMOC archive starts 2020-11-01 (SPEC: 2-year rolling, physics from 2022). 2021 can have SMOC physics.
 3. Copernicus keeps no past forecast runs, and lead-specific winds start 2024-01-19. "Archived forecasts rather than
    reanalysis wherever possible" therefore means: currents = analysis for every historical season; winds = lead-L forecasts

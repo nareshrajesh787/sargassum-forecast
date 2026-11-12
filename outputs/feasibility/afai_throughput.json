@@ -8,6 +8,7 @@
   "values_per_second_month_max": 1148027,
   "mb_total": 694.7,
   "pixels_per_day": 89178,
+  "out_of_window_steps_trimmed": 1,
   "per_season": [
    {
     "season": 2019,
@@ -51,11 +52,11 @@
    },
    {
     "season": 2024,
-    "steps": 242,
+    "steps": 241,
     "seconds": 40.9,
     "mb": 86.4,
     "calendar_days": 245,
-    "missing_days": 3
+    "missing_days": 4
    },
    {
     "season": 2025,
@@ -84,6 +85,7 @@
   "values_per_second_month_max": 850200,
   "mb_total": 694.7,
   "pixels_per_day": 89178,
+  "out_of_window_steps_trimmed": 1,
   "per_season": [
    {
     "season": 2019,
@@ -127,11 +129,11 @@
    },
    {
     "season": 2024,
-    "steps": 242,
+    "steps": 241,
     "seconds": 49.2,
     "mb": 86.4,
     "calendar_days": 245,
-    "missing_days": 3
+    "missing_days": 4
    },
    {
     "season": 2025,

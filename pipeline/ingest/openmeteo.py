@@ -210,7 +210,7 @@ def hourly_frame(root: Path, feed: str, site_id: str) -> Any:
         frames.append(f.set_index("time"))
     if not frames:
         raise FileNotFoundError(f"no cached {feed} for {site_id}")
-    out = pd.concat(frames).sort_index()
+    out = pd.concat(frames).sort_index().apply(pd.to_numeric, errors="coerce")
     return out[~out.index.duplicated(keep="last")]
 
 
