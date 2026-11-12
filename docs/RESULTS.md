@@ -1,4 +1,4 @@
-# Results (draft for README — Gate G4, revised after honesty-cop)
+# Results — held-out test seasons 2025–2026
 
 These are the held-out test seasons 2025 and 2026, scored once. The test set was unlocked at 2026-11-12T02:06:10Z with the frozen model
 (sha256 c355696f…; `outputs/results_test_meta.json`). The target is a moderate-or-worse sargassum day (severity ≥ 2) at each of 8

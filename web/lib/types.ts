@@ -48,7 +48,12 @@ export interface Results {
   model_version: string;
   headline: { source: string; rows: HeadlineRow[]; by_lead: { model: string; lead: number; bss_vs_climatology: number; bss_ci: [number, number] }[] };
   reliability: { source: string; bins: { model: string; p_mean: number; obs_freq: number; n: number }[] };
-  backtest: { source: string; label: string; booking_lead_days: number; rows: { budget_hours: number; policy: string; share_of_oracle: number; ci: [number, number] }[] };
+  backtest: {
+    source: string; label: string; booking_lead_days: number;
+    rows: { budget_hours: number; policy: string; share_of_oracle: number; ci: [number, number];
+      minus_climatology?: number; minus_climatology_ci?: [number, number]; verdict_vs_climatology?: string }[];
+    all_leads_and_budgets_vs_climatology: Record<string, { better: number; worse: number; cells: number }>;
+  };
   ablation: { source: string; reference: string; rows: { model: string; brier_minus_M1: number; ci: [number, number]; verdict: string }[] };
   interval_table: { source: string; rows: { bin_lo: number; bin_hi: number; n: number; mean_forecast: number; observed_freq: number; obs_p10: number; obs_p90: number }[] };
   gallery: { source: string; rows: Record<string, string | number>[] };

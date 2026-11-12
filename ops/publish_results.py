@@ -73,18 +73,38 @@ def reliability() -> dict[str, Any]:
 
 
 def backtest() -> dict[str, Any]:
-    b = pd.read_csv(OUT / "backtest_test.csv")
-    b = b[b.booking_lead == 2]
-    rows = [
-        {
+    full = pd.read_csv(OUT / "backtest_test.csv")
+    b = full[full.booking_lead == 2]
+    rows = []
+    for x in b.itertuples():
+        d: dict[str, Any] = {
             "budget_hours": int(x.budget_hours),
             "policy": x.policy,
             "share_of_oracle": _r(x.share_of_oracle),
             "ci": [_r(x.share_of_oracle_lo), _r(x.share_of_oracle_hi)],
         }
-        for x in b.itertuples()
-    ]
-    return {"source": "outputs/backtest_test.csv", "label": "SIMULATED", "booking_lead_days": 2, "rows": rows}
+        if x.policy != "climatology":  # paired difference vs climatology (same resampled weeks)
+            lo, hi = x.share_minus_climatology_lo, x.share_minus_climatology_hi
+            d["minus_climatology"] = _r(x.share_minus_climatology)
+            d["minus_climatology_ci"] = [_r(lo), _r(hi)]
+            d["verdict_vs_climatology"] = "better" if lo > 0 else ("worse" if hi < 0 else "no detectable difference")
+        rows.append(d)
+    fc = full[full.policy.isin(["forecast", "forecast_fc"])]
+    summary = {
+        str(p): {
+            "better": int((g.share_minus_climatology_lo > 0).sum()),
+            "worse": int((g.share_minus_climatology_hi < 0).sum()),
+            "cells": int(len(g)),
+        }
+        for p, g in fc.groupby("policy")
+    }
+    return {
+        "source": "outputs/backtest_test.csv",
+        "label": "SIMULATED",
+        "booking_lead_days": 2,
+        "rows": rows,
+        "all_leads_and_budgets_vs_climatology": summary,
+    }
 
 
 def ablation() -> dict[str, Any]:

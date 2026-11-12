@@ -1,0 +1,22 @@
+{
+ "rows": 18885,
+ "models": [
+  "B0",
+  "B1",
+  "B2",
+  "B3",
+  "B3_fc",
+  "P1",
+  "M1",
+  "M2",
+  "M1_no_p1",
+  "M1_no_afai",
+  "M1_no_wind",
+  "M1_fc",
+  "M2_fc"
+ ],
+ "mismatching_cells": 0,
+ "tolerance": 1e-12,
+ "bundle_sha256": "b63e4bdee387484d8df62c18ebf9729498e5ac48c4b5e4fa42fbd04769d1e5d5",
+ "reference": "data/test_lock/preds_test.parquet"
+}

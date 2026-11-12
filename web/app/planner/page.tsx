@@ -42,6 +42,15 @@ export default function Planner() {
   return (
     <>
       <h1>Crew planner</h1>
+      {res.state === "ready" && (() => {
+        const m2 = res.data.headline.rows.find((r) => r.season === "2025-2026" && r.model === "M2");
+        return m2 ? (
+          <p className="notice">
+            Experimental, not a warning system. The served forecast had Brier skill {m2.bss_vs_climatology?.toFixed(3)} [
+            {m2.bss_ci[0]?.toFixed(3)}, {m2.bss_ci[1]?.toFixed(3)}] versus climatology on the 2025–2026 test seasons (negative = worse).
+          </p>
+        ) : null;
+      })()}
       <p className="muted">
         Exact 0/1 knapsack (ported from the Costa project): pick the beaches that maximise expected sargassum days covered
         (forecast probability × weight) within the crew-hour budget, for crews booked {booking} day{booking > 1 ? "s" : ""} ahead.
@@ -57,8 +66,10 @@ export default function Planner() {
       <div className="card table-wrap">
         <table>
           <caption className="muted" style={{ textAlign: "left", paddingBottom: 6 }}>
-            Plan for {plan.rows[0]?.l.target_date}: {plan.forecast.hours} of {budget} hours used, expected sargassum days covered{" "}
-            {plan.forecast.value.toFixed(2)} (forecast) vs {plan.clim.value.toFixed(2)} if you planned from climatology alone.
+            Plan for {plan.rows[0]?.l.target_date}: the forecast plan sends crews to {plan.forecast.ids.length} beaches using{" "}
+            {plan.forecast.hours} of {budget} crew-hours; a plan from climatology alone would send them to {plan.clim.ids.length}{" "}
+            beaches ({plan.clim.hours} hours). The two plans score their picks with different probabilities, so their values
+            are not compared here; the backtest below compares them against what actually happened.
           </caption>
           <thead>
             <tr><th>Beach</th><th className="num">Forecast</th><th className="num">Climatology</th><th>Hours</th><th>Weight</th><th>Forecast plan</th><th>Climatology plan</th></tr>
@@ -94,11 +105,29 @@ export default function Planner() {
             ahead: share of the events an all-knowing planner would have covered (95% CI). Source: {res.data.backtest.source}.
           </p>
           <table>
-            <thead><tr><th>Policy</th><th className="num">Share of oracle</th><th className="num">95% CI</th></tr></thead>
+            <thead><tr><th>Policy</th><th className="num">Share of oracle</th><th className="num">95% CI</th><th>vs climatology (paired)</th></tr></thead>
             <tbody>
-              {bt.map((r) => (<tr key={r.policy}><td>{r.policy}</td><td className="num">{pct(r.share_of_oracle, 1)}</td><td className="num">{pct(r.ci[0], 1)}–{pct(r.ci[1], 1)}</td></tr>))}
+              {bt.map((r) => (
+                <tr key={r.policy}>
+                  <td>{r.policy}</td>
+                  <td className="num">{pct(r.share_of_oracle, 1)}</td>
+                  <td className="num">{pct(r.ci[0], 1)}–{pct(r.ci[1], 1)}</td>
+                  <td>{r.verdict_vs_climatology ? `${r.verdict_vs_climatology} (${r.minus_climatology! >= 0 ? "+" : ""}${pct(r.minus_climatology, 1)} [${pct(r.minus_climatology_ci![0], 1)}, ${pct(r.minus_climatology_ci![1], 1)}])` : "reference"}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
+          {(() => {
+            const s = res.data.backtest.all_leads_and_budgets_vs_climatology;
+            const f = s["forecast"], fc = s["forecast_fc"];
+            return f && fc ? (
+              <p style={{ marginBottom: 0 }}>
+                <strong>Answer: no.</strong> Across all {f.cells} combinations of budget (4–16 h) and booking lead (1–3 days), planning
+                from the forecast was better than planning from climatology in {f.better} and worse in {f.worse}; the issue-time
+                model was better in {fc.better} and worse in {fc.worse}.
+              </p>
+            ) : null;
+          })()}
           <p className="muted" style={{ fontSize: 13 }}>
             "forecast" uses the served model with target-day weather (an upper bound); "forecast_fc" uses only issue-time data. See Methods.
           </p>
