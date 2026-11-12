@@ -256,3 +256,20 @@ lead 2): every policy beats reactive. M2 (forecast) vs climatology: no detectabl
 - **Daily job:** the owner set the `COPERNICUSMARINE_SERVICE_*` secrets (04:06 UTC). The first scheduled run is 2026-11-12 13:30 UTC,
   and G5's "one successful unattended run" is pending until it completes.
 - Costa PR https://github.com/nareshrajesh787/Costa/pull/1 is open, awaiting teammate review.
+
+## 2026-11-12 — first GitHub daily run failed; AFAI latency is longer than assumed
+
+- The scheduled 13:30 UTC run never fired (GitHub can delay or drop scheduled runs). A manual dispatch (run 43266528340) failed:
+  `AFAI 1D: no data for 2026-09-28..2026-11-11`.
+- Cause: at 17:00 UTC on 2026-11-12, ERDDAP's newest AFAI day was 2026-11-10, so day I−1 was not yet published. ERDDAP rejects requests
+  that end after its newest step instead of clipping them.
+- Fix (`ops/live.py`, `ops/daily.py`, `physics/drift.py`):
+  - Cap the AFAI request at ERDDAP's `time_coverage_end`.
+  - Seed P1 from the newest available 3D field (date recorded as `p1_seed_field_day`). Start the drift at that field's time
+    (SMOC and wind forcing start earlier too).
+  - Shift the arrival clock (`hour_offset`) so lead windows still end on the right target days. With an I−1 field the offset is 0,
+    which is identical to the frozen config. Local scratch run for issue 2026-11-12: P1 ok, seeded from 2026-11-10.
+- **Finding (disclosed, not changed):** the SPEC's 1-day AFAI latency is optimistic; real latency here was more than 2 days. Historical
+  AFAI and P1 features assumed day I−1 was available at 12:00 UTC on I, so they used up to one day of satellite data that a live
+  forecast may not have. The frozen models and test results are not changed. This adds to the perfect-prog caveat that live skill should be
+  expected at or below the test numbers.

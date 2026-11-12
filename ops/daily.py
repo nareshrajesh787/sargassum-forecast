@@ -81,23 +81,26 @@ def _sha_dir(d: Path) -> str:
 
 # ---------------------------------------------------------------------------------------------- P1
 def run_p1(inp: LiveInputs, bundle: dict[str, Any]) -> tuple[pd.DataFrame, dict[str, Any], str]:
-    from physics.arrivals import lead_window
+    from physics.arrivals import RUN_HOURS, lead_window
     from physics.drift import simulate, simulate_tracks
     from physics.seed import _coast, seeds_from_field
 
-    if inp.seed_anom is None:
-        raise RuntimeError("no AFAI 3D field for I−1")
-    cur = smoc_forecast(inp.issue, inp.root)
-    wind = wind_grid(inp.issue, inp.root)
+    if inp.seed_anom is None or inp.seed_day is None:
+        raise RuntimeError("no AFAI 3D field available")
+    # frozen config seeds from I−1; if that field is not yet published, seed from the newest older field and let the
+    # particles drift the extra days, shifting the arrival clock so lead windows still end on the right target days
+    offset_h = int((inp.issue.normalize() - pd.Timedelta(days=1) - inp.seed_day.normalize()).days) * 24
+    cur = smoc_forecast(inp.issue, inp.root, inp.seed_day)
+    wind = wind_grid(inp.issue, inp.root, past_days=2 + offset_h // 24)
     a = inp.seed_anom
     lat, lon = a.latitude.values, a.longitude.values
     coast, land = _coast(tuple(map(float, lat)), tuple(map(float, lon)))
-    day = inp.issue.normalize() - pd.Timedelta(days=1)
+    day = inp.seed_day.normalize()
     seeds = seeds_from_field(
         a.values, lat, lon, 2000, np.random.default_rng(int(day.strftime("%Y%m%d"))), day, coast, land
     )
     w = float(bundle["p1"]["chosen_windage"])
-    tab = simulate(seeds, cur, wind, windages=(w,), n_per_group=2000)
+    tab = simulate(seeds, cur, wind, windages=(w,), n_per_group=2000, hours=RUN_HOURS + offset_h, hour_offset=offset_h)
     if tab.empty:
         from physics.drift import zero_table
 
@@ -105,9 +108,9 @@ def run_p1(inp: LiveInputs, bundle: dict[str, Any]) -> tuple[pd.DataFrame, dict[
     # drift overlay: particle positions at the end of each lead window (300 particles)
     feats: list[dict[str, Any]] = []
     if len(seeds.lon):
-        lon_t, lat_t = simulate_tracks(seeds, cur, wind, w)
+        lon_t, lat_t = simulate_tracks(seeds, cur, wind, w, hours=RUN_HOURS + offset_h)
         for L in sorted(tab["lead"].unique()):
-            h = min(lead_window(int(L))[1], lon_t.shape[1] - 1)
+            h = min(lead_window(int(L))[1] + offset_h, lon_t.shape[1] - 1)
             pts = [
                 [round(float(x), 4), round(float(y), 4)]
                 for x, y in zip(lon_t[:300, h], lat_t[:300, h], strict=True)
@@ -125,6 +128,7 @@ def run_p1(inp: LiveInputs, bundle: dict[str, Any]) -> tuple[pd.DataFrame, dict[
         "features": feats,
         "properties": {
             "issue_date": f"{inp.issue:%Y-%m-%d}",
+            "seed_field_day": f"{inp.seed_day:%Y-%m-%d}",
             "seed_pixels": seeds.n_pixels,
             "note": "P1 drift particles (frozen config) at the end of each lead window",
         },

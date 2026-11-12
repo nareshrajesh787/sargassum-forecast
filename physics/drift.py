@@ -47,6 +47,7 @@ def simulate(
     windages: tuple[float, ...] = WINDAGES,
     n_per_group: int = N_PER_GROUP,
     hours: int = RUN_HOURS,
+    hour_offset: int = 0,
 ) -> pd.DataFrame:
     """Run OpenDrift for one issue and return its arrival table (empty frame if nothing to seed)."""
     from opendrift.models.oceandrift import OceanDrift
@@ -73,6 +74,7 @@ def simulate(
     if rlon.shape[0] != len(wdf):  # (time, trajectory) layout
         rlon, rlat = rlon.T, rlat.T
     hrs = (pd.DatetimeIndex(r["time"].values) - pd.Timestamp(t0)).total_seconds().to_numpy() / 3600
+    hrs = hrs - hour_offset  # live: seed field older than I−1 → arrival clock still starts at I−1 18:00
     w = r["wind_drift_factor"].values
     w = np.nanmax(w, axis=1) if w.ndim == 2 and w.shape[0] == len(wdf) else (np.nanmax(w, axis=0) if w.ndim == 2 else w)
     return arrival_table(rlon, rlat, hrs, np.round(np.asarray(w, dtype=np.float64), 4), seeds.total_weight)
