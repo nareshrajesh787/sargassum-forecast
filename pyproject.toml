@@ -18,6 +18,7 @@ dependencies = [
     "pyshp>=3.1.8",
     "matplotlib>=3.11.2",
     "opendrift>=1.14.12",
+    "lightgbm>=4.7.0",
 ]
 
 [dependency-groups]

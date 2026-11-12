@@ -189,8 +189,8 @@ def afai_window_stats(stats: pd.DataFrame, region: str, issue_dates: pd.Series) 
     return out.reindex(pd.DatetimeIndex(issue_dates))
 
 
-def add_afai(df: pd.DataFrame, key: str) -> pd.DataFrame:
-    stats = pd.read_parquet(AFAI_STATS / f"stats_{key}.parquet")
+def add_afai(df: pd.DataFrame, key: str, afai_dir: Path = AFAI_STATS) -> pd.DataFrame:
+    stats = pd.read_parquet(afai_dir / f"stats_{key}.parquet")
     k = key.lower()
     issue = df["issue_date"]
     cols: dict[str, np.ndarray] = {}
@@ -313,15 +313,15 @@ def _sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()[:16]
 
 
-def build(seasons: list[int], allow_test: bool = False) -> pd.DataFrame:
+def build(seasons: list[int], allow_test: bool = False, afai_dir: Path = AFAI_STATS) -> pd.DataFrame:
     check_seasons(seasons, allow_test)
     labels = pd.read_parquet(LABELS)
     df = skeleton(labels, seasons)
     df = add_calendar(df)
     df = add_tide(df)
     df = add_persist(df, labels)
-    df = add_afai(df, "1D")
-    df = add_afai(df, "3D")
+    df = add_afai(df, "1D", afai_dir)
+    df = add_afai(df, "3D", afai_dir)
     df = add_openmeteo(df)
     for g in GROUPS:
         if f"avail_{g}" not in df.columns:
