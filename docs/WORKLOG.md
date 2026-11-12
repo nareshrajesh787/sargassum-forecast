@@ -142,3 +142,23 @@ diffusivity 10 m²/s (fixed); config chosen by 2024 AUC (8 configurations → op
 P1 is perfect-prog (analysed currents and winds after the issue time).
 
 **Next (owner)**: `! uv run copernicusmarine login`, then `make physics MODE=<best> WINDAGE=<best>` and `make p1-score`.
+
+## 2026-11-11 — Phase 3 completed (Gate G3), branch `phase-3-physics`
+
+**Unblocked:** the owner ran `copernicusmarine login`; `has_credentials()` now also accepts `~/.copernicusmarine/.copernicusmarine-credentials`.
+
+**Downloads:** the default ARCO map store (chunks of 1 h × 512 × 2048 cells) took 1,360 s for 2 days of SMOC. The time-series store
+(chunks of 4,272 h × 16 × 8) took 1,771 s for 30 days when requested by month (each month re-downloads whole ~178-day chunks). Once
+switched to one request per season, and once the network recovered, a season of SMOC (1.07 GB) + L4 wind (58 MB) took ≈ 5–23 min.
+
+**Runs:** 2024 sweep = 504 OpenDrift runs (252 issue days × 2 current modes, 4 windages in each run), 1,610 s of simulation,
+8 issue days with no AFAI seeds (written as explicit zero arrivals). Chosen config on 2021–2023: 251 runs per season,
+420 / 411 / 484 s.
+
+**Results (`outputs/p1_sweep_val.csv`, `outputs/results_val_p1*.csv`; validation 2024; P1 is perfect-prog)**
+- Sweep AUC (arrivals in the 24 h window) ranges from 0.509 to 0.530 across the 8 configurations. Best: `no_stokes`, 2% windage (consistent with the
+  ~2% pure-windage estimate, Stokes not double-counted); selected on 2024, so P1's 2024 score is flattered.
+- P1 vs B1, leads pooled: Brier difference −0.0043 [−0.0091, +0.0003], no detectable difference. Vs B0: −0.0009 [−0.0021, +0.0004], no detectable
+  difference. AUC 0.514 [0.490, 0.537].
+- Only 1 of 10 lead-level Brier comparisons clears zero: P1 vs B1 at lead 3, −0.0046 [−0.0094, −0.0000], upper bound at zero.
+  With 10 comparisons this is what chance alone would produce. **Plainly: P1 alone does not beat climatology or persistence on 2024.**
