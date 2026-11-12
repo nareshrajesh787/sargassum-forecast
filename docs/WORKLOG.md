@@ -188,3 +188,20 @@ lead 2): every policy beats reactive. M2 (forecast) vs climatology: no detectabl
 (−0.090 [−0.185, −0.005]). The test-season backtest waits for the unlock.
 
 **Environment**: `brew install libomp` (LightGBM on macOS needs OpenMP).
+
+## 2026-11-12 — Phase 4 test stage (Gate G4) + Phase 5 test backtest
+
+- Test unlock was run by the owner (`uv run python -m eval.run_test`, 02:06 UTC, model sha256 c355696f…). P1 for 2025/2026
+  completed with 251 issue days each. Outputs: `results_test*.csv`, `reliability_test.csv`, figures. Tag `v0.1-test-frozen` = d8e708d.
+- **Headline (pooled):** no issue-time model beats climatology. The only exception is B0 at lead 1 in 2026. M1 (upper bound) BSS vs B1 is 0.064
+  [0.032, 0.096]. M2 (user-facing, upper bound) is −0.034 [−0.058, −0.011]: isotonic calibration fit on quiet 2024 under-forecasts
+  record years (2026 mean forecasts 0.127–0.206 vs observed 0.359). Validation → test reversal for M1_fc/M2_fc and M2.
+  P1 adds nothing (no-P1 ablation: no detectable difference).
+- Backtest (simulated): no forecast policy beats climatology at any budget or booking lead. Climatology beats reactive.
+- honesty-cop: FAIL on the first draft (no mismatched numbers; scope, labelling and omissions). All 11 items were addressed in
+  `docs/RESULTS_DRAFT.md`, and each cited number was re-verified independently.
+- leakage-cop (before unlock): PASS after the labelling fix.
+- **Not committed:** failure gallery (`outputs/failure_gallery.csv`, `outputs/figures/gallery/`). It shows observed labels for
+  10 site-days, and FIU's agreement to publish derived daily labels is unconfirmed (rule 8). It needs an owner decision.
+- Post-hoc idea, NOT run (models frozen): calibrating on train + val, or no calibration at all, would likely have avoided M2's loss. This
+  can only be tested on the 2027 live season, never on 2025–2026.
