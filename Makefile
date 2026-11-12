@@ -62,6 +62,7 @@ test: ## pytest + ruff + mypy (the Stop hook runs this)
 	$(UV) run pytest -m "not live"
 	$(MAKE) lint
 	$(MAKE) typecheck
+	node --test --experimental-strip-types web/lib/knapsack.test.ts
 
 # Phase 3 (needs Copernicus Marine credentials): validation sweep on 2024 (2 current modes × 4 windages per run),
 # then the chosen configuration on the training seasons (set MODE/WINDAGE from outputs/p1_sweep_val.csv), then score.

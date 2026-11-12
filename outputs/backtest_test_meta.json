@@ -1,0 +1,48 @@
+{
+ "label": "SIMULATED backtest (not an operational evaluation)",
+ "zone_hours": {
+  "bougainvillea_terrace": 2,
+  "mj_state_park": 3,
+  "the_palms": 4,
+  "commercial_pier": 3,
+  "sea_ranch_lakes": 2,
+  "atlantic_pier": 4,
+  "hillsboro_mile_1173": 3,
+  "county_line": 2
+ },
+ "zone_weight": {
+  "bougainvillea_terrace": 1.0,
+  "mj_state_park": 1.0,
+  "the_palms": 1.0,
+  "commercial_pier": 1.0,
+  "sea_ranch_lakes": 1.0,
+  "atlantic_pier": 1.0,
+  "hillsboro_mile_1173": 1.0,
+  "county_line": 1.0
+ },
+ "budgets": [
+  4,
+  6,
+  8,
+  10,
+  12,
+  14,
+  16
+ ],
+ "booking_leads": [
+  1,
+  2,
+  3
+ ],
+ "policies": [
+  "reactive",
+  "climatology",
+  "forecast",
+  "forecast_fc",
+  "oracle"
+ ],
+ "n_boot": 1000,
+ "seed": 20261110,
+ "candidate_zones": "sites with an observation on the target day (limitation)",
+ "knapsack": "decision.knapsack.knapsack_select, ported from Costa (nareshrajesh787, Avisator1)"
+}
