@@ -310,7 +310,7 @@ def staleness(fc: dict[str, Any], issue: pd.Timestamp) -> dict[str, Any]:
     (WOUT / "ops").mkdir(parents=True, exist_ok=True)
     (WOUT / "ops" / "status.json").write_text(json.dumps(status, indent=1) + "\n")
     if stale and os.environ.get("GITHUB_ACTIONS") == "true":
-        title = f"Stale input(s) > {STALE_DAYS} days: {', '.join(sorted(stale))}"
+        title = f"Stale (> {STALE_DAYS} days) or failed input(s): {', '.join(sorted(stale))}"
         existing = subprocess.run(
             ["gh", "issue", "list", "--state", "open", "--search", title, "--json", "number"],
             capture_output=True,
