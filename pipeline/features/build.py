@@ -155,6 +155,9 @@ def add_persist(df: pd.DataFrame, labels: pd.DataFrame) -> pd.DataFrame:
         rec["avail_persist"] = avail
         out.append(rec)
     p = pd.DataFrame(out)
+    for c in ("last_sev", "last_event", "last_age_days", "n_reports_7d", "event_rate_7d", "region_event_rate_3d"):
+        if c not in p:  # e.g. off-season: no report in the last 3 days at any site → column still exists, all NaN
+            p[c] = np.nan
     return df.merge(p, on=["site", "issue_date"], how="left")
 
 
@@ -229,7 +232,7 @@ def _window_mean(hourly: pd.Series, D: pd.Series) -> np.ndarray:
     return daily.reindex(pd.DatetimeIndex(D)).to_numpy()
 
 
-def add_openmeteo(df: pd.DataFrame) -> pd.DataFrame:
+def add_openmeteo(df: pd.DataFrame, om_root: Path = OM_ROOT) -> pd.DataFrame:
     n = len(df)
     new: dict[str, np.ndarray] = {
         c: np.full(n, np.nan)
@@ -250,13 +253,13 @@ def add_openmeteo(df: pd.DataFrame) -> pd.DataFrame:
         m = (df["site"] == s.id).to_numpy()
         D = df.loc[m, "date"]
         nrm = shore_normal_deg(s.lat, s.lon)
-        w = hourly_frame(OM_ROOT, "wind_hf", s.id)
+        w = hourly_frame(om_root, "wind_hf", s.id)
         on = pd.Series(onshore(w.wind_speed_10m, w.wind_direction_10m, nrm), index=w.index)
         new["wind_pp_onshore"][m] = _window_mean(on, D)
         new["wind_pp_speed"][m] = _window_mean(w.wind_speed_10m, D)
         on3 = on.rolling(66, min_periods=24).mean()  # 66 h ending at the window end ≈ 3 days
         new["wind_pp_onshore_3d"][m] = on3.reindex(D.dt.tz_localize("UTC") + pd.Timedelta(hours=6)).to_numpy()
-        prev = hourly_frame(OM_ROOT, "wind_prev", s.id)
+        prev = hourly_frame(om_root, "wind_prev", s.id)
         for L in LEADS_ALL:
             ml = m & (df["lead"] == L).to_numpy()
             if not ml.any():
@@ -265,13 +268,13 @@ def add_openmeteo(df: pd.DataFrame) -> pd.DataFrame:
             sp, dr = prev[f"wind_speed_10m_previous_day{L}"], prev[f"wind_direction_10m_previous_day{L}"]
             new["wind_fc_onshore"][ml] = _window_mean(pd.Series(onshore(sp, dr, nrm), index=prev.index), Dl)
             new["wind_fc_speed"][ml] = _window_mean(sp, Dl)
-        wv = hourly_frame(OM_ROOT, "marine_waves", s.id)
+        wv = hourly_frame(om_root, "marine_waves", s.id)
         new["waves_pp_hs"][m] = _window_mean(wv.wave_height, D)
         new["waves_pp_tp"][m] = _window_mean(wv.wave_period, D)
         new["waves_pp_onshore"][m] = _window_mean(
             pd.Series(onshore(wv.wave_height, wv.wave_direction, nrm), index=wv.index), D
         )
-        c = hourly_frame(OM_ROOT, "marine_currents", s.id)
+        c = hourly_frame(om_root, "marine_currents", s.id)
         c["ocean_current_velocity"] = c["ocean_current_velocity"] / 3.6  # Open-Meteo serves km/h → m/s
         # currents: direction is where the flow goes TO → onshore = −cos(dir − normal)
         new["curr_pp_onshore"][m] = _window_mean(
