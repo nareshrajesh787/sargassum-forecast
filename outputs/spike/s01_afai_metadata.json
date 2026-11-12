@@ -1,0 +1,73 @@
+{
+ "test": "AFAI 1-day product metadata",
+ "script": "spike/s01_afai_metadata.py",
+ "definition": "ERDDAP info/index.csv for noaa_aoml_atlantic_oceanwatch_AFAI_1D, read on the run date. time_coverage_end and n_daily_steps change daily, so they match the spike only on 2026-11-10.",
+ "touches_test_seasons": false,
+ "results": [
+  {
+   "metric": "time_coverage_start",
+   "spike": "2016-06-18",
+   "rerun": "2016-06-18",
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "time_coverage_end (as of run date)",
+   "spike": "2026-11-09",
+   "rerun": "2026-11-09",
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "latency_days (run date - last step)",
+   "spike": 1,
+   "rerun": 1,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "n_daily_steps",
+   "spike": 3545,
+   "rerun": 3545,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "share_of_calendar_days_with_a_step",
+   "spike": null,
+   "rerun": 0.9336,
+   "flag_gt_tol": null
+  },
+  {
+   "metric": "lon_resolution_deg",
+   "spike": 0.015,
+   "rerun": 0.015,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "lat_min",
+   "spike": 0.0,
+   "rerun": 0.0,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "lat_max",
+   "spike": 38.0,
+   "rerun": 38.0,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "lon_min",
+   "spike": -98.0,
+   "rerun": -98.0,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "lon_max",
+   "spike": -38.0,
+   "rerun": -38.0,
+   "flag_gt_tol": false
+  }
+ ],
+ "notes": [
+  "license: The data may be used and redistributed for free but is not intended for legal use, since it may contain inaccuracies. Neither the data Contributor, ERD, NOAA, nor the United States Government, nor any of their employees or contractors, makes any warranty, express or implied, including warranties of merchantability and fitness for a particular purpose, or assumes any legal liability for the accuracy, completeness, or usefulness, of this information.",
+  "run date (UTC): 2026-11-10"
+ ],
+ "generated_utc": "2026-11-10T22:56:34Z"
+}

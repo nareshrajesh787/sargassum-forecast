@@ -1,0 +1,105 @@
+{
+ "test": "AFAI as a label, Canc\u00fan\u2013Puerto Morelos band, all of 2025",
+ "script": "spike/s04_afai_label_cancun.py",
+ "definition": "Band: ocean pixels 1.5\u201310 km from the coast, 20.80\u201321.20\u00b0N. Daily valid share = valid band pixels /\nband pixels. A day is \"observed\" when \u2265 20% of band pixels are valid. Daily label variants: positive if\nthe share of valid band pixels with AFAI > 0 is > 0, \u2265 1%, \u2265 5%, \u2265 25% or \u2265 50%, for the 1D and 3D\nproducts (10 variants; 25% and 50% were added after the first run showed the lower thresholds give labels that\nare positive on 87\u201399% of days). The spike reports ranges, so the rerun reports min\u2013max over these variants.\n\nAgreement = share of consecutive observed days (next observed day, any gap) with the same label.\nPersistence BSS = 1 \u2212 BS(previous observed label) / BS(monthly climatology of the label, in-sample).",
+ "touches_test_seasons": false,
+ "results": [
+  {
+   "metric": "mean_daily_valid_share_1D",
+   "spike": 0.44,
+   "rerun": 0.441,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "consecutive_observed_agreement_min",
+   "spike": 0.5,
+   "rerun": 0.5442,
+   "flag_gt_tol": true
+  },
+  {
+   "metric": "consecutive_observed_agreement_max",
+   "spike": 0.66,
+   "rerun": 0.9813,
+   "flag_gt_tol": true
+  },
+  {
+   "metric": "persistence_BSS_vs_monthly_clim_min",
+   "spike": -0.21,
+   "rerun": -1.0834,
+   "flag_gt_tol": true
+  },
+  {
+   "metric": "persistence_BSS_vs_monthly_clim_max",
+   "spike": -0.07,
+   "rerun": -0.0148,
+   "flag_gt_tol": true
+  }
+ ],
+ "notes": [
+  "the spike's label definition was not recorded in SPEC; the variants here bracket plausible choices, so a mismatch may be a definition difference rather than a data change"
+ ],
+ "generated_utc": "2026-11-10T22:56:36Z",
+ "variants": {
+  "1D_any": {
+   "n_observed_days": 227,
+   "event_rate": 0.9295154185022027,
+   "agreement": 0.8761061946902655,
+   "bss_persistence_vs_monthly_clim": -1.0833536069705088
+  },
+  "1D_1pct": {
+   "n_observed_days": 227,
+   "event_rate": 0.9295154185022027,
+   "agreement": 0.8761061946902655,
+   "bss_persistence_vs_monthly_clim": -1.0833536069705088
+  },
+  "1D_5pct": {
+   "n_observed_days": 227,
+   "event_rate": 0.8678414096916299,
+   "agreement": 0.8053097345132744,
+   "bss_persistence_vs_monthly_clim": -0.9316776467466583
+  },
+  "1D_25pct": {
+   "n_observed_days": 227,
+   "event_rate": 0.6563876651982379,
+   "agreement": 0.6150442477876106,
+   "bss_persistence_vs_monthly_clim": -0.9554675142570932
+  },
+  "1D_50pct": {
+   "n_observed_days": 227,
+   "event_rate": 0.45374449339207046,
+   "agreement": 0.5442477876106194,
+   "bss_persistence_vs_monthly_clim": -0.9083076448956
+  },
+  "3D_any": {
+   "n_observed_days": 322,
+   "event_rate": 0.9906832298136646,
+   "agreement": 0.9813084112149533,
+   "bss_persistence_vs_monthly_clim": -1.0756183044570817
+  },
+  "3D_1pct": {
+   "n_observed_days": 322,
+   "event_rate": 0.9875776397515528,
+   "agreement": 0.9750778816199377,
+   "bss_persistence_vs_monthly_clim": -1.0739510998507105
+  },
+  "3D_5pct": {
+   "n_observed_days": 322,
+   "event_rate": 0.953416149068323,
+   "agreement": 0.9376947040498442,
+   "bss_persistence_vs_monthly_clim": -0.45618814179447553
+  },
+  "3D_25pct": {
+   "n_observed_days": 322,
+   "event_rate": 0.8043478260869565,
+   "agreement": 0.8660436137071651,
+   "bss_persistence_vs_monthly_clim": -0.014779917330475678
+  },
+  "3D_50pct": {
+   "n_observed_days": 322,
+   "event_rate": 0.65527950310559,
+   "agreement": 0.7850467289719626,
+   "bss_persistence_vs_monthly_clim": -0.04705001986566759
+  }
+ },
+ "mean_daily_valid_share_3D": 0.7260032102728732
+}

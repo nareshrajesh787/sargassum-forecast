@@ -1,0 +1,157 @@
+{
+ "1D": {
+  "months": 64,
+  "values": 173540388,
+  "seconds_total": 293.8,
+  "values_per_second": 590674,
+  "values_per_second_month_min": 282312,
+  "values_per_second_month_max": 1148027,
+  "mb_total": 694.7,
+  "pixels_per_day": 89178,
+  "per_season": [
+   {
+    "season": 2019,
+    "steps": 245,
+    "seconds": 28.2,
+    "mb": 87.5,
+    "calendar_days": 245,
+    "missing_days": 0
+   },
+   {
+    "season": 2020,
+    "steps": 245,
+    "seconds": 27.9,
+    "mb": 87.5,
+    "calendar_days": 245,
+    "missing_days": 0
+   },
+   {
+    "season": 2021,
+    "steps": 245,
+    "seconds": 24.2,
+    "mb": 87.5,
+    "calendar_days": 245,
+    "missing_days": 0
+   },
+   {
+    "season": 2022,
+    "steps": 244,
+    "seconds": 26.0,
+    "mb": 87.1,
+    "calendar_days": 245,
+    "missing_days": 1
+   },
+   {
+    "season": 2023,
+    "steps": 245,
+    "seconds": 26.6,
+    "mb": 87.5,
+    "calendar_days": 245,
+    "missing_days": 0
+   },
+   {
+    "season": 2024,
+    "steps": 242,
+    "seconds": 40.9,
+    "mb": 86.4,
+    "calendar_days": 245,
+    "missing_days": 3
+   },
+   {
+    "season": 2025,
+    "steps": 236,
+    "seconds": 50.8,
+    "mb": 84.2,
+    "calendar_days": 245,
+    "missing_days": 9
+   },
+   {
+    "season": 2026,
+    "steps": 244,
+    "seconds": 69.3,
+    "mb": 87.1,
+    "calendar_days": 245,
+    "missing_days": 1
+   }
+  ]
+ },
+ "3D": {
+  "months": 64,
+  "values": 173540388,
+  "seconds_total": 340.4,
+  "values_per_second": 509774,
+  "values_per_second_month_min": 201128,
+  "values_per_second_month_max": 850200,
+  "mb_total": 694.7,
+  "pixels_per_day": 89178,
+  "per_season": [
+   {
+    "season": 2019,
+    "steps": 245,
+    "seconds": 39.2,
+    "mb": 87.5,
+    "calendar_days": 245,
+    "missing_days": 0
+   },
+   {
+    "season": 2020,
+    "steps": 245,
+    "seconds": 31.6,
+    "mb": 87.5,
+    "calendar_days": 245,
+    "missing_days": 0
+   },
+   {
+    "season": 2021,
+    "steps": 245,
+    "seconds": 33.9,
+    "mb": 87.5,
+    "calendar_days": 245,
+    "missing_days": 0
+   },
+   {
+    "season": 2022,
+    "steps": 244,
+    "seconds": 32.5,
+    "mb": 87.1,
+    "calendar_days": 245,
+    "missing_days": 1
+   },
+   {
+    "season": 2023,
+    "steps": 245,
+    "seconds": 29.7,
+    "mb": 87.5,
+    "calendar_days": 245,
+    "missing_days": 0
+   },
+   {
+    "season": 2024,
+    "steps": 242,
+    "seconds": 49.2,
+    "mb": 86.4,
+    "calendar_days": 245,
+    "missing_days": 3
+   },
+   {
+    "season": 2025,
+    "steps": 236,
+    "seconds": 56.0,
+    "mb": 84.2,
+    "calendar_days": 245,
+    "missing_days": 9
+   },
+   {
+    "season": 2026,
+    "steps": 244,
+    "seconds": 68.3,
+    "mb": 87.1,
+    "calendar_days": 245,
+    "missing_days": 1
+   }
+  ]
+ },
+ "box": "23_28N_-82_-78E_s1",
+ "grid_deg": 0.015,
+ "plan": "full box 23\u201328N, 82\u201378W at native 0.015\u00b0 (no coarsening), netCDF month by month; both products for 2019\u20132026 Mar\u2013Oct measured end to end"
+}
