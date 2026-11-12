@@ -44,7 +44,7 @@ features: labels
 	$(UV) run python -m pipeline.features.afai_grid
 	$(UV) run python -m pipeline.features.build
 
-# Every results table and figure from cached raw data (≈ 80 min, dominated by OpenDrift runs):
+# Every results table and figure from cached raw data (run time dominated by OpenDrift runs):
 # labels → features → baselines (val) → P1 sweep + training seasons + score → hybrid (val) → frozen test
 # scoring (only if the retrained model hash matches the frozen one, see eval/run_test.py) → gallery →
 # backtests → API results file.

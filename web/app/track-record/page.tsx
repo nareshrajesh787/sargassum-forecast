@@ -57,7 +57,7 @@ export default function TrackRecordPage() {
             <div className="card">
               <p style={{ marginTop: 0 }}>
                 Points above the diagonal mean the model forecast too low. The served model (M2) was calibrated on the quiet
-                2024 season and under-forecast the record 2025–2026 seasons. The 80% band shown on the map comes from this
+                2024 season and under-forecast the high-sargassum 2025–2026 seasons (2026 had the highest event rate on record). The 80% band shown on the map comes from this
                 test data.
               </p>
               <p className="muted" style={{ fontSize: 13 }}>Source: {res.data.reliability.source}</p>

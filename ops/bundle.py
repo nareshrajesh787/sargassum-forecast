@@ -127,6 +127,16 @@ def verify() -> int:
     for c in cols:
         bad += int((~np.isclose(got[c].to_numpy(), ref[c].to_numpy(), atol=1e-12, equal_nan=True)).sum())
     print(f"bundle verify: {len(ref)} rows × {len(cols)} models, mismatches = {bad}")
+    Path("outputs").mkdir(exist_ok=True)
+    rec = {
+        "rows": len(ref),
+        "models": cols,
+        "mismatching_cells": bad,
+        "tolerance": 1e-12,
+        "bundle_sha256": _sha(BUNDLE),
+        "reference": "data/test_lock/preds_test.parquet",
+    }
+    Path("outputs/bundle_verify.json").write_text(json.dumps(rec, indent=1) + "\n")
     return bad
 
 

@@ -1,6 +1,6 @@
 # Data sources
 
-Updated in Phase 1 (details and measured coverage in `docs/FEASIBILITY.md`); finalised in Phase 7.
+Final (Phase 7). Measured coverage, latency and failure modes are in `docs/FEASIBILITY.md`.
 Every source keeps its own terms; code is MIT.
 
 | Source | What we use | Terms / credit | Stored in repo? |
@@ -14,3 +14,7 @@ Every source keeps its own terms; code is MIT.
 | Natural Earth 10 m land | Coastline for distance-to-coast bands | Public domain. | No (downloaded to `data/raw/naturalearth`). |
 | Copernicus Marine `WIND_GLO_PHY_L4_MY_012_006` / `_NRT_012_004` (hourly 0.125° L4 winds) | Gridded 10 m wind for P1 drift (windage) | Copernicus Marine Service licence (attribution). Same account as SMOC. | No. |
 | OpenDrift (MET Norway) with roaring-landmask (GSHHG) | Lagrangian drift engine and coastline for stranding | GPL-2.0 (OpenDrift) — used as a library, not redistributed; GSHHG LGPL. Cite Dagestad et al. 2018. | No. |
+| OpenStreetMap tiles (web map) | Base map in the web app | © OpenStreetMap contributors (ODbL); tile usage policy applies. | No. |
+
+Live daily inputs (`ops/live.py`): Open-Meteo Forecast and Marine APIs (GFS, Météo-France), Copernicus SMOC forecast, AFAI
+(last 45 days), FIU (newest 2,000 entries), NOAA CO-OPS tides. Each daily forecast records hashes of its inputs.
