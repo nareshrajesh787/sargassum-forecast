@@ -1,0 +1,31 @@
+{
+ "test": "Open-Meteo currents and winds at Broward",
+ "script": "spike/s09_openmeteo.py",
+ "definition": "The spike reported these as 'returned' (yes/no); encoded here as 240 forecast hours and 100% non-null.",
+ "touches_test_seasons": false,
+ "results": [
+  {
+   "metric": "forecast_current_hours_returned_(10_days)",
+   "spike": 240,
+   "rerun": 240,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "june_2022_current_non_null_share",
+   "spike": 1.0,
+   "rerun": 1.0,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "2022_archived_wind_non_null_share",
+   "spike": 1.0,
+   "rerun": 1.0,
+   "flag_gt_tol": false
+  }
+ ],
+ "notes": [
+  "site: The Palms",
+  "no key used"
+ ],
+ "generated_utc": "2026-11-10T22:56:39Z"
+}

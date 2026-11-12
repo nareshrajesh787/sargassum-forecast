@@ -1,0 +1,79 @@
+{
+ "test": "FIU Sargassum Watch API",
+ "script": "spike/s05_fiu_api.py",
+ "definition": "Latest local snapshot of the Epicollect5 export; sites assigned by pipeline.labels.fiu_labels.",
+ "touches_test_seasons": false,
+ "results": [
+  {
+   "metric": "public_entries",
+   "spike": 14298,
+   "rerun": 14298,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "oldest_entry_date",
+   "spike": null,
+   "rerun": "2019-03-03",
+   "flag_gt_tol": null
+  },
+  {
+   "metric": "newest_entry_date",
+   "spike": null,
+   "rerun": "2026-11-09",
+   "flag_gt_tol": null
+  },
+  {
+   "metric": "n_fixed_broward_sites",
+   "spike": 8,
+   "rerun": 8,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "reports_assigned_to_the_8_sites",
+   "spike": null,
+   "rerun": 11813,
+   "flag_gt_tol": null
+  },
+  {
+   "metric": "first_season_with_reports",
+   "spike": 2019,
+   "rerun": 2019,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "last_season_with_reports",
+   "spike": 2026,
+   "rerun": 2026,
+   "flag_gt_tol": false
+  },
+  {
+   "metric": "mean_share_of_season_days_reported_per_site",
+   "spike": null,
+   "rerun": 0.7513,
+   "flag_gt_tol": null
+  }
+ ],
+ "notes": [
+  "snapshot 20261110T222537Z",
+  "per-site mean share of Mar\u2013Oct days with \u22651 report: {\"atlantic_pier\": 0.778, \"bougainvillea_terrace\": 0.663, \"commercial_pier\": 0.835, \"county_line\": 0.703, \"hillsboro_mile_1173\": 0.65, \"mj_state_park\": 0.805, \"sea_ranch_lakes\": 0.71, \"the_palms\": 0.866}",
+  "fields used: date, time, GPS, site name, condition, water colour, smell; photos never fetched",
+  "site list: ['Bougainvillea Terrace', 'MJ State Park', 'The Palms', 'Commercial Pier', 'Sea Ranch Lakes', 'Atlantic Pier', '1173 Hillsboro Mile', 'County Line']"
+ ],
+ "generated_utc": "2026-11-10T22:56:36Z",
+ "oldest_raw": "2019-03-03T22:11:35.000Z",
+ "newest_raw": "2026-11-09T22:27:23.000Z",
+ "unassigned_reports": 2485,
+ "unassigned_top_names": {
+  "key biscayne (key colony)": 516,
+  "playa del carmen": 148,
+  "georgia street": 68,
+  "unam": 59,
+  "georgia st": 57,
+  "crandon park": 44,
+  "deering south jetty": 31,
+  "long bay": 30,
+  "morningside park": 26,
+  "jose marti park": 24
+ },
+ "non_season_site_days": 0
+}

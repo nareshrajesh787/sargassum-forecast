@@ -36,3 +36,39 @@ Append-only. One entry per session: what was done, what failed, what is unverifi
 
 **Next**: owner merges → dispatch `sir-archive` (optionally `days=500` to capture the full 2025-07-01+ window
 as release assets) → Phase 1.
+
+## 2026-11-10 — Phase 1 (data spike), branch `phase-1-data-spike` (stacked on `phase-0-scaffold`)
+
+**Done**
+- Adapters: `pipeline/ingest/afai.py` (ERDDAP netCDF, month by month, throughput log),
+  `pipeline/ingest/copernicus.py` (catalogue + `subset_smoc`), `pipeline/ingest/openmeteo.py` (marine currents/waves,
+  historical-forecast winds, previous-runs lead-L winds), `pipeline/geo.py` (Natural Earth distance-to-coast),
+  `pipeline/sites.py` (8 sites, median-GPS coordinates + name aliases), `pipeline/labels/fiu_labels.py` (frozen rules).
+- Cached locally: AFAI 1D + 3D, full box 23–28N 82–78W at 0.015°, Mar–Oct 2019–2026 (all seasons, not just one);
+  Open-Meteo 2022-01-01 → 2026-10-31 for 8 sites; FIU snapshot; SIR back-fill from 2025-06-28 (`data/raw/sir/`).
+- `make spike` regenerates `outputs/spike/*.json`, `outputs/spike/comparison.csv` and `outputs/feasibility/*` from cache.
+- `docs/FEASIBILITY.md` with go/no-go per source; `docs/DATA_SOURCES.md` updated; 49 offline tests.
+
+**Conflicts with SPEC (raised at G1; SPEC not edited)**
+1. SIR history is online from 2025-07-01 (SPEC: none).
+2. Copernicus SMOC hourly starts 2020-11-01 (SPEC: 2-year rolling, physics from 2022). GLORYS12 (same grid) is daily-only.
+3. No historical forecast archive for currents. Lead-specific winds only from 2024-01-19. The leakage rule "archived forecasts
+   wherever possible" can be met only for winds, 2024+.
+4. 2019 FIU form had no water-colour question → 2019 severity cannot reach 3 (frozen rules unchanged).
+5. Severity precedence was not specified; `none_first` chosen because it reproduces the spike counts (definition, not tuning).
+6. ERDDAP ≈ 590K values/s (SPEC assumed ~30K/min), so no coarsening.
+
+**Rule tension**: `spike/s06`, `s07`, `s08` read 2025–2026 labels because KICKOFF Phase 1 / G2 require reproducing the spike
+numbers. Only the pre-registered fixed-rule metrics are computed; nothing fitted. Flagged in the outputs (`touches_test_seasons`).
+
+**Failed / fixed during the session**
+- FIU API 429 after 5 quick pages → paced + resumable.
+- Open-Meteo `cell_selection=sea` snapped 3 sites to a land-side wave cell returning only nulls → marine feeds now query
+  0.025° offshore and warn on all-null chunks. Re-pulled both marine feeds.
+- Creating GitHub releases from this machine was blocked by the permission classifier (Phase 0 SIR upload).
+
+**Unverified**: Copernicus data access/throughput (no credentials); Copernicus licence text not fetched; Open-Meteo call
+weights are my estimate; spike definitions for s02/s03/s04/s08 were not recorded in SPEC, so some differences may be
+definition gaps (see FEASIBILITY §5); FIU courtesy-email status.
+
+**Next**: G1 decision (driver policy) → Phase 2 (labels into the feature store with `available_at`, Zarr AFAI, B0–B3).

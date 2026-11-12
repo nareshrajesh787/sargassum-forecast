@@ -120,14 +120,10 @@ def load_entries(snapshot_dir: Path) -> list[dict[str, Any]]:
 
 def latest_snapshot(out_root: Path) -> Path:
     snaps = sorted(
-        d
-        for d in out_root.iterdir()
-        if d.is_dir() and not d.name.endswith(".partial") and (d / "_meta.json").exists()
+        d for d in out_root.iterdir() if d.is_dir() and not d.name.endswith(".partial") and (d / "_meta.json").exists()
     )
     if not snaps:
-        raise FileNotFoundError(
-            f"No complete FIU snapshot under {out_root}; run `python -m pipeline.ingest.fiu`"
-        )
+        raise FileNotFoundError(f"No complete FIU snapshot under {out_root}; run `python -m pipeline.ingest.fiu`")
     return snaps[-1]
 
 
