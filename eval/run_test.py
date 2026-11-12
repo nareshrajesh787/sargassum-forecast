@@ -154,7 +154,8 @@ def main() -> None:
     res.to_csv(OUT / "results_test.csv", index=False, float_format="%.4f")
     paired.to_csv(OUT / "results_test_paired.csv", index=False, float_format="%.4f")
     rel.to_csv(OUT / "reliability_test.csv", index=False, float_format="%.4f")
-    pd.concat([te[["site", "date", "lead", "season", "event"]], preds], axis=1).to_parquet(LOCK / "preds_test.parquet")
+    keep = ["site", "date", "lead", "season", "event", "last_event", "event_rate_7d"]
+    pd.concat([te[keep], preds], axis=1).to_parquet(LOCK / "preds_test.parquet")
     (OUT / "results_test_meta.json").write_text(
         json.dumps({**rec, "models": names, "p1": p1meta, "train_seasons": TRAIN_DEFAULT}, indent=1) + "\n"
     )
