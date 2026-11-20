@@ -1,7 +1,7 @@
 {
- "issue_date": "2026-11-19",
- "issue_time": "2026-11-19T12:00:00Z",
- "generated_utc": "2026-11-19T21:50:26Z",
+ "issue_date": "2026-11-20",
+ "issue_time": "2026-11-20T12:00:00Z",
+ "generated_utc": "2026-11-20T21:37:25Z",
  "model_version": "v0.1-test-frozen",
  "served_model": "M2",
  "target": "P(moderate-or-worse sargassum day: severity >= 2) at the beach on the target date",
@@ -9,16 +9,16 @@
  "p1_status": "ok",
  "inputs": {
   "fiu_newest_entry": "2026-11-09T22:27:23.000Z",
-  "afai_last_step": "2026-11-18",
-  "p1_seed_field_day": "2026-11-18",
+  "afai_last_step": "2026-11-19",
+  "p1_seed_field_day": "2026-11-19",
   "openmeteo_last_hour": {
-   "marine_currents": "2026-11-27T23:00",
-   "marine_waves": "2026-11-27T23:00",
-   "wind_hf": "2026-11-27T23:00"
+   "marine_currents": "2026-11-28T23:00",
+   "marine_waves": "2026-11-28T23:00",
+   "wind_hf": "2026-11-28T23:00"
   },
-  "afai_hash": "19339f03519066ad",
-  "openmeteo_hash": "f2160e9ba3d71330",
-  "p1_forcing_hash": "7c82c97776cf4f9bef17aa034685d773",
+  "afai_hash": "1c42a343d7a2fa79",
+  "openmeteo_hash": "5d1e06d9bf7d9ce8",
+  "p1_forcing_hash": "c8501a79c3e09ad1694b0af3f70ddb65",
   "bundle_sha256": "b63e4bdee387484d"
  },
  "disclaimer": "Experimental research forecast, not a warning system. On the 2025\u20132026 test seasons the served model (M2) had Brier skill -0.034 [-0.058, -0.011] versus climatology (negative = worse than climatology). See the track record and methods.",
@@ -32,20 +32,20 @@
    "leads": [
     {
      "lead_days": 1,
-     "target_date": "2026-11-20",
-     "probability": 0.0447,
+     "target_date": "2026-11-21",
+     "probability": 0.044,
      "interval_80": [
       0.0682,
       0.1107
      ],
      "climatology": 0.0528,
-     "issue_time_model_M2_fc": 0.1067,
+     "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1285,
      "in_validated_season": false
     },
     {
      "lead_days": 2,
-     "target_date": "2026-11-21",
+     "target_date": "2026-11-22",
      "probability": 0.044,
      "interval_80": [
       0.0682,
@@ -58,39 +58,39 @@
     },
     {
      "lead_days": 3,
-     "target_date": "2026-11-22",
-     "probability": 0.044,
-     "interval_80": [
-      0.0682,
-      0.1107
-     ],
-     "climatology": 0.0528,
-     "issue_time_model_M2_fc": 0.0655,
-     "drift_index_P1": 0.1268,
-     "in_validated_season": false
-    },
-    {
-     "lead_days": 5,
-     "target_date": "2026-11-24",
-     "probability": 0.044,
+     "target_date": "2026-11-23",
+     "probability": 0.029,
      "interval_80": [
       0.0682,
       0.1107
      ],
      "climatology": 0.0527,
+     "issue_time_model_M2_fc": 0.0881,
+     "drift_index_P1": 0.1268,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 5,
+     "target_date": "2026-11-25",
+     "probability": 0.0447,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0526,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
     },
     {
      "lead_days": 7,
-     "target_date": "2026-11-26",
-     "probability": 0.044,
+     "target_date": "2026-11-27",
+     "probability": 0.029,
      "interval_80": [
       0.0682,
       0.1107
      ],
-     "climatology": 0.0526,
+     "climatology": 0.0525,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
@@ -105,19 +105,6 @@
    "leads": [
     {
      "lead_days": 1,
-     "target_date": "2026-11-20",
-     "probability": 0.0741,
-     "interval_80": [
-      0.1165,
-      0.1684
-     ],
-     "climatology": 0.061,
-     "issue_time_model_M2_fc": 0.1067,
-     "drift_index_P1": 0.1285,
-     "in_validated_season": false
-    },
-    {
-     "lead_days": 2,
      "target_date": "2026-11-21",
      "probability": 0.044,
      "interval_80": [
@@ -126,11 +113,11 @@
      ],
      "climatology": 0.0595,
      "issue_time_model_M2_fc": 0.0655,
-     "drift_index_P1": 0.126,
+     "drift_index_P1": 0.1285,
      "in_validated_season": false
     },
     {
-     "lead_days": 3,
+     "lead_days": 2,
      "target_date": "2026-11-22",
      "probability": 0.029,
      "interval_80": [
@@ -139,31 +126,44 @@
      ],
      "climatology": 0.0583,
      "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.126,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-23",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0572,
+     "issue_time_model_M2_fc": 0.0881,
      "drift_index_P1": 0.1268,
      "in_validated_season": false
     },
     {
      "lead_days": 5,
-     "target_date": "2026-11-24",
-     "probability": 0.044,
+     "target_date": "2026-11-25",
+     "probability": 0.0447,
      "interval_80": [
       0.0682,
       0.1107
      ],
-     "climatology": 0.0562,
+     "climatology": 0.0554,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
     },
     {
      "lead_days": 7,
-     "target_date": "2026-11-26",
-     "probability": 0.044,
+     "target_date": "2026-11-27",
+     "probability": 0.029,
      "interval_80": [
       0.0682,
       0.1107
      ],
-     "climatology": 0.0547,
+     "climatology": 0.0542,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
@@ -178,19 +178,6 @@
    "leads": [
     {
      "lead_days": 1,
-     "target_date": "2026-11-20",
-     "probability": 0.0741,
-     "interval_80": [
-      0.1165,
-      0.1684
-     ],
-     "climatology": 0.0551,
-     "issue_time_model_M2_fc": 0.1067,
-     "drift_index_P1": 0.1321,
-     "in_validated_season": false
-    },
-    {
-     "lead_days": 2,
      "target_date": "2026-11-21",
      "probability": 0.044,
      "interval_80": [
@@ -199,44 +186,57 @@
      ],
      "climatology": 0.0545,
      "issue_time_model_M2_fc": 0.0655,
-     "drift_index_P1": 0.126,
+     "drift_index_P1": 0.1285,
      "in_validated_season": false
     },
     {
-     "lead_days": 3,
+     "lead_days": 2,
      "target_date": "2026-11-22",
-     "probability": 0.044,
+     "probability": 0.029,
      "interval_80": [
       0.0682,
       0.1107
      ],
      "climatology": 0.0541,
      "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.126,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-23",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0537,
+     "issue_time_model_M2_fc": 0.0714,
      "drift_index_P1": 0.1268,
      "in_validated_season": false
     },
     {
      "lead_days": 5,
-     "target_date": "2026-11-24",
+     "target_date": "2026-11-25",
      "probability": 0.044,
      "interval_80": [
       0.0682,
       0.1107
      ],
-     "climatology": 0.0534,
+     "climatology": 0.0531,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
     },
     {
      "lead_days": 7,
-     "target_date": "2026-11-26",
-     "probability": 0.044,
+     "target_date": "2026-11-27",
+     "probability": 0.029,
      "interval_80": [
       0.0682,
       0.1107
      ],
-     "climatology": 0.0529,
+     "climatology": 0.0528,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
@@ -251,21 +251,21 @@
    "leads": [
     {
      "lead_days": 1,
-     "target_date": "2026-11-20",
-     "probability": 0.0741,
+     "target_date": "2026-11-21",
+     "probability": 0.044,
      "interval_80": [
-      0.1165,
-      0.1684
+      0.0682,
+      0.1107
      ],
-     "climatology": 0.0519,
-     "issue_time_model_M2_fc": 0.1067,
+     "climatology": 0.052,
+     "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1285,
      "in_validated_season": false
     },
     {
      "lead_days": 2,
-     "target_date": "2026-11-21",
-     "probability": 0.044,
+     "target_date": "2026-11-22",
+     "probability": 0.029,
      "interval_80": [
       0.0682,
       0.1107
@@ -277,34 +277,34 @@
     },
     {
      "lead_days": 3,
-     "target_date": "2026-11-22",
+     "target_date": "2026-11-23",
      "probability": 0.029,
-     "interval_80": [
-      0.0682,
-      0.1107
-     ],
-     "climatology": 0.052,
-     "issue_time_model_M2_fc": 0.0655,
-     "drift_index_P1": 0.1268,
-     "in_validated_season": false
-    },
-    {
-     "lead_days": 5,
-     "target_date": "2026-11-24",
-     "probability": 0.044,
      "interval_80": [
       0.0682,
       0.1107
      ],
      "climatology": 0.0521,
      "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.1268,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 5,
+     "target_date": "2026-11-25",
+     "probability": 0.044,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0522,
+     "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
     },
     {
      "lead_days": 7,
-     "target_date": "2026-11-26",
-     "probability": 0.044,
+     "target_date": "2026-11-27",
+     "probability": 0.029,
      "interval_80": [
       0.0682,
       0.1107
@@ -324,19 +324,6 @@
    "leads": [
     {
      "lead_days": 1,
-     "target_date": "2026-11-20",
-     "probability": 0.0447,
-     "interval_80": [
-      0.0682,
-      0.1107
-     ],
-     "climatology": 0.0557,
-     "issue_time_model_M2_fc": 0.1067,
-     "drift_index_P1": 0.1285,
-     "in_validated_season": false
-    },
-    {
-     "lead_days": 2,
      "target_date": "2026-11-21",
      "probability": 0.044,
      "interval_80": [
@@ -345,11 +332,11 @@
      ],
      "climatology": 0.0552,
      "issue_time_model_M2_fc": 0.0655,
-     "drift_index_P1": 0.126,
+     "drift_index_P1": 0.1285,
      "in_validated_season": false
     },
     {
-     "lead_days": 3,
+     "lead_days": 2,
      "target_date": "2026-11-22",
      "probability": 0.029,
      "interval_80": [
@@ -358,31 +345,44 @@
      ],
      "climatology": 0.0548,
      "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.126,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-23",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0544,
+     "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1268,
      "in_validated_season": false
     },
     {
      "lead_days": 5,
-     "target_date": "2026-11-24",
-     "probability": 0.0447,
+     "target_date": "2026-11-25",
+     "probability": 0.044,
      "interval_80": [
       0.0682,
       0.1107
      ],
-     "climatology": 0.054,
+     "climatology": 0.0537,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
     },
     {
      "lead_days": 7,
-     "target_date": "2026-11-26",
-     "probability": 0.044,
+     "target_date": "2026-11-27",
+     "probability": 0.029,
      "interval_80": [
       0.0682,
       0.1107
      ],
-     "climatology": 0.0534,
+     "climatology": 0.0532,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
@@ -397,19 +397,6 @@
    "leads": [
     {
      "lead_days": 1,
-     "target_date": "2026-11-20",
-     "probability": 0.044,
-     "interval_80": [
-      0.0682,
-      0.1107
-     ],
-     "climatology": 0.0502,
-     "issue_time_model_M2_fc": 0.1067,
-     "drift_index_P1": 0.1321,
-     "in_validated_season": false
-    },
-    {
-     "lead_days": 2,
      "target_date": "2026-11-21",
      "probability": 0.044,
      "interval_80": [
@@ -418,11 +405,11 @@
      ],
      "climatology": 0.0506,
      "issue_time_model_M2_fc": 0.0655,
-     "drift_index_P1": 0.126,
+     "drift_index_P1": 0.1285,
      "in_validated_season": false
     },
     {
-     "lead_days": 3,
+     "lead_days": 2,
      "target_date": "2026-11-22",
      "probability": 0.029,
      "interval_80": [
@@ -431,31 +418,44 @@
      ],
      "climatology": 0.051,
      "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.126,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-23",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0513,
+     "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1268,
      "in_validated_season": false
     },
     {
      "lead_days": 5,
-     "target_date": "2026-11-24",
-     "probability": 0.0447,
+     "target_date": "2026-11-25",
+     "probability": 0.044,
      "interval_80": [
       0.0682,
       0.1107
      ],
-     "climatology": 0.0515,
+     "climatology": 0.0517,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
     },
     {
      "lead_days": 7,
-     "target_date": "2026-11-26",
-     "probability": 0.044,
+     "target_date": "2026-11-27",
+     "probability": 0.029,
      "interval_80": [
       0.0682,
       0.1107
      ],
-     "climatology": 0.0519,
+     "climatology": 0.052,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
@@ -470,32 +470,19 @@
    "leads": [
     {
      "lead_days": 1,
-     "target_date": "2026-11-20",
-     "probability": 0.044,
-     "interval_80": [
-      0.0682,
-      0.1107
-     ],
-     "climatology": 0.0499,
-     "issue_time_model_M2_fc": 0.1067,
-     "drift_index_P1": 0.1359,
-     "in_validated_season": false
-    },
-    {
-     "lead_days": 2,
      "target_date": "2026-11-21",
-     "probability": 0.0417,
+     "probability": 0.029,
      "interval_80": [
       0.0682,
       0.1107
      ],
      "climatology": 0.0505,
      "issue_time_model_M2_fc": 0.0655,
-     "drift_index_P1": 0.126,
+     "drift_index_P1": 0.1285,
      "in_validated_season": false
     },
     {
-     "lead_days": 3,
+     "lead_days": 2,
      "target_date": "2026-11-22",
      "probability": 0.029,
      "interval_80": [
@@ -504,31 +491,44 @@
      ],
      "climatology": 0.0509,
      "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.126,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-23",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0513,
+     "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1268,
      "in_validated_season": false
     },
     {
      "lead_days": 5,
-     "target_date": "2026-11-24",
-     "probability": 0.0447,
+     "target_date": "2026-11-25",
+     "probability": 0.044,
      "interval_80": [
       0.0682,
       0.1107
      ],
-     "climatology": 0.0516,
+     "climatology": 0.0518,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
     },
     {
      "lead_days": 7,
-     "target_date": "2026-11-26",
+     "target_date": "2026-11-27",
      "probability": 0.044,
      "interval_80": [
       0.0682,
       0.1107
      ],
-     "climatology": 0.0519,
+     "climatology": 0.052,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
@@ -543,32 +543,19 @@
    "leads": [
     {
      "lead_days": 1,
-     "target_date": "2026-11-20",
-     "probability": 0.044,
-     "interval_80": [
-      0.0682,
-      0.1107
-     ],
-     "climatology": 0.0499,
-     "issue_time_model_M2_fc": 0.1067,
-     "drift_index_P1": 0.1321,
-     "in_validated_season": false
-    },
-    {
-     "lead_days": 2,
      "target_date": "2026-11-21",
-     "probability": 0.0417,
+     "probability": 0.029,
      "interval_80": [
       0.0682,
       0.1107
      ],
      "climatology": 0.0504,
      "issue_time_model_M2_fc": 0.0655,
-     "drift_index_P1": 0.126,
+     "drift_index_P1": 0.1285,
      "in_validated_season": false
     },
     {
-     "lead_days": 3,
+     "lead_days": 2,
      "target_date": "2026-11-22",
      "probability": 0.029,
      "interval_80": [
@@ -577,31 +564,44 @@
      ],
      "climatology": 0.0509,
      "issue_time_model_M2_fc": 0.0655,
+     "drift_index_P1": 0.126,
+     "in_validated_season": false
+    },
+    {
+     "lead_days": 3,
+     "target_date": "2026-11-23",
+     "probability": 0.029,
+     "interval_80": [
+      0.0682,
+      0.1107
+     ],
+     "climatology": 0.0512,
+     "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1268,
      "in_validated_season": false
     },
     {
      "lead_days": 5,
-     "target_date": "2026-11-24",
-     "probability": 0.0447,
+     "target_date": "2026-11-25",
+     "probability": 0.044,
      "interval_80": [
       0.0682,
       0.1107
      ],
-     "climatology": 0.0515,
+     "climatology": 0.0517,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
     },
     {
      "lead_days": 7,
-     "target_date": "2026-11-26",
+     "target_date": "2026-11-27",
      "probability": 0.044,
      "interval_80": [
       0.0682,
       0.1107
      ],
-     "climatology": 0.0519,
+     "climatology": 0.052,
      "issue_time_model_M2_fc": 0.0655,
      "drift_index_P1": 0.1429,
      "in_validated_season": false
