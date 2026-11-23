@@ -278,3 +278,12 @@ lead 2): every policy beats reactive. M2 (forecast) vs climatology: no detectabl
   failed as a whole and the step printed "nothing new". The stale alarm worked (issue #15). Fixes: the wind grid is fetched in chunks of 25
   with retries (tested live: complete in 10 s); the commit step adds only existing paths (tested in a scratch repo); the alarm title now
   says "Stale (> 3 days) or failed".
+
+## 2026-11-22 — 10 unattended daily runs; stale-alarm fix
+
+- Scheduled daily runs succeeded every day 2026-11-13 → 2026-11-22 (10 in a row, unattended; GitHub starts them 5–9 h after the
+  13:30 UTC cron), each committing `forecast: YYYY-MM-DD`. **Gate G5's unattended-run criterion is met.**
+- Bug: the stale alarm opened a new issue every day (#17–#26). Its de-duplication used `gh issue list --search <title>`, which
+  returns nothing for titles containing "(> 3 days)". It now matches exact titles and comments on the open issue.
+- The cause of the alarm, FIU's newest entry dated 2026-11-09, is expected off-season (volunteers report mainly Mar–Oct). FIU
+  staleness now alarms only in Mar–Oct and is otherwise recorded as `quiet_off_season` in `status.json`. AFAI and P1 alarm year-round.

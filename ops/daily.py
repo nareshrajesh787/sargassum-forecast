@@ -290,6 +290,20 @@ def publish(fc: dict[str, Any], overlay: dict[str, Any], track: dict[str, Any]) 
     (API / "sites.json").write_text(json.dumps(sites, indent=1) + "\n")
 
 
+def stale_inputs(
+    ages: dict[str, float | None], p1_status: str, issue: pd.Timestamp
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """(alarming, quiet) stale inputs. FIU volunteers report mainly March–October, so a quiet FIU feed outside that
+    season is recorded but does not alarm. AFAI and P1 alarm year-round (the MODIS-end alarm)."""
+    stale: dict[str, Any] = {k: v for k, v in ages.items() if v is None or v > STALE_DAYS}
+    if not str(p1_status).startswith(("ok", "skipped")):
+        stale["p1"] = p1_status
+    quiet: dict[str, Any] = {}
+    if "fiu_newest_entry" in stale and issue.month not in SEASON_MONTHS:
+        quiet["fiu_newest_entry"] = stale.pop("fiu_newest_entry")
+    return stale, quiet
+
+
 def staleness(fc: dict[str, Any], issue: pd.Timestamp) -> dict[str, Any]:
     st = fc["inputs"]
 
@@ -303,33 +317,36 @@ def staleness(fc: dict[str, Any], issue: pd.Timestamp) -> dict[str, Any]:
         "fiu_newest_entry": age(st.get("fiu_newest_entry", "")),
         "afai_last_step": age(st.get("afai_last_step", "")),
     }
-    stale = {k: v for k, v in ages.items() if v is None or v > STALE_DAYS}
-    if not str(fc["p1_status"]).startswith(("ok", "skipped")):
-        stale["p1"] = fc["p1_status"]
-    status = {"issue_date": fc["issue_date"], "ages_days": ages, "stale": stale, "p1_status": fc["p1_status"]}
+    stale, quiet = stale_inputs(ages, str(fc["p1_status"]), issue)
+    status = {
+        "issue_date": fc["issue_date"],
+        "ages_days": ages,
+        "stale": stale,
+        "quiet_off_season": quiet,
+        "p1_status": fc["p1_status"],
+    }
     (WOUT / "ops").mkdir(parents=True, exist_ok=True)
     (WOUT / "ops" / "status.json").write_text(json.dumps(status, indent=1) + "\n")
     if stale and os.environ.get("GITHUB_ACTIONS") == "true":
         title = f"Stale (> {STALE_DAYS} days) or failed input(s): {', '.join(sorted(stale))}"
-        existing = subprocess.run(
-            ["gh", "issue", "list", "--state", "open", "--search", title, "--json", "number"],
+        body = (
+            f"Daily run {fc['issue_date']}: {json.dumps(status, indent=1)}\n\nIf AFAI has stopped (MODIS end, 2027), "
+            "switch the adapter to a VIIRS/OLCI product (SPEC risks)."
+        )
+        listed = subprocess.run(
+            ["gh", "issue", "list", "--state", "open", "--limit", "200", "--json", "number,title"],
             capture_output=True,
             text=True,
         ).stdout
-        if existing.strip() in ("", "[]"):
-            subprocess.run(
-                [
-                    "gh",
-                    "issue",
-                    "create",
-                    "--title",
-                    title,
-                    "--body",
-                    f"Daily run {fc['issue_date']}: {json.dumps(status, indent=1)}\n\nIf AFAI has stopped "
-                    "(MODIS end, 2027), switch the adapter to a VIIRS/OLCI product (SPEC risks).",
-                ],
-                check=False,
-            )
+        try:
+            open_issues = json.loads(listed or "[]")
+        except json.JSONDecodeError:
+            open_issues = []
+        same = [i for i in open_issues if i.get("title") == title]  # exact match; GitHub search mis-handles "(> 3"
+        if same:
+            subprocess.run(["gh", "issue", "comment", str(same[0]["number"]), "--body", body], check=False)
+        else:
+            subprocess.run(["gh", "issue", "create", "--title", title, "--body", body], check=False)
     return status
 
 

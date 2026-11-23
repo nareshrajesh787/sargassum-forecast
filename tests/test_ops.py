@@ -40,3 +40,15 @@ def test_live_skeleton_has_no_labels_and_correct_targets() -> None:
     assert len(df) == 8 * 5 and "event" not in df
     assert (df.date - df.issue_date).dt.days.tolist() == df.lead.tolist()
     assert (df.issue_time == pd.Timestamp("2027-06-01T12:00Z")).all()
+
+
+def test_fiu_quiet_off_season_does_not_alarm_but_afai_and_p1_do() -> None:
+    from ops.daily import stale_inputs
+
+    nov = pd.Timestamp("2026-11-22")
+    stale, quiet = stale_inputs({"fiu_newest_entry": 13.0, "afai_last_step": 1.0}, "ok", nov)
+    assert stale == {} and quiet == {"fiu_newest_entry": 13.0}
+    stale, _ = stale_inputs({"fiu_newest_entry": 13.0, "afai_last_step": 1.0}, "ok", pd.Timestamp("2027-06-01"))
+    assert stale == {"fiu_newest_entry": 13.0}  # in season FIU silence alarms
+    stale, _ = stale_inputs({"fiu_newest_entry": 1.0, "afai_last_step": 9.0}, "failed: X", nov)
+    assert set(stale) == {"afai_last_step", "p1"}  # MODIS-end / P1 alarms year-round
