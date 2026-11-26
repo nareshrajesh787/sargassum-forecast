@@ -1,12 +1,12 @@
 {
- "issue_date": "2026-11-25",
+ "issue_date": "2026-11-26",
  "ages_days": {
-  "fiu_newest_entry": 16.0,
+  "fiu_newest_entry": 17.0,
   "afai_last_step": 1.0
  },
  "stale": {},
  "quiet_off_season": {
-  "fiu_newest_entry": 16.0
+  "fiu_newest_entry": 17.0
  },
  "p1_status": "ok"
 }
